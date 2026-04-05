@@ -12747,534 +12747,11 @@
     }
   });
 
-  // home/claude/entry-v4.jsx
+  // home/claude/entry-v5.jsx
   var import_client = __toESM(require_client());
 
-  // home/claude/ecoscore-v4.jsx
+  // home/claude/ecoscore-v5.jsx
   var import_react = __toESM(require_react());
-
-  // home/claude/legislation-data.js
-  var LEGISLATION = [
-    // ─── EUROPEAN ─────────────────────────────────────────────────────────────
-    {
-      id: "csrd",
-      code: "CSRD",
-      titre: "Corporate Sustainability Reporting Directive",
-      type: "Directive europ\xE9enne",
-      categorie: "Reporting",
-      domaine: "Gouvernance",
-      date: "2022-12-14",
-      entreeVigueur: "2024-01-01",
-      origine: "UE",
-      statut: "En vigueur",
-      seuils: "PME cot\xE9es >250 sal. ou >40M\u20AC CA ou >20M\u20AC total bilan \xE0 partir de 2026. Grandes entreprises non cot\xE9es >500 sal. d\xE8s 2025.",
-      resume: "Oblige les grandes entreprises et PME cot\xE9es \xE0 publier un rapport de durabilit\xE9 standardis\xE9 selon les normes ESRS, int\xE9gr\xE9 au rapport de gestion annuel.",
-      obligationsCl\u00E9s: ["Rapport de durabilit\xE9 selon les ESRS", "Double mat\xE9rialit\xE9 (impacts et risques financiers)", "Audit par un tiers ind\xE9pendant", "Publication dans le rapport de gestion annuel", "Couverture de la cha\xEEne de valeur"],
-      sanctions: "Sanctions administratives et p\xE9nales selon transposition nationale. En France : jusqu'\xE0 75 000 \u20AC d'amende et 5 ans d'emprisonnement.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022L2464",
-      normes: ["ESRS E1", "ESRS S1", "ESRS G1"],
-      impactPME: "Fort \u2014 Les PME non cot\xE9es ne sont pas directement soumises mais leurs grands clients le sont et requerront des donn\xE9es ESG via la cha\xEEne de valeur.",
-      tags: ["reporting", "durabilit\xE9", "obligatoire", "ESRS"]
-    },
-    {
-      id: "esrs",
-      code: "ESRS",
-      titre: "European Sustainability Reporting Standards",
-      type: "Normes techniques",
-      categorie: "Reporting",
-      domaine: "Transversal",
-      date: "2023-07-31",
-      entreeVigueur: "2024-01-01",
-      origine: "UE",
-      statut: "En vigueur",
-      seuils: "Applicable \xE0 toutes les entreprises soumises \xE0 la CSRD.",
-      resume: "12 normes sectorielles (E1-E5, S1-S4, G1) d\xE9finissant pr\xE9cis\xE9ment les indicateurs et informations \xE0 publier dans le rapport de durabilit\xE9 CSRD.",
-      obligationsCl\u00E9s: ["E1 \u2013 Changement climatique (\xE9missions Scope 1/2/3)", "E2 \u2013 Pollution", "E3 \u2013 Ressources en eau", "E4 \u2013 Biodiversit\xE9", "E5 \u2013 \xC9conomie circulaire", "S1 \u2013 Main-d'\u0153uvre propre", "S2 \u2013 Travailleurs de la cha\xEEne de valeur", "S3 \u2013 Communaut\xE9s affect\xE9es", "S4 \u2013 Consommateurs", "G1 \u2013 Conduite des affaires"],
-      sanctions: "Via la CSRD.",
-      lienOfficiel: "https://www.efrag.org/Activities/2010051135255189/Sustainability-reporting-standards",
-      impactPME: "Les PME peuvent utiliser les ESRS simplifi\xE9s (ESRS VSME) publi\xE9s par l'EFRAG.",
-      tags: ["ESRS", "normes", "reporting", "CSRD"]
-    },
-    {
-      id: "taxonomy",
-      code: "Taxonomie UE",
-      titre: "R\xE8glement Taxonomie Verte Europ\xE9enne",
-      type: "R\xE8glement europ\xE9en",
-      categorie: "Finance durable",
-      domaine: "Environnement",
-      date: "2020-06-18",
-      entreeVigueur: "2022-01-01",
-      origine: "UE",
-      statut: "En vigueur",
-      seuils: "Entreprises >500 salari\xE9s soumises \xE0 la NFRD/CSRD + \xE9tablissements financiers.",
-      resume: "Syst\xE8me de classification des activit\xE9s \xE9conomiques durables. D\xE9finit quelles activit\xE9s sont consid\xE9r\xE9es comme 'vertes' selon 6 objectifs environnementaux.",
-      obligationsCl\u00E9s: ["Divulgation du % de CA align\xE9 taxonomie", "Divulgation du % de CapEx align\xE9 taxonomie", "Divulgation du % d'OpEx align\xE9 taxonomie", "Principe DNSH (Do No Significant Harm)", "Garanties sociales minimales"],
-      sanctions: "Via la CSRD et la SFDR.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32020R0852",
-      impactPME: "Indirect \u2014 vos clients/investisseurs peuvent vous demander vos donn\xE9es de conformit\xE9 taxonomique.",
-      tags: ["taxonomie", "finance verte", "investissement", "EU"]
-    },
-    {
-      id: "sfdr",
-      code: "SFDR",
-      titre: "Sustainable Finance Disclosure Regulation",
-      type: "R\xE8glement europ\xE9en",
-      categorie: "Finance durable",
-      domaine: "Gouvernance",
-      date: "2019-11-27",
-      entreeVigueur: "2021-03-10",
-      origine: "UE",
-      statut: "En vigueur",
-      seuils: "Gestionnaires d'actifs, assureurs, fonds de pension, conseillers financiers.",
-      resume: "Oblige les acteurs des march\xE9s financiers \xE0 divulguer comment ils int\xE8grent les risques de durabilit\xE9 dans leurs d\xE9cisions d'investissement.",
-      obligationsCl\u00E9s: ["Divulgation des risques de durabilit\xE9", "Classification des produits (Article 6, 8 ou 9)", "Indicateurs d'impact n\xE9gatif (PAI)", "Rapport annuel sur l'atteinte des objectifs durables"],
-      sanctions: "Sanctions nationales variables.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32019R2088",
-      impactPME: "Indirect \u2014 vos investisseurs ou partenaires financiers sont soumis \xE0 la SFDR et peuvent vous demander des donn\xE9es ESG.",
-      tags: ["finance", "investissement", "disclosure", "actifs"]
-    },
-    {
-      id: "csddd",
-      code: "CS3D / CSDDD",
-      titre: "Corporate Sustainability Due Diligence Directive",
-      type: "Directive europ\xE9enne",
-      categorie: "Diligence raisonnable",
-      domaine: "Transversal",
-      date: "2024-07-13",
-      entreeVigueur: "2027-07-26",
-      origine: "UE",
-      statut: "Transposition en cours",
-      seuils: "Phase 1 (2027): Entreprises >5000 sal. et >1,5 Md\u20AC CA. Phase 2 (2028): >3000 sal. et >900M\u20AC. Phase 3 (2029): >1000 sal. et >450M\u20AC.",
-      resume: "\xC9tend le devoir de vigilance \xE0 l'ensemble de la cha\xEEne de valeur mondiale. Les entreprises doivent identifier, pr\xE9venir et rem\xE9dier aux impacts n\xE9gatifs sur les droits humains et l'environnement.",
-      obligationsCl\u00E9s: ["Cartographie des risques droits humains et environnement", "Plan de vigilance et mesures pr\xE9ventives", "M\xE9canisme de plainte accessible", "Rapport annuel publi\xE9", "Engagement actif avec les fournisseurs"],
-      sanctions: "Responsabilit\xE9 civile + amendes jusqu'\xE0 5% du CA mondial.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:L_202401760",
-      impactPME: "Les PME fournisseurs de grandes entreprises soumises devront fournir des donn\xE9es sur leurs pratiques sociales et environnementales.",
-      tags: ["vigilance", "droits humains", "cha\xEEne valeur", "2027"]
-    },
-    {
-      id: "cbam",
-      code: "CBAM",
-      titre: "M\xE9canisme d'Ajustement Carbone aux Fronti\xE8res",
-      type: "R\xE8glement europ\xE9en",
-      categorie: "Carbone",
-      domaine: "Environnement",
-      date: "2023-05-10",
-      entreeVigueur: "2026-01-01",
-      origine: "UE",
-      statut: "Phase transitoire",
-      seuils: "Importateurs de ciment, acier, aluminium, engrais, \xE9lectricit\xE9, hydrog\xE8ne.",
-      resume: "Taxe carbone sur les importations de certains produits en provenance de pays tiers \xE0 faible tarification carbone, pour \xE9viter les fuites de carbone.",
-      obligationsCl\u00E9s: ["D\xE9claration des \xE9missions incorpor\xE9es", "Achat de certificats CBAM", "Rapport trimestriel (phase transitoire jusqu'au 31/12/2025)"],
-      sanctions: "P\xE9nalit\xE9s de 100 \u20AC par tonne de CO\u2082 non d\xE9clar\xE9e.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32023R0956",
-      impactPME: "Impacte les PME importatrices des secteurs concern\xE9s.",
-      tags: ["carbone", "importation", "taxe", "fronti\xE8res"]
-    },
-    {
-      id: "ets",
-      code: "EU ETS",
-      titre: "Syst\xE8me d'\xC9change de Quotas d'\xC9missions (EU ETS)",
-      type: "Directive europ\xE9enne",
-      categorie: "Carbone",
-      domaine: "Environnement",
-      date: "2003-10-13",
-      entreeVigueur: "2005-01-01",
-      origine: "UE",
-      statut: "En vigueur (Phase 4)",
-      seuils: "Installations industrielles et de production d'\xE9nergie >20 MW thermiques. Extension aux PME dans certains secteurs via ETS 2 (\xE0 partir de 2027).",
-      resume: "March\xE9 du carbone europ\xE9en : les entreprises doivent acheter des quotas pour couvrir leurs \xE9missions de CO\u2082. Prix carbone indicatif : ~60-70 \u20AC/tCO\u2082.",
-      obligationsCl\u00E9s: ["Surveillance des \xE9missions", "Rapport annuel v\xE9rifi\xE9", "Restitution des quotas", "Enregistrement EUTL"],
-      sanctions: "100 \u20AC par tonne de CO\u2082 exc\xE9dentaire + publication.",
-      lienOfficiel: "https://climate.ec.europa.eu/eu-action/eu-emissions-trading-system-eu-ets_fr",
-      impactPME: "Indirect pour la plupart. ETS 2 \xE9largira le p\xE9rim\xE8tre aux b\xE2timents et transports d\xE8s 2027.",
-      tags: ["carbone", "quotas", "\xE9missions", "march\xE9"]
-    },
-    {
-      id: "deforestation",
-      code: "EUDR",
-      titre: "R\xE8glement europ\xE9en sur la d\xE9forestation",
-      type: "R\xE8glement europ\xE9en",
-      categorie: "Biodiversit\xE9",
-      domaine: "Environnement",
-      date: "2023-06-29",
-      entreeVigueur: "2025-01-01",
-      origine: "UE",
-      statut: "En vigueur",
-      seuils: "Op\xE9rateurs et commer\xE7ants de bovins, cacao, caf\xE9, huile de palme, soja, bois, caoutchouc et produits d\xE9riv\xE9s.",
-      resume: "Interdit la mise sur le march\xE9 de l'UE de produits issus de d\xE9forestation ou de d\xE9gradation foresti\xE8re apr\xE8s le 31 d\xE9cembre 2020.",
-      obligationsCl\u00E9s: ["G\xE9olocalisation des parcelles de production", "Diligence raisonn\xE9e document\xE9e", "D\xE9claration de conformit\xE9", "Tra\xE7abilit\xE9 de la cha\xEEne d'approvisionnement"],
-      sanctions: "Amendes \u2265 4% du CA annuel + confiscation des produits.",
-      lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32023R1115",
-      impactPME: "Impacte les PME des fili\xE8res agro-alimentaires, bois et caoutchouc.",
-      tags: ["d\xE9forestation", "biodiversit\xE9", "cha\xEEne approvisionnement", "soja"]
-    },
-    // ─── FRENCH ───────────────────────────────────────────────────────────────
-    {
-      id: "grenelle2",
-      code: "Grenelle II",
-      titre: "Loi Grenelle II \u2014 Art. 225",
-      type: "Loi fran\xE7aise",
-      categorie: "Reporting",
-      domaine: "Transversal",
-      date: "2010-07-12",
-      entreeVigueur: "2012-12-31",
-      origine: "France",
-      statut: "En vigueur (remplac\xE9e par CSRD pour les grandes entreprises)",
-      seuils: "Soci\xE9t\xE9s cot\xE9es et non cot\xE9es >500 salari\xE9s et >100M\u20AC CA (ou total bilan).",
-      resume: "Obligation de publication d'informations sociales, environnementales et soci\xE9tales dans le rapport de gestion. Pr\xE9curseur de la CSRD en France.",
-      obligationsCl\u00E9s: ["Informations sociales (emploi, organisation, relations sociales, sant\xE9/s\xE9curit\xE9)", "Informations environnementales (\xE9nergie, eau, biodiversit\xE9, GES)", "Informations soci\xE9tales (impact territorial, relations avec parties prenantes)", "V\xE9rification par organisme tiers ind\xE9pendant (OTI)"],
-      sanctions: "Nullit\xE9 du rapport de gestion si informations manquantes. Engagement de responsabilit\xE9 des dirigeants.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000022470434",
-      impactPME: "Applicable aux PME d\xE9passant les seuils. Remplac\xE9e progressivement par la CSRD.",
-      tags: ["reporting", "RSE", "OTI", "article 225"]
-    },
-    {
-      id: "dpef",
-      code: "DPEF",
-      titre: "D\xE9claration de Performance Extra-Financi\xE8re",
-      type: "D\xE9cret fran\xE7ais",
-      categorie: "Reporting",
-      domaine: "Transversal",
-      date: "2017-08-19",
-      entreeVigueur: "2018-01-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "SA et SCA cot\xE9es >500 sal. et >40M\u20AC CA. Non cot\xE9es >500 sal. et >100M\u20AC CA.",
-      resume: "Transposition de la directive NFRD. Remplace le rapport RSE article 225. Rapport int\xE9gr\xE9 sur les risques et opportunit\xE9s ESG mat\xE9riels.",
-      obligationsCl\u00E9s: ["Mod\xE8le d'affaires d\xE9crit", "Risques ESG mat\xE9riels identifi\xE9s", "Politiques et r\xE9sultats pour chaque risque", "Indicateurs de performance cl\xE9s", "OTI obligatoire"],
-      sanctions: "Amende jusqu'\xE0 75 000 \u20AC (L.225-102-1 C.com).",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000035562457",
-      impactPME: "PME hors seuils non soumises, mais bonnes pratiques recommand\xE9es.",
-      tags: ["DPEF", "NFRD", "rapport", "extra-financier"]
-    },
-    {
-      id: "vigilance",
-      code: "Loi Vigilance",
-      titre: "Loi sur le Devoir de Vigilance des Soci\xE9t\xE9s M\xE8res",
-      type: "Loi fran\xE7aise",
-      categorie: "Diligence raisonnable",
-      domaine: "Social",
-      date: "2017-03-27",
-      entreeVigueur: "2018-03-27",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Soci\xE9t\xE9s fran\xE7aises >5000 salari\xE9s en France ou >10 000 salari\xE9s dans le monde.",
-      resume: "Premi\xE8re loi mondiale sur le devoir de vigilance. Oblige les multinationales \xE0 \xE9tablir et mettre en \u0153uvre un plan de vigilance couvrant leurs filiales et sous-traitants.",
-      obligationsCl\u00E9s: ["Cartographie des risques droits humains, sant\xE9/s\xE9curit\xE9, environnement", "Plan de vigilance publi\xE9 dans le rapport annuel", "Dispositif d'alerte et de recueil des signalements", "Dispositif de suivi des mesures", "Proc\xE9dure d'\xE9valuation des filiales et sous-traitants"],
-      sanctions: "Mise en demeure + responsabilit\xE9 civile en cas de pr\xE9judice li\xE9 \xE0 un manquement.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000034290626",
-      impactPME: "PME sous-traitantes de grandes entreprises concern\xE9es devront fournir des donn\xE9es.",
-      tags: ["vigilance", "droits humains", "filiales", "sous-traitants"]
-    },
-    {
-      id: "pacte",
-      code: "Loi PACTE",
-      titre: "Plan d'Action pour la Croissance et la Transformation des Entreprises",
-      type: "Loi fran\xE7aise",
-      categorie: "Gouvernance",
-      domaine: "Gouvernance",
-      date: "2019-05-22",
-      entreeVigueur: "2019-05-23",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Toutes les soci\xE9t\xE9s. Raison d'\xEAtre : optionnel. Soci\xE9t\xE9 \xE0 mission : optionnel.",
-      resume: "R\xE9forme profonde du droit des soci\xE9t\xE9s. Introduit la notion de raison d'\xEAtre, la soci\xE9t\xE9 \xE0 mission et renforce la prise en compte des enjeux sociaux et environnementaux.",
-      obligationsCl\u00E9s: ["Toute soci\xE9t\xE9 doit g\xE9rer son activit\xE9 en tenant compte des enjeux sociaux et environnementaux (art. 1833 CC)", "Possibilit\xE9 d'inscrire une raison d'\xEAtre dans les statuts", "Statut de soci\xE9t\xE9 \xE0 mission avec comit\xE9 de mission", "Indexation des primes des dirigeants sur des crit\xE8res RSE (optionnel)"],
-      sanctions: "Responsabilit\xE9 des dirigeants en cas de violation de l'int\xE9r\xEAt social \xE9largi.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000038496102",
-      impactPME: "Toutes les soci\xE9t\xE9s sont concern\xE9es. La raison d'\xEAtre et la soci\xE9t\xE9 \xE0 mission sont accessibles aux PME.",
-      tags: ["raison d'\xEAtre", "mission", "gouvernance", "RSE", "PACTE"]
-    },
-    {
-      id: "sapin2",
-      code: "Sapin II",
-      titre: "Loi Sapin II \u2014 Anti-Corruption et Transparence",
-      type: "Loi fran\xE7aise",
-      categorie: "Gouvernance",
-      domaine: "Gouvernance",
-      date: "2016-12-09",
-      entreeVigueur: "2017-06-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Entreprises >500 salari\xE9s et >100M\u20AC CA (programme anti-corruption). Dispositif d'alerte : >50 salari\xE9s.",
-      resume: "Renforce la lutte contre la corruption et la transparence. Cr\xE9e la Haute Autorit\xE9 pour la Transparence de la Vie Publique (HATVP) et l'Agence Fran\xE7aise Anticorruption (AFA).",
-      obligationsCl\u00E9s: ["Programme de pr\xE9vention de la corruption (8 piliers AFA)", "Code de conduite anticorruption", "Dispositif d'alerte interne (whistleblower) \u2014 prot\xE8ge les lanceurs d'alerte", "Formation des salari\xE9s expos\xE9s", "Cartographie des risques de corruption", "Proc\xE9dures comptables de contr\xF4le", "Dispositif de contr\xF4le et d'\xE9valuation des mesures"],
-      sanctions: "Amendes : jusqu'\xE0 200 000 \u20AC pour les personnes physiques, 1 000 000 \u20AC pour les personnes morales + injonction de mise en conformit\xE9.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000033558528",
-      impactPME: "Dispositif d'alerte obligatoire d\xE8s 50 salari\xE9s. Programme anti-corruption d\xE8s 500 sal.",
-      tags: ["anticorruption", "whistleblower", "AFA", "transparence", "alerte"]
-    },
-    {
-      id: "agec",
-      code: "Loi AGEC",
-      titre: "Loi Anti-Gaspillage pour une \xC9conomie Circulaire",
-      type: "Loi fran\xE7aise",
-      categorie: "\xC9conomie circulaire",
-      domaine: "Environnement",
-      date: "2020-02-10",
-      entreeVigueur: "2020-02-10",
-      origine: "France",
-      statut: "En vigueur (d\xE9ploiement progressif)",
-      seuils: "Variable selon les mesures : producteurs, distributeurs, entreprises de restauration, collectivit\xE9s.",
-      resume: "Vise \xE0 transformer notre mod\xE8le de production et de consommation. Interdit certains plastiques \xE0 usage unique, cr\xE9e l'indice de r\xE9parabilit\xE9, \xE9tend les fili\xE8res REP.",
-      obligationsCl\u00E9s: ["Interdiction plastiques usage unique (progressif)", "Indice de r\xE9parabilit\xE9 sur certains produits \xE9lectriques", "Extension des fili\xE8res REP (Responsabilit\xE9 \xC9largie des Producteurs)", "Objectif z\xE9ro artificialisation nette", "Information consommateurs sur les qualit\xE9s environnementales", "Lutte contre l'obsolescence programm\xE9e"],
-      sanctions: "Amendes variables selon infractions. Amende jusqu'\xE0 3 000 \u20AC pour non-affichage de l'indice de r\xE9parabilit\xE9.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000041553759",
-      impactPME: "Impacte les PME industrielles, distributeurs et restaurateurs. Fili\xE8res REP \xE0 surveiller.",
-      tags: ["plastique", "REP", "r\xE9parabilit\xE9", "\xE9conomie circulaire"]
-    },
-    {
-      id: "climatresilience",
-      code: "Loi Climat",
-      titre: "Loi Climat et R\xE9silience",
-      type: "Loi fran\xE7aise",
-      categorie: "Environnement",
-      domaine: "Environnement",
-      date: "2021-08-22",
-      entreeVigueur: "2021-08-24",
-      origine: "France",
-      statut: "En vigueur (d\xE9ploiement progressif)",
-      seuils: "Variable selon les mesures.",
-      resume: "Traduit une partie des 149 propositions de la Convention Citoyenne pour le Climat. Couvre la consommation, la production, les transports, le logement et l'alimentation.",
-      obligationsCl\u00E9s: ["Bilan de GES obligatoire \xE9tendu (seuils abaiss\xE9s)", "DPE opposable + r\xE9novation \xE9nerg\xE9tique obligatoire", "Interdiction publicit\xE9 pour \xE9nergies fossiles", "Formation des managers aux enjeux climatiques", "Plan de mobilit\xE9 employeur renforc\xE9", "Crit\xE8res environnementaux dans les march\xE9s publics"],
-      sanctions: "Variables selon les infractions. Amende jusqu'\xE0 30 000 \u20AC pour DPE frauduleux.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000043956924",
-      impactPME: "Bilan de GES \xE9tendu aux entreprises >50 sal. Plan de mobilit\xE9 d\xE8s 50 sal. sur un m\xEAme site.",
-      tags: ["climat", "GES", "mobilit\xE9", "r\xE9novation", "DPE"]
-    },
-    {
-      id: "beges",
-      code: "BEGES",
-      titre: "Bilan des \xC9missions de Gaz \xE0 Effet de Serre",
-      type: "D\xE9cret fran\xE7ais",
-      categorie: "Carbone",
-      domaine: "Environnement",
-      date: "2011-07-11",
-      entreeVigueur: "2012-01-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Personnes morales de droit priv\xE9 >500 salari\xE9s en m\xE9tropole (>250 DROM). Collectivit\xE9s >50 000 habitants. Services de l'\xC9tat.",
-      resume: "Obligation de r\xE9aliser un bilan des \xE9missions de GES (Scope 1 et 2 obligatoires, Scope 3 recommand\xE9) tous les 4 ans et d'\xE9laborer un plan de transition.",
-      obligationsCl\u00E9s: ["Bilan Scope 1 (\xE9missions directes)", "Bilan Scope 2 (\xE9nergie achet\xE9e)", "Plan de transition (depuis loi Climat 2021)", "Publication sur la plateforme BEGES de l'ADEME", "Mise \xE0 jour tous les 4 ans"],
-      sanctions: "Amende administrative jusqu'\xE0 10 000 \u20AC (+ 20 000 \u20AC si r\xE9cidive) en cas d'absence de publication.",
-      lienOfficiel: "https://www.ecologie.gouv.fr/bilan-des-emissions-gaz-effet-serre",
-      impactPME: "PME <500 sal. non soumises l\xE9galement mais vivement encourag\xE9es via label Bilan Carbone.",
-      tags: ["GES", "carbone", "bilan", "scope", "ADEME"]
-    },
-    {
-      id: "indexegalite",
-      code: "Index \xC9galit\xE9",
-      titre: "Index de l'\xC9galit\xE9 Professionnelle Femmes-Hommes",
-      type: "Loi fran\xE7aise",
-      categorie: "\xC9galit\xE9",
-      domaine: "Social",
-      date: "2018-09-05",
-      entreeVigueur: "2019-03-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Toutes entreprises >50 salari\xE9s.",
-      resume: "Note sur 100 calcul\xE9e \xE0 partir de 5 indicateurs mesurant les in\xE9galit\xE9s entre femmes et hommes. Publication obligatoire avant le 1er mars de chaque ann\xE9e.",
-      obligationsCl\u00E9s: ["Calcul de l'index (5 indicateurs)", "Publication sur le site internet de l'entreprise", "Transmission \xE0 l'inspection du travail via DeclarationIndex.travail.gouv.fr", "Plan d'action correctif si note <75/100", "Objectifs de progression si note <75/100"],
-      sanctions: "P\xE9nalit\xE9 financi\xE8re jusqu'\xE0 1% de la masse salariale si aucune mesure corrective apr\xE8s 3 ans sous 75 points.",
-      lienOfficiel: "https://www.index-egapro.travail.gouv.fr",
-      impactPME: "Obligatoire d\xE8s 50 salari\xE9s. Calcul simplifi\xE9 pour 50-250 sal. (3 indicateurs au lieu de 5).",
-      tags: ["\xE9galit\xE9", "femmes", "hommes", "index", "r\xE9mun\xE9ration"]
-    },
-    {
-      id: "oeth",
-      code: "OETH",
-      titre: "Obligation d'Emploi des Travailleurs Handicap\xE9s",
-      type: "Loi fran\xE7aise",
-      categorie: "Handicap",
-      domaine: "Social",
-      date: "1987-07-10",
-      entreeVigueur: "2020-01-01",
-      origine: "France",
-      statut: "En vigueur (r\xE9forme 2018)",
-      seuils: "Entreprises \u226520 salari\xE9s.",
-      resume: "Oblige les employeurs \xE0 employer des travailleurs handicap\xE9s \xE0 hauteur de 6% de l'effectif total. D\xE9claration mensuelle via la DSN depuis 2020.",
-      obligationsCl\u00E9s: ["Taux d'emploi direct BOETH de 6%", "D\xE9claration mensuelle via DSN", "Contribution URSSAF si taux insuffisant", "Accord agr\xE9\xE9 de branche ou d'entreprise possible", "Recours aux ESAT et EA valorisable"],
-      sanctions: "Contribution \xE0 l'URSSAF calcul\xE9e selon l'\xE9cart au taux de 6%. Peut atteindre plusieurs dizaines de milliers d'euros par an.",
-      lienOfficiel: "https://www.agefiph.fr/entreprises/obligation-demploi",
-      impactPME: "Toutes les PME \u226520 salari\xE9s. Contribution mensuelle via DSN depuis jan. 2020.",
-      tags: ["handicap", "BOETH", "AGEFIPH", "emploi", "6%"]
-    },
-    {
-      id: "dpe",
-      code: "DPE",
-      titre: "Diagnostic de Performance \xC9nerg\xE9tique \u2014 R\xE9forme 2021",
-      type: "R\xE9glementation fran\xE7aise",
-      categorie: "\xC9nergie",
-      domaine: "Environnement",
-      date: "2021-07-01",
-      entreeVigueur: "2021-07-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Toutes transactions immobili\xE8res (vente, location). Locaux tertiaires >1000 m\xB2 : D\xE9cret Tertiaire.",
-      resume: "Refonte compl\xE8te du DPE. D\xE9sormais opposable juridiquement. \xC9tiquettes A \xE0 G. Calendrier d'interdiction de location des passoires thermiques (F et G progressivement).",
-      obligationsCl\u00E9s: ["DPE opposable et fiable (nouvelle m\xE9thode 3CL)", "Audit \xE9nerg\xE9tique obligatoire pour les logements F et G mis en vente", "Interdiction de location : G d\xE8s 2025, F d\xE8s 2028, E d\xE8s 2034", "D\xE9cret Tertiaire (\xC9co-\xE9nergie tertiaire) : -40% conso. en 2030 pour tertiaire >1000m\xB2"],
-      sanctions: "Amende jusqu'\xE0 3 000 \u20AC pour DPE frauduleux. Interdiction l\xE9gale de louer les passoires thermiques.",
-      lienOfficiel: "https://www.ecologie.gouv.fr/diagnostic-performance-energetique-dpe",
-      impactPME: "PME locataires/propri\xE9taires de bureaux et locaux concern\xE9es par le D\xE9cret Tertiaire et le DPE.",
-      tags: ["\xE9nergie", "DPE", "tertiaire", "r\xE9novation", "passoire"]
-    },
-    {
-      id: "mobilite",
-      code: "Plan mobilit\xE9",
-      titre: "Plan de Mobilit\xE9 Employeur",
-      type: "R\xE9glementation fran\xE7aise",
-      categorie: "Mobilit\xE9",
-      domaine: "Environnement",
-      date: "2021-08-22",
-      entreeVigueur: "2023-09-01",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Entreprises \u226550 salari\xE9s sur un m\xEAme site.",
-      resume: "Oblige les entreprises \xE0 \xE9tablir un plan de mobilit\xE9 pour r\xE9duire les \xE9missions li\xE9es aux d\xE9placements domicile-travail. Inclut le forfait mobilit\xE9s durables.",
-      obligationsCl\u00E9s: ["Diagnostic des d\xE9placements domicile-travail et professionnels", "Plan d'actions avec objectifs chiffr\xE9s", "Consultation du CSE", "Forfait mobilit\xE9s durables jusqu'\xE0 800\u20AC d\xE9fiscalis\xE9 par an", "Prise en charge transport en commun \xE9tendue"],
-      sanctions: "Amendes via le Code des Transports si non-conformit\xE9 (proc\xE9dure encore en construction).",
-      lienOfficiel: "https://www.ecologie.gouv.fr/plan-mobilite-employeur",
-      impactPME: "D\xE8s 50 salari\xE9s. Le forfait mobilit\xE9s durables peut \xEAtre un avantage comp\xE9titif RH.",
-      tags: ["mobilit\xE9", "transports", "d\xE9placements", "forfait", "v\xE9lo"]
-    },
-    {
-      id: "grenelle1",
-      code: "Grenelle I",
-      titre: "Loi Grenelle I \u2014 Engagement National Environnement",
-      type: "Loi fran\xE7aise",
-      categorie: "Environnement",
-      domaine: "Environnement",
-      date: "2009-08-03",
-      entreeVigueur: "2009-08-05",
-      origine: "France",
-      statut: "En vigueur",
-      seuils: "Port\xE9e nationale \u2014 d\xE9finit les objectifs.",
-      resume: "Loi programmatique d\xE9finissant les objectifs fran\xE7ais en mati\xE8re d'\xE9nergie, biodiversit\xE9, d\xE9chets et gouvernance \xE9cologique. Socle des politiques environnementales fran\xE7aises.",
-      obligationsCl\u00E9s: ["Objectif 23% d'\xE9nergies renouvelables en 2020 (atteint)", "R\xE9duction de 38% des consommations d'\xE9nergie des b\xE2timents en 2020", "Trame Verte et Bleue pour la biodiversit\xE9", "Plan national de gestion des d\xE9chets"],
-      sanctions: "Loi programmatique \u2014 les sanctions sont dans les textes d'application.",
-      lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000020949548",
-      impactPME: "Texte de cadrage \u2014 impact via les r\xE9glementations d\xE9riv\xE9es.",
-      tags: ["programmatique", "\xE9nergie", "biodiversit\xE9", "objectifs"]
-    },
-    // ─── INTERNATIONAL STANDARDS ──────────────────────────────────────────────
-    {
-      id: "gri",
-      code: "GRI Standards",
-      titre: "Global Reporting Initiative Standards",
-      type: "Standard international volontaire",
-      categorie: "Reporting",
-      domaine: "Transversal",
-      date: "2021-10-05",
-      entreeVigueur: "2023-01-01",
-      origine: "International",
-      statut: "R\xE9f\xE9rence internationale",
-      seuils: "Volontaire \u2014 toute organisation quelle que soit sa taille.",
-      resume: "R\xE9f\xE9rentiel mondial le plus utilis\xE9 pour le reporting de durabilit\xE9. Les ESRS (CSRD) sont partiellement align\xE9s sur les GRI. Trois s\xE9ries : Universal Standards (GRI 1-3) + Th\xE9matiques.",
-      obligationsCl\u00E9s: ["GRI 1 : Fondements", "GRI 2 : Informations g\xE9n\xE9rales", "GRI 3 : Sujets mat\xE9riels", "GRI 200-300-400 : Standards \xE9conomiques, environnementaux, sociaux"],
-      sanctions: "Aucune \u2014 standard volontaire.",
-      lienOfficiel: "https://www.globalreporting.org/standards/",
-      impactPME: "R\xE9f\xE9rentiel id\xE9al pour les PME souhaitant structurer leur reporting ESG avant d'\xEAtre soumises \xE0 la CSRD.",
-      tags: ["GRI", "reporting", "international", "volontaire", "mat\xE9rialit\xE9"]
-    },
-    {
-      id: "issb",
-      code: "ISSB / IFRS S1-S2",
-      titre: "ISSB \u2014 Standards IFRS de Durabilit\xE9 (S1 & S2)",
-      type: "Standard international",
-      categorie: "Reporting",
-      domaine: "Transversal",
-      date: "2023-06-26",
-      entreeVigueur: "2024-01-01",
-      origine: "International",
-      statut: "En vigueur \u2014 adoption nationale variable",
-      seuils: "Standard global \u2014 adoption selon d\xE9cision nationale/boursi\xE8re.",
-      resume: "Deux normes publi\xE9es par l'ISSB : IFRS S1 (informations g\xE9n\xE9rales sur les risques et opportunit\xE9s de durabilit\xE9) et IFRS S2 (informations li\xE9es au changement climatique). Orient\xE9s investisseurs.",
-      obligationsCl\u00E9s: ["IFRS S1 : Risques et opportunit\xE9s de durabilit\xE9 mat\xE9riels", "IFRS S2 : Risques climatiques physiques et de transition", "Align\xE9 sur le TCFD", "Analyse de sc\xE9narios climatiques", "Empreinte carbone Scope 1, 2, 3"],
-      sanctions: "Selon r\xE9glementation nationale adoptant les normes.",
-      lienOfficiel: "https://www.ifrs.org/groups/international-sustainability-standards-board/",
-      impactPME: "Les ESRS s'alignent sur l'ISSB \u2014 entreprises soumises CSRD couvriront partiellement l'ISSB.",
-      tags: ["ISSB", "IFRS", "investisseurs", "climatique", "S1", "S2"]
-    },
-    {
-      id: "tcfd",
-      code: "TCFD",
-      titre: "Task Force on Climate-related Financial Disclosures",
-      type: "Cadre de r\xE9f\xE9rence",
-      categorie: "Climat",
-      domaine: "Gouvernance",
-      date: "2017-06-29",
-      entreeVigueur: "2017-01-01",
-      origine: "International",
-      statut: "Int\xE9gr\xE9 dans ISSB S2 et ESRS E1",
-      seuils: "Recommandations volontaires \u2014 int\xE9gration dans CSRD/ISSB obligatoire.",
-      resume: "4 piliers : Gouvernance, Strat\xE9gie, Gestion des risques, M\xE9triques et cibles. Cadre de r\xE9f\xE9rence mondial pour la divulgation des risques climatiques financiers.",
-      obligationsCl\u00E9s: ["Gouvernance des risques climatiques", "Sc\xE9narios climatiques <2\xB0C et 4\xB0C", "Risques physiques et de transition", "Empreinte carbone et objectifs de r\xE9duction", "Int\xE9gration dans la strat\xE9gie financi\xE8re"],
-      sanctions: "Aucune directement \u2014 int\xE9gr\xE9 dans des textes r\xE9glementaires contraignants.",
-      lienOfficiel: "https://www.fsb-tcfd.org",
-      impactPME: "Tr\xE8s utile pour pr\xE9parer les informations climatiques requises par la CSRD.",
-      tags: ["TCFD", "climat", "sc\xE9narios", "risques", "gouvernance"]
-    },
-    {
-      id: "iso14001",
-      code: "ISO 14001",
-      titre: "ISO 14001 \u2014 Syst\xE8me de Management Environnemental",
-      type: "Norme internationale",
-      categorie: "Management",
-      domaine: "Environnement",
-      date: "2015-09-15",
-      entreeVigueur: "2018-09-14",
-      origine: "International",
-      statut: "En vigueur (version 2015)",
-      seuils: "Volontaire \u2014 toute organisation.",
-      resume: "Sp\xE9cifie les exigences pour un syst\xE8me de management environnemental (SME). Aide les organisations \xE0 am\xE9liorer leurs performances environnementales de mani\xE8re continue.",
-      obligationsCl\u00E9s: ["Analyse du contexte et parties prenantes", "Politique environnementale document\xE9e", "Objectifs et plans d'action mesurables", "Revue de direction annuelle", "Audit interne", "Certification par tierce partie (optionnel)"],
-      sanctions: "Aucune \u2014 norme volontaire.",
-      lienOfficiel: "https://www.iso.org/fr/iso-14001-environmental-management.html",
-      impactPME: "Tr\xE8s accessible aux PME. Renforce la cr\xE9dibilit\xE9 ESG et facilite le reporting CSRD.",
-      tags: ["ISO", "management environnemental", "certification", "SME", "am\xE9lioration continue"]
-    },
-    {
-      id: "iso26000",
-      code: "ISO 26000",
-      titre: "ISO 26000 \u2014 Responsabilit\xE9 Soci\xE9tale",
-      type: "Norme internationale",
-      categorie: "RSE",
-      domaine: "Transversal",
-      date: "2010-11-01",
-      entreeVigueur: "2010-11-01",
-      origine: "International",
-      statut: "En vigueur (lignes directrices)",
-      seuils: "Lignes directrices \u2014 toute organisation.",
-      resume: "Lignes directrices (non certifiable) sur la responsabilit\xE9 soci\xE9tale. 7 questions centrales : gouvernance, droits de l'homme, relations et conditions de travail, environnement, loyaut\xE9 des pratiques, consommateurs, communaut\xE9s.",
-      obligationsCl\u00E9s: ["Gouvernance de l'organisation", "Droits de l'homme", "Relations et conditions de travail", "Environnement", "Loyaut\xE9 des pratiques", "Questions relatives aux consommateurs", "Communaut\xE9s et d\xE9veloppement local"],
-      sanctions: "Aucune \u2014 lignes directrices.",
-      lienOfficiel: "https://www.iso.org/fr/iso-26000-social-responsibility.html",
-      impactPME: "R\xE9f\xE9rentiel de structuration RSE id\xE9al pour les PME. Facilite la mise en place d'une politique RSE coh\xE9rente.",
-      tags: ["ISO 26000", "RSE", "responsabilit\xE9", "parties prenantes", "social"]
-    },
-    {
-      id: "ecovadis",
-      code: "EcoVadis",
-      titre: "EcoVadis \u2014 \xC9valuation RSE Fournisseurs",
-      type: "Standard d'\xE9valuation",
-      categorie: "Cha\xEEne de valeur",
-      domaine: "Transversal",
-      date: "2007-01-01",
-      entreeVigueur: "2007-01-01",
-      origine: "International",
-      statut: "R\xE9f\xE9rence march\xE9",
-      seuils: "Volontaire \u2014 demand\xE9 par les grands donneurs d'ordres.",
-      resume: "Plateforme d'\xE9valuation et notation RSE des entreprises dans leur cha\xEEne d'approvisionnement. Notation de 0 \xE0 100 sur 4 th\xE8mes : Environnement, Social/RH, \xC9thique, Achats responsables.",
-      obligationsCl\u00E9s: ["Questionnaire RSE document\xE9", "Politique environnementale", "Donn\xE9es sociales et RH", "Politique anticorruption", "Achats responsables"],
-      sanctions: "Aucune \u2014 \xE9valuation commerciale.",
-      lienOfficiel: "https://ecovadis.com/fr/",
-      impactPME: "De nombreuses grandes entreprises (Renault, L'Or\xE9al, Airbus\u2026) exigent une notation EcoVadis \xE0 leurs fournisseurs PME.",
-      tags: ["EcoVadis", "fournisseurs", "notation", "cha\xEEne approvisionnement"]
-    }
-  ];
-
-  // home/claude/ecoscore-v4.jsx
   var import_jsx_runtime = __toESM(require_jsx_runtime());
   var GF = "https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap";
   var C = {
@@ -13301,124 +12778,261 @@
   };
   var uid = () => Math.random().toString(36).slice(2, 9);
   var initials = (n) => (n || "").split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
-  var avatarColors = ["#1D3D2E", "#2D5A45", "#3D9A6E", "#0F766E", "#1D4ED8", "#7C3AED", "#BE185D", "#B45309"];
-  var avatarColor = (n) => avatarColors[(n || "").charCodeAt(0) % avatarColors.length];
+  var avatarPalette = ["#1D3D2E", "#2D5A45", "#3D9A6E", "#0F766E", "#1D4ED8", "#7C3AED", "#BE185D", "#B45309"];
+  var avatarColor = (n) => avatarPalette[(n || "").charCodeAt(0) % avatarPalette.length];
   var DEPTS = ["Direction", "Tech", "RH", "Op\xE9rations", "Commercial", "Finance", "Marketing", "Juridique"];
   var CONTRATS = ["CDI", "CDD", "Stage", "Alternance", "Freelance"];
+  var todayStr = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  var CSS = `
+@import url('${GF}');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:#F7F6F3;color:#18181B;font-size:14px}
+input,select,textarea{font-family:'Sora',sans-serif;font-size:14px;color:#18181B;background:#fff;border:1px solid #E4E4E7;border-radius:8px;padding:8px 12px;width:100%;outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:#3D9A6E;box-shadow:0 0 0 3px #EBF5EF}
+textarea{resize:vertical;min-height:80px}
+button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8px;font-size:13px;font-weight:500;transition:all .15s}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#E4E4E7;border-radius:99px}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+`;
+  var LEGISLATION = [
+    { id: "csrd", code: "CSRD", titre: "Corporate Sustainability Reporting Directive", type: "Directive UE", categorie: "Reporting", domaine: "Transversal", date: "2022-12-14", entreeVigueur: "2024-01-01", origine: "UE", statut: "En vigueur", seuils: "Grandes entreprises non cot\xE9es >500 sal. d\xE8s 2025. PME cot\xE9es >250 sal. ou >40M\u20AC CA \xE0 partir de 2026. PME non cot\xE9es : norme VSME volontaire.", resume: "Oblige les entreprises \xE0 publier un rapport de durabilit\xE9 standardis\xE9 selon les normes ESRS, int\xE9gr\xE9 au rapport de gestion et audit\xE9 par un tiers ind\xE9pendant.", obligationsCl\u00E9s: ["Rapport de durabilit\xE9 selon les 12 normes ESRS", "Double mat\xE9rialit\xE9 : impacts ET risques financiers", "Audit par un OTI (organisme tiers ind\xE9pendant)", "Int\xE9gration obligatoire dans le rapport de gestion", "Couverture de la cha\xEEne de valeur (Scope 3)", "Plan de transition climatique document\xE9"], articlesLoi: ["Art. 19a Directive 2013/34/UE modifi\xE9e par CSRD", "Art. 29a Directive 2013/34/UE \u2014 Rapport consolid\xE9", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2023/2772 \u2014 ESRS adopt\xE9s", "Consid\xE9rant 44 CSRD \u2014 Principe de double mat\xE9rialit\xE9", "Transposition France : ordonnance n\xB02023-1142 du 6 d\xE9c. 2023"], sanctions: "Amendes jusqu'\xE0 75 000 \u20AC et 5 ans d'emprisonnement (L. 225-102-1 Code de commerce). OTI non consult\xE9 : rapport nul.", lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022L2464", impactPME: "Indirect imm\xE9diat : vos donneurs d'ordres soumis CSRD doivent collecter vos donn\xE9es ESG. Direct : PME cot\xE9es d\xE8s 2026.", tags: ["CSRD", "reporting", "ESRS", "durabilit\xE9", "obligatoire"] },
+    { id: "dpef", code: "DPEF", titre: "D\xE9claration de Performance Extra-Financi\xE8re", type: "Loi fran\xE7aise", categorie: "Reporting", domaine: "Transversal", date: "2017-08-19", entreeVigueur: "2018-01-01", origine: "France", statut: "En vigueur", seuils: "SA/SCA cot\xE9es >500 sal. et >40M\u20AC CA. Non cot\xE9es >500 sal. et >100M\u20AC CA.", resume: "Transposition NFRD. Rapport int\xE9gr\xE9 sur les risques ESG mat\xE9riels, politiques et r\xE9sultats. Audit OTI obligatoire. Remplac\xE9e progressivement par la CSRD.", obligationsCl\u00E9s: ["Description du mod\xE8le d'affaires", "Identification et gestion des risques ESG mat\xE9riels", "Politiques mises en \u0153uvre et indicateurs de r\xE9sultats", "V\xE9rification par OTI accr\xE9dit\xE9 COFRAC", "Informations sociales : emploi, organisation, sant\xE9/s\xE9curit\xE9", "Informations environnementales : \xE9nergie, eau, GES, biodiversit\xE9", "Informations soci\xE9tales : fournisseurs, droits fondamentaux"], articlesLoi: ["Art. L. 225-102-1 Code de commerce", "Art. R. 225-104 \xE0 R. 225-105-2 Code de commerce", "D\xE9cret n\xB02017-1265 du 9 ao\xFBt 2017", "Arr\xEAt\xE9 du 7 mai 2019 \u2014 Modalit\xE9s d'intervention OTI"], sanctions: "Amende jusqu'\xE0 75 000 \u20AC (L. 225-102-1 C.com). Nullit\xE9 possible du rapport de gestion.", lienOfficiel: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038792989", impactPME: "PME hors seuils non soumises. Bonnes pratiques recommand\xE9es pour anticiper la CSRD.", tags: ["DPEF", "rapport", "extra-financier", "OTI", "NFRD"] },
+    { id: "pacte", code: "Loi PACTE", titre: "Loi PACTE \u2014 Raison d'\xEAtre & Soci\xE9t\xE9 \xE0 Mission", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Gouvernance", date: "2019-05-22", entreeVigueur: "2019-05-23", origine: "France", statut: "En vigueur", seuils: "Art. 1833 CC modifi\xE9 : toutes soci\xE9t\xE9s. Raison d'\xEAtre et soci\xE9t\xE9 \xE0 mission : optionnel pour toutes tailles.", resume: "R\xE9forme profonde du droit des soci\xE9t\xE9s. Toute soci\xE9t\xE9 doit g\xE9rer son activit\xE9 en tenant compte des enjeux sociaux et environnementaux. Cr\xE9e la soci\xE9t\xE9 \xE0 mission.", obligationsCl\u00E9s: ["Art. 1833 CC : gestion dans l'int\xE9r\xEAt social incluant enjeux sociaux et environnementaux (TOUTES soci\xE9t\xE9s)", "Art. 1835 CC : possibilit\xE9 d'inscrire une raison d'\xEAtre dans les statuts", "Statut de soci\xE9t\xE9 \xE0 mission : objet \xE9tendu + comit\xE9 de mission + OTI", "Rapport annuel du comit\xE9 de mission (si soci\xE9t\xE9 \xE0 mission)", "Possibilit\xE9 d'indexer les r\xE9mun\xE9rations dirigeants sur crit\xE8res RSE"], articlesLoi: ["Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi (modifi\xE9 Loi PACTE)", "Art. 1835 Code civil \u2014 Raison d'\xEAtre dans les statuts", "Art. L. 210-10 \xE0 L. 210-12 Code de commerce (soci\xE9t\xE9 \xE0 mission)", "Art. R. 210-21 \xE0 R. 210-24 Code de commerce", "D\xE9cret n\xB02020-1 du 2 janvier 2020 \u2014 soci\xE9t\xE9 \xE0 mission"], sanctions: "Responsabilit\xE9 des dirigeants si violation int\xE9r\xEAt social \xE9largi. Perte du statut de soci\xE9t\xE9 \xE0 mission si manquements.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000038496102", impactPME: "Applicable \xE0 TOUTES les PME via l'art. 1833 CC. Raison d'\xEAtre et soci\xE9t\xE9 \xE0 mission : outils de diff\xE9renciation accessibles.", tags: ["PACTE", "raison d'\xEAtre", "mission", "1833", "gouvernance", "RSE"] },
+    { id: "sapin2", code: "Loi Sapin II", titre: "Loi Sapin II \u2014 Anticorruption & Lanceurs d'Alerte", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Gouvernance", date: "2016-12-09", entreeVigueur: "2017-06-01", origine: "France", statut: "En vigueur", seuils: "Programme AFA : >500 sal. et >100M\u20AC CA. Dispositif d'alerte : \u226550 salari\xE9s (renforc\xE9 loi Waserman 2022).", resume: "Cr\xE9e l'AFA (Agence Fran\xE7aise Anticorruption). Programme obligatoire de pr\xE9vention en 8 piliers. Protection \xE9tendue des lanceurs d'alerte.", obligationsCl\u00E9s: ["Code de conduite anticorruption int\xE9gr\xE9 au r\xE8glement int\xE9rieur", "Dispositif d'alerte interne confidentiel (\u226550 sal.)", "Cartographie des risques de corruption", "Proc\xE9dures d'\xE9valuation des tiers (fournisseurs, interm\xE9diaires, clients)", "Formation des salari\xE9s expos\xE9s aux risques", "Dispositifs comptables de contr\xF4le interne", "R\xE9gime disciplinaire li\xE9 au code de conduite", "Contr\xF4le et \xE9valuation interne annuelle des mesures"], articlesLoi: ["Art. 17 Loi n\xB02016-1691 \u2014 Programme anticorruption AFA", "Art. 8 \xE0 16 Loi Sapin II \u2014 Lanceurs d'alerte (abrog\xE9s et remplac\xE9s)", "Loi n\xB02022-401 du 21 mars 2022 (Waserman) \u2014 Protection renforc\xE9e", "Art. L. 1132-3-3 Code du travail \u2014 Protection lanceur d'alerte", "Recommandations AFA 2021 r\xE9vis\xE9es \u2014 Guide pratique 8 piliers"], sanctions: "Amende 200 000 \u20AC (personne physique), 1 000 000 \u20AC (personne morale) + injonction de mise en conformit\xE9 AFA.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000033558528", impactPME: "Dispositif d'alerte obligatoire d\xE8s 50 sal. Programme AFA complet requis d\xE8s 500 sal. et 100M\u20AC CA.", tags: ["Sapin II", "anticorruption", "AFA", "whistleblower", "lanceur d'alerte"] },
+    { id: "vigilance", code: "Loi Vigilance", titre: "Devoir de Vigilance des Soci\xE9t\xE9s M\xE8res", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Social", date: "2017-03-27", entreeVigueur: "2018-03-27", origine: "France", statut: "En vigueur", seuils: "Soci\xE9t\xE9s fran\xE7aises >5 000 sal. en France ou >10 000 sal. dans le monde (si\xE8ge + filiales).", resume: "Premi\xE8re loi mondiale sur le devoir de vigilance. Obligation d'identifier et pr\xE9venir les risques droits humains, sant\xE9/s\xE9curit\xE9, environnement sur toute la cha\xEEne de valeur.", obligationsCl\u00E9s: ["Cartographie des risques droits fondamentaux, sant\xE9/s\xE9curit\xE9, environnement", "Plan de vigilance publi\xE9 dans le rapport annuel", "Proc\xE9dures d'\xE9valuation filiales, sous-traitants, fournisseurs", "Dispositif d'alerte et de recueil des signalements", "Suivi des mesures et \xE9valuation de leur efficacit\xE9", "Couverture : propres activit\xE9s + filiales + sous-traitants directs et indirects"], articlesLoi: ["Art. L. 225-102-4 Code de commerce \u2014 Plan de vigilance", "Art. L. 225-102-5 Code de commerce \u2014 Responsabilit\xE9 civile", "Loi n\xB02017-399 du 27 mars 2017", "R\xE9f\xE9rentiel BHREDD (Business and Human Rights Due Diligence)", "Rapport annuel : modalit\xE9s de publication"], sanctions: "Mise en demeure par toute personne int\xE9ress\xE9e. Responsabilit\xE9 civile r\xE9paratrice si pr\xE9judice caus\xE9 par manquement.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000034290626", impactPME: "PME sous-traitantes de grands groupes soumis doivent r\xE9pondre \xE0 leurs questionnaires ESG et plans de vigilance.", tags: ["vigilance", "droits humains", "filiales", "sous-traitants", "cha\xEEne valeur"] },
+    { id: "csddd", code: "CS3D / CSDDD", titre: "Corporate Sustainability Due Diligence Directive", type: "Directive UE", categorie: "Gouvernance", domaine: "Transversal", date: "2024-07-13", entreeVigueur: "2027-07-26", origine: "UE", statut: "Transposition en cours", seuils: "Phase 1 (2027) : >5 000 sal. et >1,5 Md\u20AC CA. Phase 2 (2028) : >3 000 sal. et >900M\u20AC. Phase 3 (2029) : >1 000 sal. et >450M\u20AC.", resume: "Version europ\xE9enne du devoir de vigilance. \xC9tend l'obligation \xE0 toute la cha\xEEne de valeur mondiale. Responsabilit\xE9 civile harmonis\xE9e.", obligationsCl\u00E9s: ["Cartographie des risques droits humains et environnement", "Plan de vigilance avec mesures pr\xE9ventives et correctives", "M\xE9canisme de plainte accessible", "Rapport annuel publi\xE9", "Engagement contractuel avec fournisseurs", "Plan de transition Accord de Paris"], articlesLoi: ["Directive UE 2024/1760 du 13 juillet 2024", "Art. 10 CSDDD \u2014 Plan de transition climatique", "Art. 22 CSDDD \u2014 Responsabilit\xE9 civile harmonis\xE9e", "Consid\xE9rant 30 CSDDD \u2014 D\xE9finition cha\xEEne de valeur"], sanctions: "Amendes \u22655% du CA mondial net. Publication des entreprises sanctionn\xE9es.", lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:L_202401760", impactPME: "Anticiper d\xE8s maintenant en structurant votre d\xE9marche ESG. Vos clients grands groupes seront soumis d\xE8s 2027.", tags: ["CSDDD", "vigilance", "droits humains", "2027", "responsabilit\xE9"] },
+    { id: "rgpd", code: "RGPD", titre: "R\xE8glement G\xE9n\xE9ral sur la Protection des Donn\xE9es", type: "R\xE8glement UE", categorie: "Gouvernance", domaine: "Gouvernance", date: "2016-04-27", entreeVigueur: "2018-05-25", origine: "UE", statut: "En vigueur", seuils: "Toute organisation traitant des donn\xE9es personnelles de r\xE9sidents UE, quelle que soit sa taille.", resume: "Cadre de protection des donn\xE9es personnelles. Droits des personnes, obligations des responsables de traitement, s\xE9curit\xE9 et notification des violations.", obligationsCl\u00E9s: ["Registre des activit\xE9s de traitement (art. 30) \u2014 obligatoire toute taille", "DPO si traitements \xE0 grande \xE9chelle ou de donn\xE9es sensibles", "Analyse d'impact (DPIA) pour traitements \xE0 risque \xE9lev\xE9", "Notification violations \xE0 la CNIL dans les 72h (art. 33)", "Consentement \xE9clair\xE9 et libre pour chaque finalit\xE9", "Contrats sous-traitants conformes art. 28", "S\xE9curit\xE9 : pseudonymisation, chiffrement, contr\xF4le d'acc\xE8s"], articlesLoi: ["Art. 5 RGPD \u2014 Principes de traitement licite", "Art. 7 RGPD \u2014 Conditions du consentement", "Art. 17 RGPD \u2014 Droit \xE0 l'effacement (droit \xE0 l'oubli)", "Art. 28 RGPD \u2014 Obligations du sous-traitant", "Art. 32 RGPD \u2014 S\xE9curit\xE9 du traitement", "Art. 33-34 RGPD \u2014 Notification de violation de donn\xE9es"], sanctions: "Jusqu'\xE0 20M\u20AC ou 4% du CA mondial. CNIL : mises en demeure, astreintes, amendes publi\xE9es.", lienOfficiel: "https://www.cnil.fr/fr/reglement-europeen-protection-donnees", impactPME: "Toutes PME. Registre de traitement obligatoire d\xE8s le 1er salari\xE9. Outil CNIL gratuit disponible.", tags: ["RGPD", "donn\xE9es personnelles", "CNIL", "DPO", "consentement", "cybers\xE9curit\xE9"] },
+    { id: "beges", code: "BEGES", titre: "Bilan des \xC9missions de Gaz \xE0 Effet de Serre", type: "D\xE9cret fran\xE7ais", categorie: "Carbone", domaine: "Environnement", date: "2011-07-11", entreeVigueur: "2012-01-01", origine: "France", statut: "En vigueur", seuils: "Personnes morales droit priv\xE9 >500 sal. m\xE9tropole (>250 DROM). Loi Climat 2021 : recommand\xE9 aux 50-499 sal. avec plan de transition.", resume: "Bilan GES obligatoire tous les 4 ans. Scope 1 et 2 obligatoires, Scope 3 recommand\xE9. Plan de transition obligatoire depuis 2021. Publication sur plateforme ADEME.", obligationsCl\u00E9s: ["Bilan Scope 1 : \xE9missions directes (combustibles, proc\xE9d\xE9s, fuites)", "Bilan Scope 2 : \xE9missions indirectes li\xE9es \xE0 l'\xE9nergie achet\xE9e", "Plan de transition associ\xE9 (obligatoire depuis Loi Climat 2021)", "Publication sur bilans-ges.ademe.fr dans les 6 mois", "Mise \xE0 jour tous les 4 ans", "Scope 3 recommand\xE9 : achats, transport, immobilisations, fin de vie"], articlesLoi: ["Art. L. 229-25 Code de l'environnement", "Art. R. 229-45 \xE0 R. 229-56 Code de l'environnement", "D\xE9cret n\xB02011-829 du 11 juillet 2011", "Art. 301-303 Loi Climat n\xB02021-1104 (plan de transition)", "Guide m\xE9thodologique ADEME Bilan GES v4 \u2014 2022"], sanctions: "Amende administrative jusqu'\xE0 10 000 \u20AC (+ 20 000 \u20AC si r\xE9cidive) en cas d'absence de publication.", lienOfficiel: "https://www.ecologie.gouv.fr/bilan-des-emissions-gaz-effet-serre", impactPME: "PME <500 sal. non soumises l\xE9galement mais fortement recommand\xE9 (appels d'offres publics, donneurs d'ordres CSRD).", tags: ["BEGES", "GES", "carbone", "Scope 1", "Scope 2", "Scope 3", "ADEME", "plan transition"] },
+    { id: "climatresilience", code: "Loi Climat", titre: "Loi Climat et R\xE9silience", type: "Loi fran\xE7aise", categorie: "Environnement", domaine: "Environnement", date: "2021-08-22", entreeVigueur: "2021-08-24", origine: "France", statut: "En vigueur (d\xE9ploiement progressif)", seuils: "Plan mobilit\xE9 : \u226550 sal./site. D\xE9cret tertiaire : b\xE2timents \u22651 000 m\xB2. Crit\xE8res env. march\xE9s publics : toutes tailles.", resume: "305 articles issus de la Convention Citoyenne pour le Climat. Consommation, production, transports, logement, alimentation, justice climatique.", obligationsCl\u00E9s: ["BEGES \xE9tendu aux 50-499 sal. (recommand\xE9 sans OTI)", "Plan de mobilit\xE9 employeur \u226550 sal. sur un m\xEAme site (avant 01/09/2023)", "Crit\xE8res environnementaux obligatoires dans les march\xE9s publics (21%)", "Formation des managers aux enjeux climatiques", "DPE opposable \u2014 calendrier interdiction location passoires thermiques", "Z\xE9ro artificialisation nette (ZAN) \u2014 objectif 2050"], articlesLoi: ["Art. 301-303 Loi Climat \u2014 BEGES PME et plan de transition", "Art. 82-84 Loi Climat \u2014 Plan de mobilit\xE9 employeur", "Art. 26 Loi Climat \u2014 Commande publique environnementale", "Art. 224-226 Loi Climat \u2014 Formation managers enjeux climatiques", "Art. 172 Loi Climat \u2014 DPE opposable et audit \xE9nerg\xE9tique", "Art. 191-199 Loi Climat \u2014 Z\xE9ro artificialisation nette"], sanctions: "DPE frauduleux : jusqu'\xE0 3 000 \u20AC. Plan mobilit\xE9 : injonction de mise en conformit\xE9.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000043956924", impactPME: "Plan mobilit\xE9 \u226550 sal. D\xE9cret tertiaire si locaux \u22651 000 m\xB2. March\xE9s publics : crit\xE8res env. valorisent toutes tailles.", tags: ["Loi Climat", "GES", "mobilit\xE9", "DPE", "ZAN", "b\xE2timent", "2030"] },
+    { id: "agec", code: "Loi AGEC", titre: "Loi Anti-Gaspillage pour une \xC9conomie Circulaire", type: "Loi fran\xE7aise", categorie: "\xC9conomie circulaire", domaine: "Environnement", date: "2020-02-10", entreeVigueur: "2020-02-10", origine: "France", statut: "En vigueur (d\xE9ploiement progressif)", seuils: "Variable selon les mesures. Indice r\xE9parabilit\xE9 : fabricants. REP : metteurs sur le march\xE9. Don alimentaire : GMS >400m\xB2.", resume: "Transformation vers le mod\xE8le circulaire : 5R (Refuser, R\xE9duire, R\xE9utiliser, Recycler, Rendre). Plastiques, indice r\xE9parabilit\xE9, fili\xE8res REP \xE9tendues.", obligationsCl\u00E9s: ["Interdiction plastiques \xE0 usage unique (progressif 2020-2025)", "Indice de r\xE9parabilit\xE9 et durabilit\xE9 sur produits \xE9lectriques", "Extension des fili\xE8res REP (emballages, textiles, papiers, jouets\u2026)", "Information obligatoire sur les qualit\xE9s environnementales des produits", "Interdiction destruction stocks neufs invendus", "Don alimentaire obligatoire grandes surfaces >400m\xB2"], articlesLoi: ["Art. L. 541-10 Code de l'environnement \u2014 REP et \xE9coconception", "Art. L. 541-1 Code de l'environnement \u2014 Hi\xE9rarchie 5R", "Art. 13 Loi AGEC \u2014 Indice de r\xE9parabilit\xE9 (L. 111-6 Code consommation)", "Art. 17 Loi AGEC \u2014 Information consommateurs qualit\xE9s env.", "Art. 24 Loi AGEC \u2014 Invendus non alimentaires interdits", "D\xE9cret n\xB02021-1342 \u2014 REP emballages m\xE9nagers"], sanctions: "Indice r\xE9parabilit\xE9 absent : amende jusqu'\xE0 3 000 \u20AC. REP : contributions + sanctions variables par fili\xE8re.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000041553759", impactPME: "Fabricants, distributeurs, restaurateurs concern\xE9s selon leur activit\xE9. V\xE9rifier les fili\xE8res REP applicables.", tags: ["AGEC", "REP", "plastique", "r\xE9parabilit\xE9", "\xE9conomie circulaire", "invendus"] },
+    { id: "decrettertiaire", code: "D\xE9cret Tertiaire", titre: "D\xE9cret \xC9co-\xC9nergie Tertiaire", type: "D\xE9cret fran\xE7ais", categorie: "\xC9nergie", domaine: "Environnement", date: "2019-07-23", entreeVigueur: "2021-09-30", origine: "France", statut: "En vigueur", seuils: "B\xE2timents ou parties \xE0 usage tertiaire \u22651 000 m\xB2 (bureaux, commerces, h\xF4tels, restauration collective\u2026).", resume: "Objectifs de r\xE9duction \xE9nerg\xE9tique vs. une ann\xE9e de r\xE9f\xE9rence : -40% en 2030, -50% en 2040, -60% en 2050. D\xE9claration annuelle sur OPERAT.", obligationsCl\u00E9s: ["D\xE9claration annuelle sur la plateforme OPERAT (ADEME)", "D\xE9finition d'une ann\xE9e de r\xE9f\xE9rence (2010-2019)", "Objectif -40% conso. \xE9nerg\xE9tique en 2030", "Objectif -50% en 2040, -60% en 2050", "Plan d'actions techniques et comportementales", "Rapport d'avancement transmis tous les 3 ans"], articlesLoi: ["Art. L. 174-1 Code de la construction et de l'habitation", "D\xE9cret n\xB02019-771 du 23 juillet 2019", "Arr\xEAt\xE9 du 10 avril 2020 \u2014 Valeurs absolues de consommation", "Arr\xEAt\xE9 du 24 novembre 2020 \u2014 Plateforme OPERAT", "Guide ADEME-DHUP 2022 \u2014 Application du d\xE9cret tertiaire"], sanctions: "Name and shame : liste publique des propri\xE9taires/occupants d\xE9faillants sur un site gouvernemental.", lienOfficiel: "https://operat.ademe.fr", impactPME: "PME propri\xE9taire ou locataire de locaux \u22651 000 m\xB2. Bureaux, commerces, restaurants d'entreprise concern\xE9s.", tags: ["D\xE9cret Tertiaire", "\xE9nergie", "OPERAT", "b\xE2timent", "tertiaire", "-40%", "2030"] },
+    { id: "indexegalite", code: "Index \xC9galit\xE9 F/H", titre: "Index de l'\xC9galit\xE9 Professionnelle F/H", type: "Loi fran\xE7aise", categorie: "\xC9galit\xE9", domaine: "Social", date: "2018-09-05", entreeVigueur: "2019-03-01", origine: "France", statut: "En vigueur", seuils: "Toutes entreprises \u226550 salari\xE9s. Publication obligatoire avant le 1er mars de chaque ann\xE9e.", resume: "Note sur 100 calcul\xE9e sur 4 ou 5 indicateurs. Mesure les in\xE9galit\xE9s de r\xE9mun\xE9ration et de carri\xE8re. Plan d'action correctif obligatoire si note <75.", obligationsCl\u00E9s: ["Indicateur 1 : \xC9cart de r\xE9mun\xE9ration (40 pts)", "Indicateur 2 : \xC9cart de taux d'augmentations (20 pts)", "Indicateur 3 : \xC9cart de taux de promotions (15 pts \u2014 \u2265250 sal.)", "Indicateur 4 : Augmentations au retour de cong\xE9 maternit\xE9 (15 pts)", "Indicateur 5 : Part des femmes dans les 10 plus hautes r\xE9mun\xE9rations (10 pts)", "Publication sur site internet avant le 1er mars chaque ann\xE9e", "Transmission inspection du travail via index.egapro.travail.gouv.fr", "Plan d'action correctif si note <75/100 \u2014 accord ou plan unilat\xE9ral si <85"], articlesLoi: ["Art. L. 1142-8 Code du travail \u2014 Obligation de mesure des \xE9carts", "Art. L. 1142-9 Code du travail \u2014 Mesures correctives", "Art. L. 1142-10 Code du travail \u2014 P\xE9nalit\xE9 financi\xE8re", "D\xE9cret n\xB02019-15 du 8 janvier 2019 \u2014 Modalit\xE9s de calcul", "D\xE9cret n\xB02022-243 du 25 f\xE9vrier 2022 \u2014 Renforcement obligations"], sanctions: "P\xE9nalit\xE9 jusqu'\xE0 1% de la masse salariale si note <75/100 pendant 3 ans cons\xE9cutifs sans mesures.", lienOfficiel: "https://www.index-egapro.travail.gouv.fr", impactPME: "Obligatoire d\xE8s 50 sal. Calcul simplifi\xE9 (3 indicateurs) pour 50-249 sal. Outil gratuit sur index.egapro.travail.gouv.fr.", tags: ["index \xE9galit\xE9", "femmes", "hommes", "r\xE9mun\xE9ration", "promotion", "egapro", "F/H"] },
+    { id: "oeth", code: "OETH", titre: "Obligation d'Emploi des Travailleurs Handicap\xE9s", type: "Loi fran\xE7aise", categorie: "Handicap", domaine: "Social", date: "1987-07-10", entreeVigueur: "2020-01-01", origine: "France", statut: "En vigueur (r\xE9forme 2019)", seuils: "Entreprises \u226520 salari\xE9s. D\xE9claration mensuelle via DSN depuis janvier 2020.", resume: "Taux d'emploi de 6% de BOETH obligatoire. D\xE9claration mensuelle int\xE9gr\xE9e \xE0 la DSN. Contribution URSSAF si taux insuffisant.", obligationsCl\u00E9s: ["Taux d'emploi direct BOETH de 6% de l'effectif", "D\xE9claration mensuelle int\xE9gr\xE9e \xE0 la DSN (depuis jan. 2020)", "Contribution calcul\xE9e et vers\xE9e \xE0 l'URSSAF trimestriellement", "Accord agr\xE9\xE9 de branche ou d'entreprise possible", "Recours aux ESAT et EA valorisable (limite tiers)", "RQTH \xE0 jour pour chaque BOETH reconnu"], articlesLoi: ["Art. L. 5212-1 \xE0 L. 5212-17 Code du travail \u2014 OETH", "Art. L. 5213-13 \xE0 L. 5213-16 Code du travail \u2014 ESAT et EA", "Art. R. 5212-1 \xE0 R. 5212-45 Code du travail \u2014 Modalit\xE9s", "Loi n\xB087-517 du 10 juillet 1987 \u2014 Cr\xE9ation OETH", "Loi n\xB02018-771 du 5 septembre 2018 \u2014 R\xE9forme OETH et DSN"], sanctions: "Contribution URSSAF trimestrielle proportionnelle \xE0 l'\xE9cart. Contribution major\xE9e si aucune action depuis 3 ans.", lienOfficiel: "https://www.agefiph.fr/entreprises/obligation-demploi", impactPME: "Toutes PME \u226520 sal. Contribution calcul\xE9e automatiquement via DSN. AGEFIPH : aides financi\xE8res \xE0 l'embauche.", tags: ["OETH", "handicap", "BOETH", "AGEFIPH", "6%", "RQTH", "DSN"] },
+    { id: "mobilite", code: "Plan Mobilit\xE9", titre: "Plan de Mobilit\xE9 Employeur (PDME)", type: "Loi fran\xE7aise", categorie: "Mobilit\xE9", domaine: "Environnement", date: "2021-08-22", entreeVigueur: "2023-09-01", origine: "France", statut: "En vigueur", seuils: "Entreprises \u226550 salari\xE9s sur un m\xEAme site.", resume: "Plan de mobilit\xE9 pour r\xE9duire les \xE9missions li\xE9es aux d\xE9placements domicile-travail. Forfait mobilit\xE9s durables jusqu'\xE0 800\u20AC d\xE9fiscalis\xE9/an.", obligationsCl\u00E9s: ["Diagnostic des d\xE9placements domicile-travail et professionnels", "Plan d'actions avec objectifs de r\xE9duction des \xE9missions", "Consultation du CSE avant adoption", "Forfait mobilit\xE9s durables (FMD) : jusqu'\xE0 800\u20AC/an d\xE9fiscalis\xE9", "Prise en charge 50% transports en commun (obligatoire)", "Mise \xE0 jour tous les 3 ans"], articlesLoi: ["Art. L. 1214-8-2 Code des transports \u2014 PDME obligatoire", "Art. R. 1214-1 \xE0 R. 1214-8 Code des transports \u2014 Contenu", "Art. L. 3261-3-1 Code du travail \u2014 Forfait mobilit\xE9s durables", "D\xE9cret n\xB02020-541 du 9 mai 2020 \u2014 FMD d\xE9fiscalisation", "Art. 82-84 Loi Climat n\xB02021-1104 \u2014 Obligation PDME"], sanctions: "Proc\xE9dure de mise en conformit\xE9 en construction. Risque de p\xE9nalit\xE9 \xE0 terme.", lienOfficiel: "https://www.ecologie.gouv.fr/plan-mobilite-employeur", impactPME: "D\xE8s 50 sal. FMD = avantage RH. R\xE9duction des cotisations patronales sur le FMD (jusqu'\xE0 800\u20AC/an non charg\xE9).", tags: ["PDME", "mobilit\xE9", "FMD", "d\xE9placements", "v\xE9lo", "co-voiturage", "transports"] },
+    { id: "santetravail", code: "Sant\xE9 au Travail", titre: "Loi Sant\xE9 au Travail \u2014 R\xE9forme 2021", type: "Loi fran\xE7aise", categorie: "Sant\xE9 & S\xE9curit\xE9", domaine: "Social", date: "2021-08-02", entreeVigueur: "2022-03-31", origine: "France", statut: "En vigueur", seuils: "Toutes entreprises d\xE8s 1 salari\xE9. DUERP num\xE9rique : \u226511 sal. imm\xE9diat, <11 sal. diff\xE9r\xE9.", resume: "Renforce la pr\xE9vention primaire. DUERP num\xE9ris\xE9 et historis\xE9. Visite mi-carri\xE8re \xE0 45 ans. Passeport pr\xE9vention individuel. Rendez-vous de liaison.", obligationsCl\u00E9s: ["DUERP num\xE9ris\xE9, actualis\xE9 et historis\xE9 (toutes entreprises)", "Visite m\xE9dicale de mi-carri\xE8re \xE0 45 ans", "Rendez-vous de liaison en cas d'arr\xEAt >30 jours", "Programme annuel de pr\xE9vention des risques professionnels", "Passeport de pr\xE9vention individuel pour chaque salari\xE9", "Cellule de pr\xE9vention de la d\xE9sinsertion professionnelle (SPSTI)"], articlesLoi: ["Loi n\xB02021-1018 du 2 ao\xFBt 2021 \u2014 R\xE9forme sant\xE9 au travail", "Art. L. 4121-1 Code du travail \u2014 Obligation g\xE9n\xE9rale de s\xE9curit\xE9", "Art. R. 4121-1 Code du travail \u2014 DUERP et mise \xE0 jour", "Art. L. 4624-1 Code du travail \u2014 Visite m\xE9dicale et mi-carri\xE8re", "D\xE9cret n\xB02022-395 du 18 mars 2022 \u2014 DUERP num\xE9rique", "D\xE9cret n\xB02022-372 du 16 mars 2022 \u2014 Visite mi-carri\xE8re 45 ans"], sanctions: "Faute inexcusable si DUERP absent lors d'un accident. Amende R. 4741-1 : jusqu'\xE0 3 750 \u20AC.", lienOfficiel: "https://www.ameli.fr/employeur/sante-et-prevoyance/sante-au-travail", impactPME: "Toutes PME. DUERP obligatoire d\xE8s 1 salari\xE9. Passeport pr\xE9vention : outil num\xE9rique gratuit via Mon Compte Formation.", tags: ["DUERP", "sant\xE9 travail", "s\xE9curit\xE9", "pr\xE9vention", "accidents", "mi-carri\xE8re"] },
+    { id: "formation", code: "Formation Pro", titre: "Formation Professionnelle \u2014 CPF & Plan de Formation", type: "Loi fran\xE7aise", categorie: "Formation", domaine: "Social", date: "2018-09-05", entreeVigueur: "2019-01-01", origine: "France", statut: "En vigueur", seuils: "Entretien professionnel : toutes entreprises \u22651 sal. Contribution OPCO : toutes entreprises. Abondement CPF correctif : \u226550 sal.", resume: "Loi Avenir Professionnel : CPF universalis\xE9, reconversion, formation qualifiante. Entretien professionnel obligatoire tous les 2 ans. Contribution OPCO obligatoire.", obligationsCl\u00E9s: ["Entretien professionnel tous les 2 ans + bilan \xE0 6 ans", "Plan de d\xE9veloppement des comp\xE9tences", "Contribution formation : 0,55% MS (<11 sal.) ou 1% MS (\u226511 sal.)", "Participation \xE0 la gouvernance de l'OPCO de branche", "Abondement correctif CPF (3 000 \u20AC) si bilan 6 ans non r\xE9alis\xE9 (\u226550 sal.)", "Possibilit\xE9 de co-financer les CPF de transition professionnelle"], articlesLoi: ["Art. L. 6315-1 Code du travail \u2014 Entretien professionnel", "Art. L. 6321-1 Code du travail \u2014 Plan de d\xE9veloppement comp\xE9tences", "Art. L. 6323-1 et s. Code du travail \u2014 CPF", "Loi n\xB02018-771 du 5 septembre 2018 \u2014 Avenir professionnel", "D\xE9cret n\xB02019-566 \u2014 Entretien professionnel renforc\xE9 et bilan"], sanctions: "Abondement correctif CPF de 3 000 \u20AC si entretiens non r\xE9alis\xE9s ou bilan 6 ans non tenu (\u226550 sal.).", lienOfficiel: "https://www.moncompteformation.gouv.fr", impactPME: "Toutes PME. Entretiens professionnels obligatoires. Contribution OPCO obligatoire. CPF : outil de fid\xE9lisation RH.", tags: ["CPF", "formation", "OPCO", "entretien professionnel", "comp\xE9tences", "plan formation"] },
+    { id: "taxonomy", code: "Taxonomie UE", titre: "R\xE8glement Taxonomie Verte Europ\xE9enne", type: "R\xE8glement UE", categorie: "Finance durable", domaine: "Environnement", date: "2020-06-18", entreeVigueur: "2022-01-01", origine: "UE", statut: "En vigueur", seuils: "Entreprises soumises \xE0 la NFRD/CSRD + \xE9tablissements financiers.", resume: "Classification des activit\xE9s \xE9conomiques durables selon 6 objectifs. Divulgation du % d'alignement taxonomique (CA, CapEx, OpEx). Principe DNSH obligatoire.", obligationsCl\u00E9s: ["% de CA align\xE9 taxonomie verte", "% de CapEx align\xE9 taxonomie verte", "% d'OpEx align\xE9 taxonomie verte", "Principe DNSH (Do No Significant Harm) pour 6 objectifs", "Garanties sociales minimales (droits fondamentaux OCDE)", "6 objectifs : att\xE9nuation CC, adaptation CC, eau, circularit\xE9, pollution, biodiversit\xE9"], articlesLoi: ["R\xE8glement UE 2020/852 \u2014 R\xE8glement Taxonomie", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2021/2139 \u2014 Crit\xE8res techniques Climat", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2022/1214 \u2014 Nucl\xE9aire et gaz", "Art. 8 Taxonomie \u2014 Obligations de divulgation", "Actes d\xE9l\xE9gu\xE9s 2023 \u2014 4 autres objectifs environnementaux"], sanctions: "Via la CSRD et SFDR. D\xE9claration inexacte : responsabilit\xE9 de la direction.", lienOfficiel: "https://finance.ec.europa.eu/sustainable-finance/tools-and-standards/eu-taxonomy-sustainable-activities_fr", impactPME: "Indirect. Clients et investisseurs soumis CSRD/SFDR peuvent demander vos donn\xE9es d'alignement.", tags: ["taxonomie", "finance verte", "DNSH", "alignement", "EU", "investissement"] },
+    { id: "gri", code: "GRI Standards", titre: "Global Reporting Initiative Standards", type: "Standard international", categorie: "Reporting", domaine: "Transversal", date: "2021-10-05", entreeVigueur: "2023-01-01", origine: "International", statut: "R\xE9f\xE9rence internationale", seuils: "Volontaire \u2014 toute organisation quelle que soit sa taille.", resume: "R\xE9f\xE9rentiel mondial de reporting de durabilit\xE9. Partiellement align\xE9 sur les ESRS. GRI 1-3 (Universal) + standards th\xE9matiques 200 (\xE9co), 300 (env), 400 (social).", obligationsCl\u00E9s: ["GRI 1 : Fondements et utilisation des standards", "GRI 2 : Informations g\xE9n\xE9rales (gouvernance, strat\xE9gie, parties prenantes)", "GRI 3 : Sujets mat\xE9riels \u2014 identification et gestion", "GRI 200 : Performance \xE9conomique, anticorruption, concurrence", "GRI 300 : \xC9nergie, eau, biodiversit\xE9, \xE9missions, effluents, d\xE9chets", "GRI 400 : Emploi, sant\xE9/s\xE9curit\xE9, formation, diversit\xE9, droits humains"], articlesLoi: ["GRI 1 Foundation 2021 \u2014 Exigences d'utilisation", "GRI 2 General Disclosures 2021 \u2014 Informations organisationnelles", "GRI 3 Material Topics 2021 \u2014 Analyse de mat\xE9rialit\xE9", "GRI 302 Energy 2016 \u2014 Indicateurs \xE9nergie", "GRI 305 Emissions 2016 \u2014 Indicateurs GES", "GRI 401 Employment 2016 \u2014 Emploi et relation de travail"], sanctions: "Aucune \u2014 standard volontaire.", lienOfficiel: "https://www.globalreporting.org/standards/", impactPME: "R\xE9f\xE9rentiel id\xE9al pour structurer le reporting ESG avant la CSRD. Reconnu mondialement.", tags: ["GRI", "reporting", "mat\xE9rialit\xE9", "international", "volontaire"] },
+    { id: "iso14001", code: "ISO 14001:2015", titre: "ISO 14001 \u2014 Syst\xE8me de Management Environnemental", type: "Norme internationale", categorie: "Management", domaine: "Environnement", date: "2015-09-15", entreeVigueur: "2018-09-14", origine: "International", statut: "En vigueur", seuils: "Volontaire \u2014 toute organisation.", resume: "SME (Syst\xE8me de Management Environnemental). Approche PDCA. Am\xE9lioration continue des performances environnementales. Certification reconnue dans les march\xE9s publics.", obligationsCl\u00E9s: ["Analyse du contexte et des parties prenantes", "Politique environnementale document\xE9e et communiqu\xE9e", "Identification aspects et impacts environnementaux significatifs", "Objectifs environnementaux SMART et plans d'action", "Formation et sensibilisation du personnel", "Surveillance, mesure et audit interne", "Revue de direction annuelle"], articlesLoi: ["Norme ISO 14001:2015 \u2014 Chapitres 4 \xE0 10", "ISO 14001:2015 \u2014 Annexe A (guide d'utilisation)", "ISO 14004:2016 \u2014 Lignes directrices SME", "ISO 19011:2018 \u2014 Audit de syst\xE8mes de management", "Chap. 6.2 ISO 14001 \u2014 Objectifs environnementaux et plans"], sanctions: "Aucune \u2014 norme volontaire.", lienOfficiel: "https://www.iso.org/fr/iso-14001-environmental-management.html", impactPME: "Tr\xE8s accessible aux PME. Certification valoris\xE9e dans les appels d'offres. Facilite la pr\xE9paration CSRD E1-E5.", tags: ["ISO 14001", "SME", "management environnemental", "certification", "PDCA"] },
+    { id: "iso26000", code: "ISO 26000", titre: "ISO 26000 \u2014 Responsabilit\xE9 Soci\xE9tale des Organisations", type: "Norme internationale", categorie: "RSE", domaine: "Transversal", date: "2010-11-01", entreeVigueur: "2010-11-01", origine: "International", statut: "Lignes directrices (non certifiable)", seuils: "Toute organisation, quelle que soit sa taille.", resume: "7 questions centrales de la RSO : gouvernance, droits de l'homme, conditions de travail, environnement, loyaut\xE9 des pratiques, consommateurs, communaut\xE9s.", obligationsCl\u00E9s: ["Question 1 : Gouvernance de l'organisation", "Question 2 : Droits de l'homme", "Question 3 : Relations et conditions de travail", "Question 4 : Environnement", "Question 5 : Loyaut\xE9 des pratiques (anticorruption, concurrence)", "Question 6 : Questions relatives aux consommateurs", "Question 7 : Communaut\xE9s et d\xE9veloppement local"], articlesLoi: ["Norme ISO 26000:2010 \u2014 Chapitre 6 (7 questions centrales)", "Chapitre 7 ISO 26000 \u2014 Int\xE9gration RSO dans l'organisation", "Annexe A ISO 26000 \u2014 Correspondances GRI et UNGC", "Principes directeurs OCDE pour les entreprises multinationales"], sanctions: "Aucune \u2014 lignes directrices non certifiables.", lienOfficiel: "https://www.iso.org/fr/iso-26000-social-responsibility.html", impactPME: "R\xE9f\xE9rentiel de structuration RSE id\xE9al. Compatible GRI, ESRS et devoir de vigilance.", tags: ["ISO 26000", "RSE", "RSO", "responsabilit\xE9", "7 questions", "parties prenantes"] },
+    { id: "ecovadis", code: "EcoVadis", titre: "EcoVadis \u2014 \xC9valuation RSE Fournisseurs", type: "Standard march\xE9", categorie: "Cha\xEEne de valeur", domaine: "Transversal", date: "2007-01-01", entreeVigueur: "2007-01-01", origine: "International", statut: "R\xE9f\xE9rence march\xE9 (Renault, L'Or\xE9al, Airbus, Michelin\u2026)", seuils: "Volontaire \u2014 demand\xE9 par les grands donneurs d'ordres.", resume: "\xC9valuation RSE sur 4 th\xE8mes (Environnement, Social/RH, \xC9thique, Achats responsables). Score 0-100. +80 000 entreprises dans 175 pays.", obligationsCl\u00E9s: ["Questionnaire RSE document\xE9 avec preuves justificatives", "Politique environnementale formalis\xE9e", "Indicateurs sociaux et RH document\xE9s", "Politique anticorruption et code de conduite", "Pratiques d'achats responsables", "Renouvellement annuel de l'\xE9valuation"], articlesLoi: ["M\xE9thodologie EcoVadis 2024 \u2014 Align\xE9e GRI, ISO 26000, UNGC, ESRS", "Scorecard EcoVadis \u2014 Pond\xE9ration par th\xE8me et secteur d'activit\xE9", "EcoVadis Sector-specific questionnaires (secteur adapt\xE9)", "Crit\xE8res ESRS S2 \u2014 Travailleurs de la cha\xEEne de valeur (lien direct)"], sanctions: "Aucune \u2014 \xE9valuation commerciale mais risque de perte de contrat si score insuffisant.", lienOfficiel: "https://ecovadis.com/fr/", impactPME: "Grands groupes soumis CSRD exigent EcoVadis \xE0 leurs fournisseurs PME (souvent >100k\u20AC/an). Pr\xE9pare directement \xE0 la CSRD S2.", tags: ["EcoVadis", "fournisseurs", "notation RSE", "cha\xEEne approvisionnement", "CSRD S2"] }
+  ];
+  var RSE_LEGAL_MAP = {
+    "Environnement": {
+      lois: ["BEGES", "Loi Climat", "D\xE9cret Tertiaire", "Loi AGEC", "ISO 14001:2015", "CSRD", "Taxonomie UE"],
+      articles: ["Art. L. 229-25 Code env. \u2014 Bilan GES", "Art. L. 174-1 CCH \u2014 D\xE9cret tertiaire", "Art. L. 541-10 Code env. \u2014 REP", "ESRS E1 \u2014 Changement climatique", "ESRS E2-E5 \u2014 Pollution, eau, biodiversit\xE9, circularit\xE9"],
+      objectifsSugg\u00E9r\u00E9s: ["R\xE9duire les \xE9missions CO\u2082 de 30% d'ici {ann\xE9e}", "Atteindre {%}% d'\xE9nergies renouvelables d'ici {ann\xE9e}", "R\xE9duire la consommation \xE9nerg\xE9tique de 40% d'ici 2030 (D\xE9cret Tertiaire)", "Atteindre un taux de recyclage de 80% des d\xE9chets", "R\xE9aliser un Bilan Carbone Scope 1+2+3 annuel"]
+    },
+    "Social & RH": {
+      lois: ["Index \xC9galit\xE9 F/H", "OETH", "Plan Mobilit\xE9", "Sant\xE9 au Travail", "Formation Pro", "Loi Vigilance"],
+      articles: ["Art. L. 1142-8 CT \u2014 Index \xE9galit\xE9 professionnelle", "Art. L. 5212-1 CT \u2014 OETH 6%", "Art. R. 4121-1 CT \u2014 DUERP", "Art. L. 6315-1 CT \u2014 Entretien professionnel", "ESRS S1 \u2014 Personnel propre"],
+      objectifsSugg\u00E9r\u00E9s: ["Atteindre un index \xE9galit\xE9 F/H \u2265 85/100 d'ici {ann\xE9e}", "Atteindre un taux OETH \u2265 6% d'ici {ann\xE9e}", "R\xE9duire le taux de turnover \xE0 moins de {%}%", "Atteindre {h} heures de formation par salari\xE9 par an", "Z\xE9ro accident du travail avec arr\xEAt d'ici {ann\xE9e}"]
+    },
+    "Gouvernance": {
+      lois: ["Loi PACTE", "Loi Sapin II", "RGPD", "Loi Vigilance", "CS3D / CSDDD"],
+      articles: ["Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi (Loi PACTE)", "Art. 17 Loi Sapin II \u2014 Programme anticorruption AFA", "Art. L. 225-102-4 Code com. \u2014 Plan de vigilance", "Art. 5 RGPD \u2014 Principes de traitement", "ESRS G1 \u2014 Conduite des affaires"],
+      objectifsSugg\u00E9r\u00E9s: ["Inscrire une raison d'\xEAtre dans les statuts d'ici {ann\xE9e}", "Obtenir la certification soci\xE9t\xE9 \xE0 mission", "100% des salari\xE9s form\xE9s au code de conduite \xE9thique", "Mettre en place un dispositif d'alerte conforme Sapin II", "\xC9valuer 100% des fournisseurs strat\xE9giques sur crit\xE8res ESG"]
+    },
+    "Achats responsables": {
+      lois: ["Loi Vigilance", "CS3D / CSDDD", "EcoVadis", "ISO 26000", "CSRD"],
+      articles: ["Art. L. 225-102-4 Code com. \u2014 Plan de vigilance fournisseurs", "ESRS S2 \u2014 Travailleurs dans la cha\xEEne de valeur", "ESRS G1 \u2014 Loyaut\xE9 des pratiques", "Art. 26 Loi Climat \u2014 Crit\xE8res env. march\xE9s publics", "M\xE9thodologie EcoVadis \u2014 Achats responsables"],
+      objectifsSugg\u00E9r\u00E9s: ["\xC9valuer 100% des fournisseurs >50k\u20AC/an sur crit\xE8res ESG", "Score EcoVadis minimum de 45/100 pour tous fournisseurs strat\xE9giques", "R\xE9duire les \xE9missions Scope 3 achats de {%}% d'ici {ann\xE9e}", "Int\xE9grer une clause ESG dans 100% des nouveaux contrats fournisseurs"]
+    },
+    "Diversit\xE9 & Inclusion": {
+      lois: ["Index \xC9galit\xE9 F/H", "OETH", "Loi PACTE", "Sant\xE9 au Travail"],
+      articles: ["Art. L. 1142-8 CT \u2014 Index \xE9galit\xE9 professionnelle", "Art. L. 5212-1 CT \u2014 OETH travailleurs handicap\xE9s", "Art. L. 1132-1 CT \u2014 Principe de non-discrimination", "Art. L. 1153-1 CT \u2014 Pr\xE9vention harc\xE8lement sexuel", "ESRS S1-6 \u2014 Diversit\xE9 et inclusion"],
+      objectifsSugg\u00E9r\u00E9s: ["Atteindre {%}% de femmes dans les instances dirigeantes", "Augmenter le taux OETH \xE0 plus de 6%", "Index \xE9galit\xE9 F/H \u2265 85/100 d'ici {ann\xE9e}", "Z\xE9ro \xE9cart de r\xE9mun\xE9ration non justifi\xE9 entre F et H"]
+    },
+    "\xC9thique & Conformit\xE9": {
+      lois: ["Loi Sapin II", "RGPD", "Loi PACTE", "Loi Vigilance"],
+      articles: ["Art. 17 Loi Sapin II \u2014 8 piliers programme AFA", "Art. 8 Loi Sapin II / Loi Waserman \u2014 Dispositif d'alerte", "Art. 32 RGPD \u2014 S\xE9curit\xE9 des donn\xE9es", "Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi", "ESRS G1-4 \u2014 Pr\xE9vention de la corruption"],
+      objectifsSugg\u00E9r\u00E9s: ["D\xE9ployer un dispositif d'alerte conforme Sapin II / Waserman", "100% des managers form\xE9s \xE0 l'anticorruption", "Audit de conformit\xE9 RGPD annuel", "Int\xE9grer un code \xE9thique dans le r\xE8glement int\xE9rieur"]
+    },
+    "Donn\xE9es & RGPD": {
+      lois: ["RGPD", "Loi Sapin II", "CSRD"],
+      articles: ["Art. 5 RGPD \u2014 Principes de lic\xE9it\xE9", "Art. 7 RGPD \u2014 Conditions du consentement", "Art. 13-14 RGPD \u2014 Information des personnes", "Art. 32 RGPD \u2014 S\xE9curit\xE9 du traitement", "Art. 33 RGPD \u2014 Notification de violations \xE0 la CNIL"],
+      objectifsSugg\u00E9r\u00E9s: ["Registre de traitement \xE0 jour et document\xE9", "100% des cookies conformes (refus possible)", "Audit RGPD annuel par le DPO ou prestataire", "Z\xE9ro violation de donn\xE9es non notifi\xE9e dans les 72h"]
+    },
+    "Sant\xE9 & S\xE9curit\xE9": {
+      lois: ["Sant\xE9 au Travail", "Formation Pro", "DPEF", "CSRD"],
+      articles: ["Art. L. 4121-1 CT \u2014 Obligation g\xE9n\xE9rale de s\xE9curit\xE9", "Art. R. 4121-1 CT \u2014 DUERP et mise \xE0 jour", "Loi n\xB02021-1018 \u2014 R\xE9forme sant\xE9 au travail", "Art. L. 4624-1 CT \u2014 Suivi m\xE9dical individuel", "ESRS S1-3 \u2014 Sant\xE9 et s\xE9curit\xE9 au travail"],
+      objectifsSugg\u00E9r\u00E9s: ["DUERP actualis\xE9 et num\xE9ris\xE9 \xE0 jour", "Taux de fr\xE9quence des accidents < {TF} d'ici {ann\xE9e}", "100% des salari\xE9s avec visite m\xE9dicale \xE0 jour", "D\xE9ployer un programme bien-\xEAtre et pr\xE9vention RPS"]
+    }
+  };
   var RSE_TEMPLATES = {
-    "Politique environnementale": `# Politique Environnementale
+    "Environnement": `# Politique Environnementale
 
 ## 1. Engagement de la direction
-[Nom de l'entreprise] s'engage \xE0 r\xE9duire son impact environnemental de mani\xE8re continue et mesurable.
 
-## 2. Objectifs environnementaux
-- R\xE9duire les \xE9missions de GES de X% d'ici [ann\xE9e]
-- Atteindre X% d'\xE9nergies renouvelables d'ici [ann\xE9e]
-- Z\xE9ro d\xE9chet mis en d\xE9charge d'ici [ann\xE9e]
+La direction de [Nom de l'entreprise] s'engage \xE0 r\xE9duire son impact environnemental de mani\xE8re continue et mesurable, conform\xE9ment aux exigences de la loi Climat et R\xE9silience (n\xB02021-1104) et des normes ESRS E1 \xE0 E5.
 
-## 3. Gouvernance environnementale
-Un Comit\xE9 Environnement se r\xE9unit [fr\xE9quence] pour piloter la politique.
+## 2. Cadre r\xE9glementaire applicable
 
-## 4. Indicateurs de suivi
-- \xC9missions CO\u2082 (Scope 1, 2, 3)
-- Consommation \xE9nerg\xE9tique totale
-- Taux de d\xE9chets recycl\xE9s
-- Consommation d'eau
-
-## 5. Plan d'action
-[\xC0 compl\xE9ter par vos \xE9quipes]
-
-## 6. Communication et formation
-Cette politique est communiqu\xE9e \xE0 l'ensemble des collaborateurs et partenaires.`,
-    "Politique diversit\xE9 & inclusion": `# Politique Diversit\xE9, \xC9quit\xE9 & Inclusion
-
-## 1. Vision et engagement
-Nous croyons que la diversit\xE9 est source de performance et d'innovation.
-
-## 2. Axes prioritaires
-- \xC9galit\xE9 professionnelle femmes-hommes
-- Int\xE9gration des travailleurs handicap\xE9s
-- Non-discrimination \xE0 l'embauche
-- Mixit\xE9 dans les instances dirigeantes
+Cette politique s'inscrit dans le respect de :
+- Loi Climat et R\xE9silience (22 ao\xFBt 2021) \u2014 Art. 301-303 sur les bilans GES des PME
+- D\xE9cret \xC9co-\xC9nergie Tertiaire (2019-771) \u2014 si locaux \u22651 000 m\xB2
+- Loi AGEC (10 f\xE9vrier 2020) \u2014 \xE9conomie circulaire et REP
+- Norme ISO 14001:2015 \u2014 syst\xE8me de management environnemental
 
 ## 3. Objectifs mesurables
-- Index \xC9galit\xE9 F/H \u2265 85/100 d'ici [ann\xE9e]
-- Taux OETH \u2265 6%
-- X% de femmes dans le CODIR d'ici [ann\xE9e]
 
-## 4. Dispositifs mis en place
-- Processus de recrutement anonymis\xE9
-- Formations sur les biais inconscients
-- R\xE9seau de mentoring interne
+- R\xE9duire les \xE9missions de GES (Scope 1+2) de **30%** d'ici 2027 (base 2025)
+- Atteindre **50%** d'\xE9nergies renouvelables d'ici 2026
+- R\xE9duire la consommation \xE9nerg\xE9tique de **40%** d'ici 2030
+- Atteindre un taux de recyclage des d\xE9chets de **80%** d'ici 2026
 
-## 5. Indicateurs de suivi
-- Index \xE9galit\xE9 professionnelle (publication annuelle)
-- Taux d'emploi travailleurs handicap\xE9s
-- Part des femmes aux postes de direction`,
-    "Politique achats responsables": `# Politique Achats Responsables
+## 4. Gouvernance environnementale
+
+Un r\xE9f\xE9rent environnement est d\xE9sign\xE9 et un comit\xE9 se r\xE9unit trimestriellement pour piloter la politique.
+
+## 5. Plan d'action
+
+- R\xE9aliser un Bilan Carbone\xAE ADEME annuel (Scope 1, 2 et 3)
+- Publier le bilan sur la plateforme bilans-ges.ademe.fr
+- Mettre en place un plan de mobilit\xE9 employeur (si \u226550 sal.)
+- R\xE9aliser les d\xE9clarations OPERAT annuelles (si tertiaire \u22651 000 m\xB2)
+
+## 6. Indicateurs de suivi
+
+| Indicateur | Valeur cible | Fr\xE9quence |
+|---|---|---|
+| \xC9missions CO\u2082 (tCO\u2082eq) | -30% vs 2025 | Annuelle |
+| % \xE9nergies renouvelables | 50% | Annuelle |
+| Taux recyclage d\xE9chets | 80% | Semestrielle |
+
+## 7. Communication
+
+Cette politique est accessible \xE0 l'ensemble des collaborateurs et publi\xE9e sur notre site internet.`,
+    "Social & RH": `# Politique Sociale et Ressources Humaines
+
+## 1. Engagement
+
+Nous nous engageons \xE0 offrir \xE0 tous nos collaborateurs des conditions de travail de qualit\xE9, conform\xE9ment aux obligations l\xE9gales (Code du travail, loi Sant\xE9 au Travail 2021) et aux exigences ESRS S1.
+
+## 2. Cadre r\xE9glementaire
+
+- Loi n\xB02021-1018 du 2 ao\xFBt 2021 \u2014 R\xE9forme sant\xE9 au travail (DUERP, mi-carri\xE8re)
+- Art. L. 1142-8 Code du travail \u2014 Index \xE9galit\xE9 professionnelle F/H
+- Art. L. 5212-1 Code du travail \u2014 OETH (\u226520 sal.)
+- Art. L. 6315-1 Code du travail \u2014 Entretiens professionnels
+- ESRS S1 \u2014 Main-d'\u0153uvre propre
+
+## 3. \xC9galit\xE9 professionnelle
+
+- Publication de l'index \xE9galit\xE9 F/H avant le 1er mars de chaque ann\xE9e
+- Objectif : index \u2265 85/100 d'ici [ann\xE9e]
+- Plan d'action correctif si index <75/100
+
+## 4. Emploi et inclusion
+
+- Taux OETH \u2265 6% (Art. L. 5212-1 CT)
+- Programme d'int\xE9gration des travailleurs handicap\xE9s avec l'AGEFIPH
+- Partenariats avec les ESAT et EA
+
+## 5. Formation et d\xE9veloppement
+
+- Entretien professionnel tous les 2 ans (Art. L. 6315-1 CT)
+- Bilan professionnel \xE0 6 ans
+- Objectif : [X] heures de formation par salari\xE9 par an
+
+## 6. Sant\xE9 et s\xE9curit\xE9
+
+- DUERP num\xE9ris\xE9 et actualis\xE9 (Art. R. 4121-1 CT)
+- Programme de pr\xE9vention des risques psychosociaux
+- Objectif : taux de fr\xE9quence accidents < [TF]`,
+    "Gouvernance": `# Politique de Gouvernance et \xC9thique
+
+## 1. Vision
+
+Nous conduisons nos affaires avec int\xE9grit\xE9, transparence et dans le respect de toutes les parties prenantes, conform\xE9ment \xE0 l'article 1833 du Code civil (Loi PACTE) et aux exigences ESRS G1.
+
+## 2. Cadre r\xE9glementaire
+
+- Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi (Loi PACTE 2019)
+- Art. 17 Loi Sapin II \u2014 Programme anticorruption AFA (si \u2265500 sal.)
+- Loi n\xB02022-401 (Waserman) \u2014 Protection des lanceurs d'alerte
+- RGPD \u2014 Protection des donn\xE9es personnelles
+- ESRS G1 \u2014 Conduite des affaires
+
+## 3. Anticorruption
+
+- Code de conduite anticorruption int\xE9gr\xE9 au r\xE8glement int\xE9rieur
+- Formation annuelle des salari\xE9s expos\xE9s
+- Cartographie des risques actualis\xE9e annuellement
+- [Si \u226550 sal.] : Dispositif d'alerte confidentiel op\xE9rationnel (loi Waserman)
+
+## 4. Protection des donn\xE9es (RGPD)
+
+- Registre des activit\xE9s de traitement \xE0 jour (Art. 30 RGPD)
+- Politique de confidentialit\xE9 publi\xE9e
+- DPO d\xE9sign\xE9 [si applicable]
+- Audit de conformit\xE9 annuel
+
+## 5. Transparence
+
+- Publication du rapport ESG / DPEF / rapport de durabilit\xE9
+- Dialogue r\xE9gulier avec les parties prenantes
+- [Si soci\xE9t\xE9 \xE0 mission] : Rapport du comit\xE9 de mission
+
+## 6. Indicateurs
+
+- % de salari\xE9s form\xE9s au code \xE9thique : objectif 100%
+- Fr\xE9quence des audits internes : [trimestrielle / semestrielle]
+- Nombre de signalements re\xE7us et trait\xE9s`,
+    "Achats responsables": `# Politique Achats Responsables
 
 ## 1. Ambition
-Int\xE9grer des crit\xE8res ESG dans l'ensemble de nos d\xE9cisions d'achat.
 
-## 2. P\xE9rim\xE8tre
-Cette politique s'applique \xE0 tous les achats sup\xE9rieurs \xE0 [seuil] euros.
+Int\xE9grer des crit\xE8res ESG dans l'ensemble de nos d\xE9cisions d'achat, conform\xE9ment \xE0 nos obligations de vigilance (Loi du 27 mars 2017) et aux exigences ESRS S2.
 
-## 3. Crit\xE8res de s\xE9lection fournisseurs
-- Score ESG minimum : [score] sur 100
+## 2. Cadre r\xE9glementaire
+
+- Loi n\xB02017-399 \u2014 Devoir de vigilance (Art. L. 225-102-4 Code com.)
+- ESRS S2 \u2014 Travailleurs dans la cha\xEEne de valeur
+- Art. 26 Loi Climat \u2014 Crit\xE8res env. dans les march\xE9s publics
+- Directive CSDDD 2024/1760 \u2014 (anticipation \xE0 partir de 2027)
+
+## 3. P\xE9rim\xE8tre et crit\xE8res
+
+Cette politique s'applique \xE0 tous les achats >50 000 \u20AC annuels. Crit\xE8res de s\xE9lection :
+- Score ESG (EcoVadis ou questionnaire interne) \u2265 45/100
 - Certification ISO 14001 ou \xE9quivalent appr\xE9ci\xE9e
-- Politique anti-corruption document\xE9e
-- Respect des droits fondamentaux au travail
+- Politique anticorruption document\xE9e
+- Respect des droits fondamentaux au travail (OIT)
+- Pays de production : \xE9valuation niveau de risque
 
 ## 4. Processus d'\xE9valuation
-- Questionnaire ESG envoy\xE9 \xE0 tous les fournisseurs strat\xE9giques
-- \xC9valuation EcoVadis pour les fournisseurs >100k\u20AC/an
-- Audit terrain pour les fournisseurs \xE0 risque
 
-## 5. Plan de progr\xE8s
-Accompagner nos fournisseurs dans l'am\xE9lioration de leur score ESG.`,
-    "Code de conduite \xE9thique": `# Code de Conduite \xC9thique et Anticorruption
+1. Questionnaire RSE envoy\xE9 \xE0 tous les fournisseurs strat\xE9giques annuellement
+2. \xC9valuation EcoVadis pour les fournisseurs >100k\u20AC/an
+3. Plan de progr\xE8s co-construit pour les fournisseurs sous 45/100
 
-## 1. Principes fondamentaux
-Nous agissons avec int\xE9grit\xE9, transparence et dans le respect des lois.
+## 5. Objectifs
 
-## 2. Anticorruption (Sapin II)
-- Interdiction absolue des pots-de-vin et cadeaux d'affaires indus
-- Seuil de cadeaux autoris\xE9s : [montant] \u20AC
-- D\xE9claration obligatoire de tout conflit d'int\xE9r\xEAts
-
-## 3. Protection des lanceurs d'alerte
-Un dispositif d'alerte confidentiel est accessible \xE0 tous via [canal].
-
-## 4. Loyaut\xE9 concurrentielle
-Respect strict du droit de la concurrence. Interdiction de tout accord de prix.
-
-## 5. Protection des donn\xE9es
-Conformit\xE9 RGPD. Donn\xE9es personnelles trait\xE9es avec le consentement des personnes.
-
-## 6. Devoir de vigilance
-\xC9valuation des risques droits humains et environnementaux dans la cha\xEEne de valeur.
-
-## 7. Sanctions
-Tout manquement \xE0 ce code peut entra\xEEner des sanctions disciplinaires jusqu'au licenciement.`
+- 100% des fournisseurs strat\xE9giques \xE9valu\xE9s sur crit\xE8res ESG d'ici [ann\xE9e]
+- Score EcoVadis moyen panel \u2265 55/100 d'ici [ann\xE9e]
+- Clause ESG dans 100% des nouveaux contrats d'ici [ann\xE9e]`
   };
   var DEFAULT_DATA = {
-    company: { name: "Lacavalerie Group", siren: "987 654 321", sector: "Conseil & Digital", taille: "PME", adresse: "24 avenue Montaigne, 75008 Paris", email: "contact@lacavalerie.fr", tel: "01 23 45 67 89" },
-    admin: { nom: "Lacavalerie", prenom: "Jahsan", email: "jahsan@lacavalerie.fr", role: "Directeur G\xE9n\xE9ral" },
+    company: { name: "Mon Entreprise", siren: "", sector: "", taille: "PME", adresse: "", email: "", tel: "" },
+    admin: { nom: "Lacavalerie", prenom: "Jahsan", email: "jahsan@lacavalerie.fr", role: "Fondateur & Cr\xE9ateur" },
     apiKey: "",
     employees: [
-      { id: uid(), nom: "Dupont", prenom: "Marie", poste: "Responsable ESG", dept: "Direction", contrat: "CDI", dateEntree: "2021-03-15", email: "m.dupont@lc.fr", genre: "F", formation: 24, salaire: 52e3 },
-      { id: uid(), nom: "Bernard", prenom: "Thomas", poste: "Lead D\xE9veloppeur", dept: "Tech", contrat: "CDI", dateEntree: "2022-06-01", email: "t.bernard@lc.fr", genre: "M", formation: 18, salaire: 58e3 },
-      { id: uid(), nom: "Martin", prenom: "Sophie", poste: "Chef de projet", dept: "Op\xE9rations", contrat: "CDI", dateEntree: "2020-01-10", email: "s.martin@lc.fr", genre: "F", formation: 20, salaire: 55e3 },
-      { id: uid(), nom: "Leroy", prenom: "Paul", poste: "Responsable Commercial", dept: "Commercial", contrat: "CDI", dateEntree: "2019-05-20", email: "p.leroy@lc.fr", genre: "M", formation: 12, salaire: 6e4 }
+      { id: uid(), nom: "Dupont", prenom: "Marie", poste: "Responsable ESG", dept: "Direction", contrat: "CDI", dateEntree: "2021-03-15", email: "m.dupont@entreprise.fr", genre: "F", formation: 24, salaire: 52e3 },
+      { id: uid(), nom: "Bernard", prenom: "Thomas", poste: "D\xE9veloppeur Full Stack", dept: "Tech", contrat: "CDI", dateEntree: "2022-06-01", email: "t.bernard@entreprise.fr", genre: "M", formation: 18, salaire: 48e3 },
+      { id: uid(), nom: "Martin", prenom: "Sophie", poste: "Chef de projet", dept: "Op\xE9rations", contrat: "CDI", dateEntree: "2020-01-10", email: "s.martin@entreprise.fr", genre: "F", formation: 20, salaire: 55e3 },
+      { id: uid(), nom: "Leroy", prenom: "Paul", poste: "Responsable Commercial", dept: "Commercial", contrat: "CDI", dateEntree: "2019-05-20", email: "p.leroy@entreprise.fr", genre: "M", formation: 12, salaire: 6e4 }
     ],
     postes: [
       { id: uid(), titre: "Responsable ESG", dept: "Direction", niveau: "Senior", description: "Pilotage de la strat\xE9gie d\xE9veloppement durable et reporting CSRD.", competences: "ESG, CSRD, reporting", contrat: "CDI", teletravail: true, ouvert: false },
-      { id: uid(), titre: "Charg\xE9\xB7e RH", dept: "RH", niveau: "Junior", description: "Administration RH et recrutement.", competences: "SIRH, droit social", contrat: "CDI", teletravail: false, ouvert: true }
+      { id: uid(), titre: "Charg\xE9\xB7e RH", dept: "RH", niveau: "Junior", description: "Administration RH et recrutement.", competences: "SIRH, droit social, recrutement", contrat: "CDI", teletravail: false, ouvert: true }
     ],
     fournisseurs: [
       { id: uid(), nom: "GreenPrint SAS", categorie: "Impression", scoreESG: 78, evaluation: "Bon", certifications: "ISO 14001", contact: "contact@greenprint.fr", pays: "France", depuis: "2022", notes: "Papier recycl\xE9 certifi\xE9" },
       { id: uid(), nom: "CleanEnergy Co.", categorie: "\xC9nergie", scoreESG: 91, evaluation: "Excellent", certifications: "RE2020, ISO 50001", contact: "pro@cleanenergy.fr", pays: "France", depuis: "2023", notes: "100% renouvelable" },
-      { id: uid(), nom: "TechSupply SARL", categorie: "Mat\xE9riel IT", scoreESG: 52, evaluation: "Moyen", certifications: "", contact: "info@techsupply.fr", pays: "France", depuis: "2020", notes: "\xC0 r\xE9\xE9valuer" }
+      { id: uid(), nom: "TechSupply SARL", categorie: "Mat\xE9riel IT", scoreESG: 52, evaluation: "Moyen", certifications: "", contact: "info@techsupply.fr", pays: "France", depuis: "2020", notes: "\xC0 r\xE9\xE9valuer sur crit\xE8res sociaux" }
     ],
     documents: [
       { id: uid(), nom: "Politique RSE 2025.pdf", type: "Politique", date: "2025-01-15", taille: "2.4 Mo", tag: "RSE" },
@@ -13432,10 +13046,8 @@ Tout manquement \xE0 ce code peut entra\xEEner des sanctions disciplinaires jusq
     },
     rse: {
       politiques: [
-        { id: uid(), titre: "Politique Environnementale", type: "Environnement", statut: "Publi\xE9", responsable: "Marie Dupont", dateCreation: "2025-01-15", dateMaj: "2025-03-10", contenu: RSE_TEMPLATES["Politique environnementale"], objectifs: [{ id: uid(), titre: "R\xE9duire \xE9missions CO\u2082 de 30%", echeance: "2027-12-31", avancement: 25, indicateur: "tCO\u2082" }, { id: uid(), titre: "100% \xE9nergies renouvelables", echeance: "2026-12-31", avancement: 38, indicateur: "%" }], version: "1.2" },
-        { id: uid(), titre: "Code de Conduite \xC9thique", type: "Gouvernance", statut: "Valid\xE9", responsable: "Jahsan Lacavalerie", dateCreation: "2024-09-01", dateMaj: "2025-01-20", contenu: RSE_TEMPLATES["Code de conduite \xE9thique"], objectifs: [{ id: uid(), titre: "100% salari\xE9s form\xE9s \xE9thique", echeance: "2025-12-31", avancement: 82, indicateur: "%" }], version: "2.0" }
-      ],
-      veille: []
+        { id: uid(), titre: "Politique Environnementale", type: "Environnement", statut: "Publi\xE9", responsable: "Marie Dupont", dateCreation: "2025-01-15", dateMaj: "2025-03-10", contenu: RSE_TEMPLATES["Environnement"], objectifs: [{ id: uid(), titre: "R\xE9duire \xE9missions CO\u2082 de 30%", echeance: "2027-12-31", avancement: 25, indicateur: "tCO\u2082" }, { id: uid(), titre: "50% \xE9nergies renouvelables", echeance: "2026-12-31", avancement: 38, indicateur: "%" }], version: "1.2" }
+      ]
     },
     alerts: [
       { id: uid(), type: "warning", msg: "Rapport CSRD \xE0 soumettre avant le 30 juin 2026", date: "Aujourd'hui" },
@@ -13449,7 +13061,7 @@ Tout manquement \xE0 ce code peut entra\xEEner des sanctions disciplinaires jusq
     (0, import_react.useEffect)(() => {
       (async () => {
         try {
-          const r = await window.storage.get(key);
+          const r = await window.storage?.get(key);
           setVal(r ? JSON.parse(r.value) : fallback);
         } catch {
           setVal(fallback);
@@ -13461,36 +13073,90 @@ Tout manquement \xE0 ce code peut entra\xEEner des sanctions disciplinaires jusq
       const next = typeof v === "function" ? v(val) : v;
       setVal(next);
       try {
-        await window.storage.set(key, JSON.stringify(next));
+        await window.storage?.set(key, JSON.stringify(next));
       } catch {
       }
     }, [val, key]);
     return [val, save, ready];
   }
-  var css = `
-@import url('${GF}');
+  function calcScores(esg) {
+    const e = esg.env, s = esg.soc, g = esg.gov;
+    let E = 0, S = 0, G = 0;
+    const rv = parseFloat(e.renouvelable) || 0;
+    E += rv >= 70 ? 35 : rv >= 40 ? 22 : rv >= 15 ? 10 : 0;
+    const co2 = parseFloat(e.co2) || 9999;
+    E += co2 < 50 ? 35 : co2 < 200 ? 24 : co2 < 400 ? 14 : 0;
+    const dech = parseFloat(e.dechets) || 0;
+    E += dech >= 80 ? 30 : dech >= 55 ? 20 : dech >= 30 ? 10 : 0;
+    const gap = parseFloat(s.ecartSalaire) || 99;
+    S += gap < 3 ? 35 : gap < 7 ? 24 : gap < 12 ? 12 : 0;
+    const form = parseFloat(s.formation) || 0;
+    S += form >= 30 ? 35 : form >= 18 ? 24 : form >= 8 ? 12 : 0;
+    const turn = parseFloat(s.turnover) || 99;
+    S += turn < 5 ? 30 : turn < 12 ? 20 : turn < 20 ? 10 : 0;
+    const div = parseFloat(g.femmesDirigeantes) || 0;
+    G += div >= 50 ? 35 : div >= 35 ? 22 : div >= 20 ? 12 : 0;
+    const eth = parseFloat(g.ethique) || 0;
+    G += eth >= 90 ? 35 : eth >= 65 ? 22 : eth >= 40 ? 12 : 0;
+    G += g.whistleblower ? 20 : 0;
+    G += g.auditFreq === "quarterly" ? 10 : g.auditFreq === "biannual" ? 7 : g.auditFreq === "annual" ? 4 : 0;
+    const cl = (v) => Math.min(Math.max(Math.round(v), 0), 100);
+    const Ec = cl(E), Sc = cl(S), Gc = cl(G);
+    return { E: Ec, S: Sc, G: Gc, total: cl(Math.round((Ec + Sc + Gc) / 3)) };
+  }
+  function getGrade(score) {
+    return score >= 80 ? "A" : score >= 65 ? "B" : score >= 50 ? "C" : "D";
+  }
+  function getGradeColor(score) {
+    return score >= 80 ? C.success : score >= 65 ? C.accent : score >= 50 ? C.warning : C.danger;
+  }
+  function exportPDF(title, htmlContent) {
+    const win = window.open("", "_blank", "width=900,height=700");
+    if (!win) return alert("Autorisez les popups pour t\xE9l\xE9charger le PDF.");
+    win.document.write(`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
+<title>${title}</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sora',sans-serif;background:${C.bg};color:${C.text};font-size:14px}
-input,select,textarea{font-family:'Sora',sans-serif;font-size:14px;color:${C.text};background:${C.surface};border:1px solid ${C.border};border-radius:8px;padding:8px 12px;width:100%;outline:none;transition:border-color .15s}
-input:focus,select:focus,textarea:focus{border-color:${C.accent};box-shadow:0 0 0 3px ${C.brandLight}}
-textarea{resize:vertical;min-height:80px}
-button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8px;font-size:13px;font-weight:500;transition:all .15s}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:${C.border};border-radius:99px}
-.prose h1{font-size:20px;font-weight:700;color:${C.brand};margin:0 0 16px;font-family:'DM Serif Display',serif}
-.prose h2{font-size:15px;font-weight:600;color:${C.text};margin:20px 0 10px;border-bottom:1px solid ${C.border};padding-bottom:6px}
-.prose p{font-size:13px;color:${C.sub};line-height:1.8;margin-bottom:10px}
-.prose ul,.prose ol{padding-left:20px;margin-bottom:10px}
-.prose li{font-size:13px;color:${C.sub};line-height:1.8;margin-bottom:4px}
-`;
-  var Btn = ({ children, variant = "primary", onClick, small, danger, disabled, type = "button", icon }) => {
+body{font-family:'Sora',sans-serif;color:#18181B;background:#fff;padding:48px 56px;font-size:14px}
+.header{display:flex;align-items:center;gap:14px;margin-bottom:36px;padding-bottom:20px;border-bottom:2px solid #1D3D2E}
+.logo{width:42px;height:42px;background:#1D3D2E;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.lt h1{font-family:'DM Serif Display',serif;font-size:22px;color:#1D3D2E;line-height:1}
+.lt p{font-size:11px;color:#A1A1AA;margin-top:2px}
+.doc-title{font-family:'DM Serif Display',serif;font-size:28px;color:#18181B;margin-bottom:6px}
+.doc-meta{font-size:12px;color:#A1A1AA;margin-bottom:28px}
+h2{font-size:16px;font-weight:700;color:#1D3D2E;margin:24px 0 10px;border-bottom:1px solid #E4E4E7;padding-bottom:6px}
+h3{font-size:14px;font-weight:600;color:#18181B;margin:18px 0 8px}
+p,li{font-size:13px;color:#52525B;line-height:1.8;margin-bottom:6px}
+ul,ol{padding-left:20px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+th{background:#EBF5EF;color:#1D3D2E;font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid #1D3D2E}
+td{padding:8px 12px;border-bottom:1px solid #E4E4E7}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;background:#EBF5EF;color:#2D5A45}
+.footer{margin-top:48px;padding-top:16px;border-top:1px solid #E4E4E7;font-size:10px;color:#A1A1AA;display:flex;justify-content:space-between}
+@page{margin:20mm;size:A4}
+</style></head><body>
+<div class="header">
+  <div class="logo">\u{1F33F}</div>
+  <div class="lt"><h1>EcoScore</h1><p>Plateforme ESG & CSRD pour PME</p></div>
+</div>
+<div class="doc-title">${title}</div>
+<div class="doc-meta">G\xE9n\xE9r\xE9 le ${(/* @__PURE__ */ new Date()).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })} \xB7 EcoScore</div>
+${htmlContent}
+<div class="footer">
+  <span>EcoScore \u2014 Plateforme ESG & CSRD</span>
+  <span>Document g\xE9n\xE9r\xE9 le ${(/* @__PURE__ */ new Date()).toLocaleDateString("fr-FR")}</span>
+</div>
+<script>window.onload=()=>{setTimeout(()=>window.print(),500)}<\/script>
+</body></html>`);
+    win.document.close();
+  }
+  var Btn = ({ children, variant = "primary", onClick, small, danger, disabled, type = "button" }) => {
     const v = danger ? { background: C.dangerLight, color: C.danger, border: `1px solid #FECACA` } : variant === "outline" ? { background: "transparent", color: C.text, border: `1px solid ${C.border}` } : variant === "ghost" ? { background: "transparent", color: C.sub, border: "none" } : variant === "accent" ? { background: C.accent, color: "#fff", border: "none" } : { background: C.brand, color: "#fff", border: "none" };
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { type, style: { display: "inline-flex", alignItems: "center", gap: 6, padding: small ? "5px 12px" : "8px 16px", fontSize: small ? 12 : 13, fontWeight: 500, borderRadius: 8, ...v, opacity: disabled ? 0.5 : 1, cursor: disabled ? "not-allowed" : "pointer" }, onClick, disabled, children: [
-      icon && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: icon }),
-      children
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { type, style: { display: "inline-flex", alignItems: "center", gap: 6, padding: small ? "5px 12px" : "8px 16px", fontSize: small ? 12 : 13, fontWeight: 500, borderRadius: 8, ...v, opacity: disabled ? 0.5 : 1, cursor: disabled ? "not-allowed" : "pointer" }, onClick, disabled, children });
   };
   var Badge = ({ label, color = "default" }) => {
-    const map = { default: [C.bg, C.sub, C.border], green: [C.successLight, C.success, "#A7F3D0"], amber: [C.warningLight, "#92400E", "#FDE68A"], red: [C.dangerLight, C.danger, "#FECACA"], blue: [C.blueLight, C.blue, "#BFDBFE"], brand: [C.brandLight, C.brandMid, "#BDE5CF"], purple: [C.purpleLight, C.purple, "#DDD6FE"], orange: ["#FFF7ED", "#C2410C", "#FED7AA"] };
+    const map = { default: [C.bg, C.sub, C.border], green: [C.successLight, C.success, "#A7F3D0"], amber: [C.warningLight, "#92400E", "#FDE68A"], red: [C.dangerLight, C.danger, "#FECACA"], blue: [C.blueLight, C.blue, "#BFDBFE"], brand: [C.brandLight, C.brandMid, "#BDE5CF"], purple: [C.purpleLight, C.purple, "#DDD6FE"] };
     const [bg, text, border] = map[color] || map.default;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { display: "inline-flex", alignItems: "center", padding: "2px 9px", borderRadius: 6, fontSize: 11, fontWeight: 600, background: bg, color: text, border: `1px solid ${border}`, whiteSpace: "nowrap" }, children: label });
   };
@@ -13503,7 +13169,7 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
     children,
     hint && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 4 }, children: hint })
   ] });
-  var Modal = ({ title, subtitle, onClose, children, width = 560 }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", inset: 0, background: "rgba(15,23,18,.45)", display: "flex", alignItems: "flex-start", justifyContent: "center", zIndex: 100, padding: "40px 16px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 16, width: "100%", maxWidth: width, border: `1px solid ${C.border}`, boxShadow: "0 20px 60px rgba(0,0,0,.15)" }, children: [
+  var Modal = ({ title, subtitle, onClose, children, width = 560 }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", inset: 0, background: "rgba(15,23,18,.5)", display: "flex", alignItems: "flex-start", justifyContent: "center", zIndex: 100, padding: "40px 16px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 16, width: "100%", maxWidth: width, border: `1px solid ${C.border}`, boxShadow: "0 20px 60px rgba(0,0,0,.15)" }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px", borderBottom: `1px solid ${C.border}` }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 15, fontWeight: 600 }, children: title }),
@@ -13524,28 +13190,8 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
     ] }),
     sub && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 4 }, children: sub })
   ] });
-  function calcScores(esg) {
-    const e = esg.env, s = esg.soc, g = esg.gov;
-    let E = 0, S = 0, G = 0;
-    const renew = parseFloat(e.renouvelable) || 0;
-    E += renew >= 70 ? 35 : renew >= 40 ? 22 : renew >= 15 ? 10 : 0;
-    const co2 = parseFloat(e.co2) || 9999;
-    E += co2 < 50 ? 35 : co2 < 200 ? 24 : co2 < 400 ? 14 : 0;
-    E += (parseFloat(e.dechets) || 0) >= 80 ? 30 : (parseFloat(e.dechets) || 0) >= 55 ? 20 : (parseFloat(e.dechets) || 0) >= 30 ? 10 : 0;
-    S += (parseFloat(s.ecartSalaire) || 99) < 3 ? 35 : (parseFloat(s.ecartSalaire) || 99) < 7 ? 24 : (parseFloat(s.ecartSalaire) || 99) < 12 ? 12 : 0;
-    S += (parseFloat(s.formation) || 0) >= 30 ? 35 : (parseFloat(s.formation) || 0) >= 18 ? 24 : (parseFloat(s.formation) || 0) >= 8 ? 12 : 0;
-    S += (parseFloat(s.turnover) || 99) < 5 ? 30 : (parseFloat(s.turnover) || 99) < 12 ? 20 : (parseFloat(s.turnover) || 99) < 20 ? 10 : 0;
-    G += (parseFloat(g.femmesDirigeantes) || 0) >= 50 ? 35 : (parseFloat(g.femmesDirigeantes) || 0) >= 35 ? 22 : (parseFloat(g.femmesDirigeantes) || 0) >= 20 ? 12 : 0;
-    G += (parseFloat(g.ethique) || 0) >= 90 ? 35 : (parseFloat(g.ethique) || 0) >= 65 ? 22 : (parseFloat(g.ethique) || 0) >= 40 ? 12 : 0;
-    G += g.whistleblower ? 20 : 0;
-    G += g.auditFreq === "quarterly" ? 10 : g.auditFreq === "biannual" ? 7 : g.auditFreq === "annual" ? 4 : 0;
-    const cl = (v) => Math.min(Math.max(Math.round(v), 0), 100);
-    const Ec = cl(E), Sc = cl(S), Gc = cl(G);
-    return { E: Ec, S: Sc, G: Gc, total: cl(Math.round((Ec + Sc + Gc) / 3)) };
-  }
-  function ScoreRing({ score, size = 110 }) {
-    const grade = score >= 80 ? "A" : score >= 65 ? "B" : score >= 50 ? "C" : "D";
-    const gc = score >= 80 ? C.success : score >= 65 ? C.accent : score >= 50 ? C.warning : C.danger;
+  function ScoreRing({ score, size = 110, label }) {
+    const gc = getGradeColor(score);
     const r = 46, circ = 2 * Math.PI * r, dash = score / 100 * circ * 0.75;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", { width: size, height: size * 0.75, viewBox: `0 0 ${size} ${size * 0.75}`, children: [
@@ -13553,55 +13199,225 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: `M ${size * 0.12} ${size * 0.7} A ${r} ${r} 0 0 1 ${size * 0.88} ${size * 0.7}`, fill: "none", stroke: gc, strokeWidth: 9, strokeLinecap: "round", strokeDasharray: `${dash} ${circ}` }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("text", { x: "50%", y: "68%", textAnchor: "middle", style: { fontSize: size * 0.2, fontWeight: 700, fill: C.text, fontFamily: "'DM Serif Display',serif" }, children: score })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `Note ${grade}`, color: score >= 80 ? "green" : score >= 65 ? "brand" : score >= 50 ? "amber" : "red" })
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `Note ${getGrade(score)}`, color: score >= 80 ? "green" : score >= 65 ? "brand" : score >= 50 ? "amber" : "red" }),
+      label && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.sub, marginTop: 2 }, children: label })
     ] });
   }
-  function DashView({ data }) {
+  function ScoreExplainModal({ scores, esg, onClose }) {
+    const pillars = [
+      {
+        key: "E",
+        label: "Environnement",
+        icon: "\u{1F331}",
+        score: scores.E,
+        color: "#10B981",
+        desc: "Ce score mesure votre impact environnemental : \xE9missions de carbone, efficacit\xE9 \xE9nerg\xE9tique et gestion des d\xE9chets.",
+        indicators: [
+          {
+            name: "\xC9missions CO\u2082 (Scope 1+2)",
+            value: esg.env.co2 || "\u2014",
+            unit: "tCO\u2082",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.env.co2) < 50 ? "\u2705 Excellent \u2014 \xE9missions tr\xE8s faibles" : parseFloat(esg.env.co2) < 200 ? "\u{1F7E1} Correct \u2014 des am\xE9liorations possibles" : "\u{1F534} \xC0 r\xE9duire \u2014 plan de d\xE9carbonation recommand\xE9"
+          },
+          {
+            name: "\xC9nergies renouvelables",
+            value: esg.env.renouvelable || "\u2014",
+            unit: "%",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.env.renouvelable) >= 70 ? "\u2705 Excellent \u2014 majorit\xE9 renouvelable" : parseFloat(esg.env.renouvelable) >= 40 ? "\u{1F7E1} Correct \u2014 progression recommand\xE9e" : "\u{1F534} \xC0 am\xE9liorer \u2014 contrat vert \xE0 envisager"
+          },
+          {
+            name: "D\xE9chets recycl\xE9s",
+            value: esg.env.dechets || "\u2014",
+            unit: "%",
+            weight: "30 pts",
+            interpretation: parseFloat(esg.env.dechets) >= 80 ? "\u2705 Excellent \u2014 tr\xE8s bon taux" : parseFloat(esg.env.dechets) >= 55 ? "\u{1F7E1} Correct" : "\u{1F534} \xC0 am\xE9liorer \u2014 fili\xE8res REP \xE0 activer"
+          }
+        ],
+        recos: ["R\xE9alisez un Bilan GES Scope 1+2+3 (ADEME)", "Souscrivez un contrat d'\xE9nergie renouvelable (RECs)", "Identifiez vos fili\xE8res REP applicables (Loi AGEC)", "D\xE9clarez sur la plateforme OPERAT si locaux \u22651 000 m\xB2"]
+      },
+      {
+        key: "S",
+        label: "Social",
+        icon: "\u{1F465}",
+        score: scores.S,
+        color: "#3B82F6",
+        desc: "Ce score \xE9value vos pratiques sociales : \xE9galit\xE9 professionnelle, formation des \xE9quipes et r\xE9tention des talents.",
+        indicators: [
+          {
+            name: "\xC9cart de r\xE9mun\xE9ration F/H",
+            value: esg.soc.ecartSalaire || "\u2014",
+            unit: "%",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.soc.ecartSalaire) < 3 ? "\u2705 Excellent \u2014 quasi-parit\xE9" : parseFloat(esg.soc.ecartSalaire) < 7 ? "\u{1F7E1} Correct \u2014 index F/H \xE0 optimiser" : "\u{1F534} Risque l\xE9gal \u2014 plan d'action obligatoire si index <75"
+          },
+          {
+            name: "Heures de formation/salari\xE9",
+            value: esg.soc.formation || "\u2014",
+            unit: "h/an",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.soc.formation) >= 30 ? "\u2705 Excellent \u2014 politique formation mature" : parseFloat(esg.soc.formation) >= 18 ? "\u{1F7E1} Correct" : "\u{1F534} Insuffisant \u2014 obligation entretiens pro (art. L.6315-1 CT)"
+          },
+          {
+            name: "Taux de turnover",
+            value: esg.soc.turnover || "\u2014",
+            unit: "%",
+            weight: "30 pts",
+            interpretation: parseFloat(esg.soc.turnover) < 5 ? "\u2705 Excellent \u2014 forte fid\xE9lisation" : parseFloat(esg.soc.turnover) < 12 ? "\u{1F7E1} Correct \u2014 dans la moyenne" : "\u{1F534} \xC9lev\xE9 \u2014 enqu\xEAte satisfaction recommand\xE9e"
+          }
+        ],
+        recos: ["Publiez l'index \xE9galit\xE9 F/H avant le 1er mars (index.egapro.travail.gouv.fr)", "V\xE9rifiez votre taux OETH \u22656% (art. L.5212-1 CT) et d\xE9clarez via DSN", "R\xE9alisez les entretiens professionnels tous les 2 ans", "Mettez en place un plan de mobilit\xE9 (\u226550 sal. \u2014 loi Climat 2021)"]
+      },
+      {
+        key: "G",
+        label: "Gouvernance",
+        icon: "\u{1F3DB}\uFE0F",
+        score: scores.G,
+        color: "#7C3AED",
+        desc: "Ce score refl\xE8te la qualit\xE9 de votre gouvernance : transparence, \xE9thique, diversit\xE9 \xE0 la direction et conformit\xE9 r\xE9glementaire.",
+        indicators: [
+          {
+            name: "Femmes en direction",
+            value: esg.gov.femmesDirigeantes || "\u2014",
+            unit: "%",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.gov.femmesDirigeantes) >= 50 ? "\u2705 Excellent \u2014 parit\xE9 atteinte" : parseFloat(esg.gov.femmesDirigeantes) >= 35 ? "\u{1F7E1} Correct \u2014 progression recommand\xE9e" : "\u{1F534} \xC0 am\xE9liorer \u2014 loi PACTE & index F/H"
+          },
+          {
+            name: "Salari\xE9s form\xE9s \xE9thique",
+            value: esg.gov.ethique || "\u2014",
+            unit: "%",
+            weight: "35 pts",
+            interpretation: parseFloat(esg.gov.ethique) >= 90 ? "\u2705 Excellent \u2014 conformit\xE9 Sapin II" : parseFloat(esg.gov.ethique) >= 65 ? "\u{1F7E1} Correct \u2014 plan de formation \xE0 compl\xE9ter" : "\u{1F534} Risque Sapin II \u2014 formation prioritaire"
+          },
+          {
+            name: "Dispositif alerte \xE9thique",
+            value: esg.gov.whistleblower ? "Oui" : "Non",
+            unit: "",
+            weight: "20 pts",
+            interpretation: esg.gov.whistleblower ? "\u2705 Conforme loi Waserman (\u226550 sal.)" : "\u{1F534} Obligatoire \u226550 sal. \u2014 loi Waserman 2022"
+          }
+        ],
+        recos: ["Mettez en place un dispositif d'alerte (art. 8 Loi Waserman 2022)", "Formez 100% des managers au code \xE9thique (Loi Sapin II)", "R\xE9alisez un audit interne annuel", "Publiez votre DPEF/rapport CSRD si vous \xEAtes dans les seuils"]
+      }
+    ];
+    const gradeInfo = {
+      "A": { label: "Excellent", desc: "Votre score est dans le top 20% des PME. Vous anticipez les obligations r\xE9glementaires futures.", color: C.success },
+      "B": { label: "Bon", desc: "Votre d\xE9marche ESG est solide. Quelques points d'am\xE9lioration pour atteindre l'excellence.", color: C.accent },
+      "C": { label: "En progr\xE8s", desc: "Des actions concr\xE8tes sont n\xE9cessaires pour r\xE9pondre aux obligations r\xE9glementaires \xE0 venir.", color: C.warning },
+      "D": { label: "\xC0 am\xE9liorer", desc: "Des risques r\xE9glementaires existent. Un plan d'action ESG prioritaire est recommand\xE9.", color: C.danger }
+    };
+    const g = getGrade(scores.total);
+    const gi = gradeInfo[g];
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Modal, { title: "Comprendre mon score ESG", subtitle: "Analyse d\xE9taill\xE9e par pilier avec recommandations", onClose, width: 720, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { animation: "fadeIn .3s ease" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 12, padding: 20, marginBottom: 20, display: "flex", gap: 20, alignItems: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", flexShrink: 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Score global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 48, fontWeight: 800, color: gi.color, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: scores.total }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { fontSize: 14, fontWeight: 700, color: gi.color, marginTop: 4 }, children: [
+            "Note ",
+            g,
+            " \u2014 ",
+            gi.label
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, borderLeft: `1px solid ${C.border}`, paddingLeft: 20 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.text, lineHeight: 1.7, marginBottom: 12 }, children: gi.desc }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }, children: [{ label: "Environnement", s: scores.E }, { label: "Social", s: scores.S }, { label: "Gouvernance", s: scores.G }].map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 8, padding: "8px 12px", border: `1px solid ${C.border}` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, marginBottom: 4 }, children: p.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 18, fontWeight: 700, color: getGradeColor(p.s), fontFamily: "'DM Serif Display',serif" }, children: [
+              p.s,
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 400, color: C.muted }, children: "/100" })
+            ] })
+          ] }, p.label)) })
+        ] })
+      ] }),
+      pillars.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 16, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "14px 20px", background: C.bg, display: "flex", alignItems: "center", gap: 10, borderBottom: `1px solid ${C.border}` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 20 }, children: p.icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 700, fontSize: 14 }, children: p.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted }, children: p.desc })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 24, fontWeight: 800, color: getGradeColor(p.score), fontFamily: "'DM Serif Display',serif" }, children: p.score }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `Note ${getGrade(p.score)}`, color: p.score >= 80 ? "green" : p.score >= 65 ? "brand" : p.score >= 50 ? "amber" : "red" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: 16 }, children: [
+          p.indicators.map((ind, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 12, padding: "8px 0", borderBottom: i < p.indicators.length - 1 ? `1px solid ${C.border}` : "none", alignItems: "flex-start" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, marginBottom: 2 }, children: ind.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted }, children: ind.interpretation })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "right", flexShrink: 0 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 15, fontWeight: 700, color: C.text }, children: [
+                ind.value,
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.muted, marginLeft: 2 }, children: ind.unit })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted }, children: ind.weight })
+            ] })
+          ] }, i)),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 14, background: C.brandLight, borderRadius: 8, padding: "12px 14px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 6 }, children: "\u{1F4A1} Recommandations" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { style: { paddingLeft: 16 }, children: p.recos.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 12, color: C.brandMid, lineHeight: 1.7 }, children: r }, i)) })
+          ] })
+        ] })
+      ] }, p.key))
+    ] }) });
+  }
+  function DashView({ data, onScoreDetail }) {
     const sc = calcScores(data.esg);
     const deptCounts = data.employees.reduce((a, e) => {
       a[e.dept] = (a[e.dept] || 0) + 1;
       return a;
     }, {});
     const fournOk = data.fournisseurs.filter((f) => f.scoreESG >= 70).length;
-    const politiquesPubliees = data.rse.politiques.filter((p) => p.statut === "Publi\xE9").length;
+    const polPub = data.rse.politiques.filter((p) => p.statut === "Publi\xE9").length;
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 14, background: C.brandLight, borderRadius: 12, padding: "16px 22px", marginBottom: 24, border: `1px solid #BDE5CF` }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 44 }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 15, fontWeight: 700, color: C.brand }, children: [
-            "Bienvenue, ",
+            "Bonjour, ",
             data.admin.prenom,
             " \u{1F44B}"
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.brandMid }, children: [
-            "Tableau de bord ESG \xB7 Exercice 2025 \xB7 ",
-            data.company.name
+            data.admin.role,
+            " \xB7 Tableau de bord ESG 2025"
           ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "right" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted }, children: "Score global" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 30, fontWeight: 800, color: sc.total >= 65 ? C.success : C.warning, fontFamily: "'DM Serif Display',serif", lineHeight: 1.1 }, children: [
-            sc.total,
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 14, fontWeight: 400, color: C.muted }, children: "/100" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 2 }, children: "Score global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: onScoreDetail, style: { background: "none", border: "none", cursor: "pointer", textAlign: "right", padding: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 30, fontWeight: 800, color: getGradeColor(sc.total), fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: [
+              sc.total,
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 14, fontWeight: 400, color: C.muted }, children: "/100" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.accent, marginTop: 2 }, children: "Comprendre mon score \u2192" })
           ] })
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Salari\xE9s", value: data.employees.length, icon: "\u{1F465}", sub: `${data.employees.filter((e) => e.genre === "F").length} femmes \xB7 ${data.employees.filter((e) => e.genre === "M").length} hommes` }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Fournisseurs ESG", value: `${fournOk}/${data.fournisseurs.length}`, icon: "\u{1F91D}", sub: "fournisseurs score \u2265 70", color: C.accent }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Politiques RSE", value: politiquesPubliees, icon: "\u{1F4DC}", sub: `sur ${data.rse.politiques.length} r\xE9dig\xE9es`, color: C.purple }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Conformit\xE9 CSRD", value: "74", unit: "%", icon: "\u2696\uFE0F", sub: "8 crit\xE8res sur 11 remplis", color: C.warning })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Politiques RSE", value: polPub, icon: "\u{1F4DC}", sub: `sur ${data.rse.politiques.length} r\xE9dig\xE9es`, color: C.purple }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Conformit\xE9 CSRD", value: 74, unit: "%", icon: "\u2696\uFE0F", sub: "8 crit\xE8res sur 11 remplis", color: C.warning })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 290px", gap: 16 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 280px", gap: 16 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginBottom: 18 }, children: "Scores ESG" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 20 }, children: [{ label: "Environnement", score: sc.E, icon: "\u{1F331}" }, { label: "Social", score: sc.S, icon: "\u{1F465}" }, { label: "Gouvernance", score: sc.G, icon: "\u{1F3DB}\uFE0F" }].map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: 16, background: C.bg, borderRadius: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 600 }, children: "Scores ESG par pilier" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: onScoreDetail, children: "D\xE9tails \u2192" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 20 }, children: [{ label: "Environnement", score: sc.E, icon: "\u{1F331}" }, { label: "Social", score: sc.S, icon: "\u{1F465}" }, { label: "Gouvernance", score: sc.G, icon: "\u{1F3DB}\uFE0F" }].map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "14px 10px", background: C.bg, borderRadius: 10 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 20, marginBottom: 8 }, children: p.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreRing, { score: p.score, size: 100 }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.sub, marginTop: 8 }, children: p.label })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreRing, { score: p.score, size: 100, label: p.label })
           ] }, p.label)) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { borderTop: `1px solid ${C.border}`, paddingTop: 16 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.muted, marginBottom: 12, textTransform: "uppercase", letterSpacing: 0.5 }, children: "R\xE9partition par d\xE9partement" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }, children: "R\xE9partition par d\xE9partement" }),
             Object.entries(deptCounts).map(([dept, count]) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, color: C.sub, width: 96, flexShrink: 0 }, children: dept }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { flex: 1, height: 5, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${count / data.employees.length * 100}%`, background: C.accent, borderRadius: 99 } }) }),
@@ -13611,32 +13427,39 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginBottom: 16 }, children: "Politiques RSE actives" }),
-          data.rse.politiques.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 0", borderBottom: `1px solid ${C.border}` }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 6 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: p.titre }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: p.statut === "Publi\xE9" ? "green" : p.statut === "Valid\xE9" ? "brand" : p.statut === "En r\xE9vision" ? "amber" : "default" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, marginBottom: 8 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.type }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, color: C.muted }, children: [
-                "v",
-                p.version,
-                " \xB7 ",
-                p.responsable
-              ] })
-            ] }),
-            p.objectifs.slice(0, 1).map((o) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.sub }, children: o.titre }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontWeight: 600 }, children: [
-                  o.avancement,
-                  "%"
+          data.rse.politiques.map((p) => {
+            const avg = p.objectifs.length ? Math.round(p.objectifs.reduce((s, o) => s + o.avancement, 0) / p.objectifs.length) : 0;
+            return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 0", borderBottom: `1px solid ${C.border}` }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 6 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: p.titre }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: p.statut === "Publi\xE9" ? "green" : p.statut === "Valid\xE9" ? "brand" : p.statut === "En r\xE9vision" ? "amber" : "default" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, marginBottom: 8 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.type }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, color: C.muted }, children: [
+                  "v",
+                  p.version,
+                  " \xB7 ",
+                  p.responsable
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${o.avancement}%`, background: C.accent, borderRadius: 99 } }) })
-            ] }, o.id))
-          ] }, p.id)),
-          data.rse.politiques.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted, textAlign: "center", padding: "20px 0" }, children: "Aucune politique RSE" })
+              p.objectifs.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { color: C.sub }, children: [
+                    p.objectifs.length,
+                    " objectif",
+                    p.objectifs.length > 1 ? "s" : ""
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontWeight: 600 }, children: [
+                    avg,
+                    "%"
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${avg}%`, background: C.accent, borderRadius: 99 } }) })
+              ] })
+            ] }, p.id);
+          }),
+          data.rse.politiques.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted, textAlign: "center", padding: "20px 0" }, children: "Aucune politique RSE \u2014 cr\xE9ez-en une dans le module RSE" })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 12 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18, flex: 1 }, children: [
@@ -13650,9 +13473,9 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
             ] }, a.id))
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 12, border: `1px solid #BDE5CF`, padding: 16 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.brandMid, marginBottom: 4 }, children: "\u{1F4CB} Prochaine \xE9ch\xE9ance" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, fontWeight: 700, color: C.brand }, children: "Rapport CSRD 2025" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.brandMid, marginTop: 4 }, children: "Soumettre avant le 30 juin 2026" })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.brandMid, marginBottom: 4 }, children: "\u{1F4CB} Prochaine \xE9ch\xE9ance CSRD" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, fontWeight: 700, color: C.brand }, children: "30 juin 2026" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.brandMid, marginTop: 4 }, children: "Rapport de durabilit\xE9 2025" })
           ] })
         ] })
       ] })
@@ -13662,23 +13485,36 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
     const [search, setSearch] = (0, import_react.useState)("");
     const [filterOrigine, setFilterOrigine] = (0, import_react.useState)("");
     const [filterDomaine, setFilterDomaine] = (0, import_react.useState)("");
-    const [filterStatut, setFilterStatut] = (0, import_react.useState)("");
     const [selected, setSelected] = (0, import_react.useState)(null);
     const filtered = LEGISLATION.filter((l) => {
       const q = search.toLowerCase();
       const matchQ = !q || (l.titre.toLowerCase().includes(q) || l.code.toLowerCase().includes(q) || l.resume.toLowerCase().includes(q) || l.tags.some((t) => t.toLowerCase().includes(q)));
-      return matchQ && (!filterOrigine || l.origine === filterOrigine) && (!filterDomaine || l.domaine === filterDomaine) && (!filterStatut || l.statut.includes(filterStatut));
+      return matchQ && (!filterOrigine || l.origine === filterOrigine) && (!filterDomaine || l.domaine === filterDomaine);
     });
     const origines = [...new Set(LEGISLATION.map((l) => l.origine))];
     const domaines = [...new Set(LEGISLATION.map((l) => l.domaine))];
-    const statuts = ["En vigueur", "Transposition en cours", "Phase transitoire", "R\xE9f\xE9rence internationale"];
-    const statutColor = (s) => s.includes("En vigueur") ? "green" : s.includes("transitoire") || s.includes("cours") ? "amber" : s.includes("R\xE9f\xE9rence") ? "blue" : "default";
+    const statutColor = (s) => s.includes("En vigueur") ? "green" : s.includes("cours") || s.includes("transitoire") ? "amber" : s.includes("R\xE9f\xE9rence") ? "blue" : "default";
     const origineColor = (o) => o === "UE" ? "blue" : o === "France" ? "brand" : o === "International" ? "purple" : "default";
     const law = selected ? LEGISLATION.find((l) => l.id === selected) : null;
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: law ? "1fr 480px" : "1fr", gap: 16, height: "calc(100vh - 110px)" }, children: [
+    const handleExportLaw = (l) => {
+      const html = `
+      <h2>${l.code} \u2014 ${l.titre}</h2>
+      <p><strong>Type :</strong> ${l.type} | <strong>Origine :</strong> ${l.origine} | <strong>Statut :</strong> ${l.statut}</p>
+      <p><strong>Date :</strong> ${l.date} | <strong>En vigueur :</strong> ${l.entreeVigueur}</p>
+      <h2>R\xE9sum\xE9</h2><p>${l.resume}</p>
+      <h2>Qui est concern\xE9 ?</h2><p>${l.seuils}</p>
+      <h2>Impact pour les PME</h2><p>${l.impactPME}</p>
+      <h2>Obligations cl\xE9s</h2><ul>${l.obligationsCl\u00E9s.map((o) => `<li>${o}</li>`).join("")}</ul>
+      <h2>Articles de loi de r\xE9f\xE9rence</h2><ul>${l.articlesLoi.map((a) => `<li>${a}</li>`).join("")}</ul>
+      <h2>Sanctions</h2><p>${l.sanctions}</p>
+      <p><strong>Source officielle :</strong> ${l.lienOfficiel}</p>
+    `;
+      exportPDF(`Fiche l\xE9gislative \u2014 ${l.code}`, html);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: law ? "1fr 460px" : "1fr", gap: 16, height: "calc(100vh - 110px)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { overflow: "hidden", display: "flex", flexDirection: "column" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: search, onChange: (e) => setSearch(e.target.value), placeholder: "Rechercher (CSRD, carbone, salaire\u2026)", style: { flex: 1, minWidth: 200 } }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: search, onChange: (e) => setSearch(e.target.value), placeholder: "Rechercher (CSRD, carbone, \xE9galit\xE9, DUERP\u2026)", style: { flex: 1, minWidth: 200 } }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: filterOrigine, onChange: (e) => setFilterOrigine(e.target.value), style: { width: 130 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Toutes origines" }),
             origines.map((o) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: o }, o))
@@ -13686,41 +13522,36 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: filterDomaine, onChange: (e) => setFilterDomaine(e.target.value), style: { width: 150 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Tous domaines" }),
             domaines.map((d) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: d }, d))
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: filterStatut, onChange: (e) => setFilterStatut(e.target.value), style: { width: 170 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Tous statuts" }),
-            statuts.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s))
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 10 }, children: [
           filtered.length,
           " texte",
           filtered.length > 1 ? "s" : "",
-          " trouv\xE9",
-          filtered.length > 1 ? "s" : ""
+          " \xB7 ",
+          LEGISLATION.length,
+          " r\xE9f\xE9rences au total"
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { overflow: "auto", flex: 1 }, children: filtered.map((l) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
           "div",
           {
             onClick: () => setSelected(l.id === selected ? null : l.id),
-            style: { background: selected === l.id ? C.brandLight : C.surface, borderRadius: 12, border: `1.5px solid ${selected === l.id ? C.accent : C.border}`, padding: "16px 20px", marginBottom: 8, cursor: "pointer", transition: "all .15s" },
+            style: { background: selected === l.id ? C.brandLight : C.surface, borderRadius: 12, border: `1.5px solid ${selected === l.id ? C.accent : C.border}`, padding: "14px 18px", marginBottom: 8, cursor: "pointer", transition: "all .15s" },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 8 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 6 }, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 4 }, children: [
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif" }, children: l.code }),
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.origine, color: origineColor(l.origine) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.statut, color: statutColor(l.statut) })
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.statut, color: statutColor(l.statut) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.domaine })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, fontWeight: 600, color: C.text, lineHeight: 1.4 }, children: l.titre })
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text, lineHeight: 1.4 }, children: l.titre })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "right", flexShrink: 0 }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.domaine }),
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 4 }, children: l.date?.slice(0, 4) })
-                ] })
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, flexShrink: 0 }, children: l.date?.slice(0, 4) })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.sub, lineHeight: 1.6 }, children: [
-                l.resume.slice(0, 160),
+                l.resume.slice(0, 150),
                 "\u2026"
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 4, flexWrap: "wrap", marginTop: 8 }, children: l.tags.slice(0, 4).map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: C.bg, color: C.muted, padding: "2px 7px", borderRadius: 99, border: `1px solid ${C.border}` }, children: t }, t)) })
@@ -13730,65 +13561,74 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
         )) })
       ] }),
       law && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "auto", display: "flex", flexDirection: "column" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "20px 24px", borderBottom: `1px solid ${C.border}`, position: "sticky", top: 0, background: C.surface, zIndex: 10 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 20, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif", marginBottom: 4 }, children: law.code }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text, lineHeight: 1.4, maxWidth: 380 }, children: law.titre })
-            ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "18px 22px", borderBottom: `1px solid ${C.border}`, position: "sticky", top: 0, background: C.surface, zIndex: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 18, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif" }, children: law.code }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setSelected(null), style: { background: "none", border: "none", cursor: "pointer", fontSize: 18, color: C.muted }, children: "\xD7" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text, lineHeight: 1.4, marginBottom: 10 }, children: law.titre }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 5, flexWrap: "wrap" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.origine, color: origineColor(law.origine) }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.statut, color: statutColor(law.statut) }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.domaine }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.type })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "20px 24px", overflow: "auto" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "18px 22px", overflow: "auto" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 16 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 8, padding: "10px 14px" }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 4 }, children: "Date du texte" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text }, children: law.date })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: law.date })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 8, padding: "10px 14px" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 4 }, children: "Entr\xE9e en vigueur" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text }, children: law.entreeVigueur })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 4 }, children: "En vigueur" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: law.entreeVigueur })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 20 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8 }, children: "R\xE9sum\xE9" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.sub, lineHeight: 1.8 }, children: law.resume })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.warningLight, borderRadius: 10, padding: "14px 16px", marginBottom: 16, border: `1px solid #FDE68A` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }, children: "R\xE9sum\xE9" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.sub, lineHeight: 1.8, marginBottom: 16 }, children: law.resume }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.warningLight, borderRadius: 10, padding: "12px 14px", marginBottom: 12, border: `1px solid #FDE68A` }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: "#92400E", marginBottom: 6 }, children: "\u26A0\uFE0F Qui est concern\xE9 ?" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: "#78350F", lineHeight: 1.7 }, children: law.seuils })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: "#78350F", lineHeight: 1.7 }, children: law.seuils })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 10, padding: "14px 16px", marginBottom: 16, border: `1px solid #BDE5CF` }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 6 }, children: "\u{1F3E2} Impact pour votre PME" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.brand, lineHeight: 1.7 }, children: law.impactPME })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 10, padding: "12px 14px", marginBottom: 16, border: `1px solid #BDE5CF` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 6 }, children: "\u{1F3E2} Impact PME" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.brand, lineHeight: 1.7 }, children: law.impactPME })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 20 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 10 }, children: "Obligations cl\xE9s" }),
-            law.obligationsCl\u00E9s.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, padding: "8px 0", borderBottom: `1px solid ${C.border}` }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.accent, fontWeight: 700, fontSize: 14, marginTop: 1 }, children: "\u2192" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.text, lineHeight: 1.6 }, children: o })
-            ] }, i))
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.dangerLight, borderRadius: 10, padding: "14px 16px", marginBottom: 16, border: `1px solid #FECACA` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8 }, children: "Obligations cl\xE9s" }),
+          law.obligationsCl\u00E9s.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "7px 0", borderBottom: `1px solid ${C.border}` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.accent, fontWeight: 700, fontSize: 13, marginTop: 1 }, children: "\u2192" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.text, lineHeight: 1.6 }, children: o })
+          ] }, i)),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, margin: "14px 0 8px" }, children: "Articles de loi de r\xE9f\xE9rence" }),
+          law.articlesLoi.map((a, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "6px 0", borderBottom: `1px solid ${C.border}` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.blue, fontSize: 12, fontWeight: 700, flexShrink: 0 }, children: "\xA7" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.sub, lineHeight: 1.6, fontFamily: "monospace", fontSize: 11 }, children: a })
+          ] }, i)),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.dangerLight, borderRadius: 10, padding: "12px 14px", margin: "14px 0 16px", border: `1px solid #FECACA` }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.danger, marginBottom: 6 }, children: "\u26A1 Sanctions" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: "#991B1B", lineHeight: 1.7 }, children: law.sanctions })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: "#991B1B", lineHeight: 1.7 }, children: law.sanctions })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 10 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "a",
-            {
-              href: law.lienOfficiel,
-              target: "_blank",
-              rel: "noreferrer",
-              style: { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: C.brand, color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 500, textDecoration: "none" },
-              children: "\u{1F517} Texte officiel complet"
-            }
-          ) })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "a",
+              {
+                href: law.lienOfficiel,
+                target: "_blank",
+                rel: "noreferrer",
+                style: { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: C.brand, color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 500, textDecoration: "none" },
+                children: "\u{1F517} Texte officiel"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "button",
+              {
+                onClick: () => handleExportLaw(law),
+                style: { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "transparent", border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, fontSize: 13, fontWeight: 500, cursor: "pointer" },
+                children: "\u{1F4C4} Exporter PDF"
+              }
+            )
+          ] })
         ] })
       ] })
     ] });
@@ -13796,12 +13636,28 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
   function RseView({ rse, setRse, admin, apiKey }) {
     const [view, setView] = (0, import_react.useState)("list");
     const [selected, setSelected] = (0, import_react.useState)(null);
+    const [aiMessages, setAiMessages] = (0, import_react.useState)([{ role: "assistant", content: `Bonjour ${admin.prenom} ! \u{1F44B} Je suis votre assistant RSE, propuls\xE9 par Claude.
+
+Je connais toute la l\xE9gislation fran\xE7aise et europ\xE9enne applicable \xE0 votre d\xE9marche ESG. Je peux vous aider \xE0 :
+
+**Cr\xE9er et am\xE9liorer vos politiques RSE**
+- R\xE9diger une politique environnementale conforme ESRS E1
+- Adapter votre code \xE9thique aux exigences Sapin II
+- Structurer votre politique achats responsables (Loi Vigilance)
+
+**Analyser votre conformit\xE9 r\xE9glementaire**
+- Identifier vos obligations selon votre taille
+- Pr\xE9parer votre rapport CSRD/DPEF
+- V\xE9rifier votre conformit\xE9 Sapin II, RGPD, Index F/H
+
+**Proposer des objectifs concrets et mesurables**
+
+Que souhaitez-vous faire ?` }]);
     const [aiPrompt, setAiPrompt] = (0, import_react.useState)("");
-    const [aiMessages, setAiMessages] = (0, import_react.useState)([]);
     const [aiLoading, setAiLoading] = (0, import_react.useState)(false);
-    const [showNewModal, setShowNewModal] = (0, import_react.useState)(false);
+    const [showNew, setShowNew] = (0, import_react.useState)(false);
     const chatEndRef = (0, import_react.useRef)(null);
-    const TYPES_RSE = ["Environnement", "Social", "Gouvernance", "Achats responsables", "Diversit\xE9 & Inclusion", "\xC9thique", "Donn\xE9es & RGPD", "Sant\xE9 & S\xE9curit\xE9"];
+    const TYPES_RSE = Object.keys(RSE_LEGAL_MAP);
     const STATUTS_RSE = ["Brouillon", "En r\xE9vision", "Valid\xE9", "Publi\xE9", "Archiv\xE9"];
     const pol = selected ? rse.politiques.find((p) => p.id === selected) : null;
     const updatePol = (fn) => setRse((r) => ({ ...r, politiques: r.politiques.map((p) => p.id === selected ? fn(p) : p) }));
@@ -13812,70 +13668,87 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
       setAiMessages(newMessages);
       setAiPrompt("");
       setAiLoading(true);
-      const systemPrompt = `Tu es un expert RSE et d\xE9veloppement durable sp\xE9cialis\xE9 dans la r\xE9glementation fran\xE7aise et europ\xE9enne.
-Tu aides l'entreprise "${admin?.prenom} ${admin?.nom}" (${rse.politiques.length > 0 ? rse.politiques.map((p) => p.titre).join(", ") : "sans politique RSE actuelle"}) \xE0 cr\xE9er et optimiser ses politiques RSE.
-Tu connais parfaitement : CSRD, ESRS, DPEF, Loi Vigilance, Loi PACTE, Loi Sapin II, AGEC, Loi Climat, Index \xC9galit\xE9, OETH, ISO 14001, ISO 26000, GRI Standards, Taxonomie UE, SFDR.
-Tes r\xE9ponses sont structur\xE9es, concr\xE8tes et directement actionnables pour une PME fran\xE7aise.
-R\xE9ponds en markdown pour structurer tes r\xE9ponses (titres, listes, gras).
-${pol ? `La politique en cours d'\xE9dition : "${pol.titre}" (${pol.type}, statut: ${pol.statut})` : ""}`;
+      const system = `Tu es un expert RSE et juriste sp\xE9cialis\xE9 en droit fran\xE7ais et europ\xE9en de la durabilit\xE9.
+Tu aides ${admin.prenom} ${admin.nom} (${admin.role}) \xE0 cr\xE9er et optimiser ses politiques RSE.
+
+Tu connais parfaitement et cites les articles de loi pr\xE9cis :
+- CSRD (R\xE8glement 2023/2772), ESRS E1-G1, DPEF (Art. L.225-102-1 Code com.)
+- Loi PACTE (Art. 1833 CC), Loi Sapin II (Art. 17), Loi Vigilance (Art. L.225-102-4 Code com.)
+- Loi Climat (Art. 301-303), AGEC (Art. L.541-10), D\xE9cret Tertiaire (D\xE9cret 2019-771)
+- Index \xC9galit\xE9 F/H (Art. L.1142-8 CT), OETH (Art. L.5212-1 CT), RGPD (Art. 5, 28, 32, 33)
+- Sant\xE9 au travail (Loi 2021-1018), Formation (Art. L.6315-1 CT), Plan mobilit\xE9 (Art. L.1214-8-2 CT)
+- ISO 14001:2015, ISO 26000:2010, GRI Standards 2021, EcoVadis
+
+Tes r\xE9ponses sont :
+- Structur\xE9es en Markdown (titres ##, listes -, gras **)
+- Concr\xE8tes et directement actionnables pour une PME
+- Incluent syst\xE9matiquement les articles de loi pertinents
+- Proposent des objectifs SMART avec indicateurs mesurables
+
+Politiques RSE actuelles : ${rse.politiques.map((p) => `${p.titre} (${p.type}, ${p.statut})`).join(", ") || "aucune"}
+${pol ? `Politique en cours d'\xE9dition : "${pol.titre}" (${pol.type})` : ""}`;
       try {
-        const resp = await fetch("http://localhost:3000/api/ai", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
-            system: systemPrompt
-          })
-        });
+        const resp = await fetch("/api/ai", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: newMessages.map((m) => ({ role: m.role, content: m.content })), system, apiKey }) });
         const data = await resp.json();
-        const answer = data.content?.[0]?.text || data.error || "Erreur de r\xE9ponse.";
-        setAiMessages((prev) => [...prev, { role: "assistant", content: answer }]);
-      } catch (e) {
-        setAiMessages((prev) => [...prev, { role: "assistant", content: "\u26A0\uFE0F Impossible de contacter le serveur IA. V\xE9rifiez que votre cl\xE9 API est configur\xE9e dans les param\xE8tres." }]);
+        const text = data.content?.[0]?.text || data.error || "Erreur de r\xE9ponse.";
+        setAiMessages((p) => [...p, { role: "assistant", content: text }]);
+      } catch {
+        setAiMessages((p) => [...p, { role: "assistant", content: "\u26A0\uFE0F Erreur de connexion. V\xE9rifiez que le serveur est bien lanc\xE9 avec `node server.js`." }]);
       }
       setAiLoading(false);
     };
     (0, import_react.useEffect)(() => {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [aiMessages]);
-    const renderMarkdown = (text) => {
-      const lines = text.split("\n");
-      return lines.map((line, i) => {
-        if (line.startsWith("## ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 700, color: C.brand, margin: "14px 0 6px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(3) }, i);
-        if (line.startsWith("# ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { style: { fontSize: 15, fontWeight: 700, color: C.brand, margin: "0 0 10px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(2) }, i);
-        if (line.startsWith("- ") || line.startsWith("\u2022 ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 13, color: C.text, lineHeight: 1.7, marginLeft: 16, marginBottom: 2 }, children: line.slice(2) }, i);
-        if (line.startsWith("**") && line.endsWith("**")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 700, color: C.text, margin: "6px 0" }, children: line.slice(2, -2) }, i);
-        if (line === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}, i);
-        const withBold = line.replace(/\*\*(.*?)\*\*/g, (_, m) => `<strong>${m}</strong>`);
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.text, lineHeight: 1.7, marginBottom: 4 }, dangerouslySetInnerHTML: { __html: withBold } }, i);
-      });
-    };
+    const renderMD = (text) => text.split("\n").map((line, i) => {
+      if (line.startsWith("## ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 700, color: C.brand, margin: "14px 0 6px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(3) }, i);
+      if (line.startsWith("# ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { style: { fontSize: 15, fontWeight: 700, color: C.brand, margin: "0 0 10px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(2) }, i);
+      if (line.startsWith("- ") || line.startsWith("\u2022 ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 12, color: C.text, lineHeight: 1.7, marginLeft: 16, marginBottom: 2 }, children: line.slice(2).replace(/\*\*(.*?)\*\*/g, (_, m) => `<b>${m}</b>`) }, i);
+      if (line === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}, i);
+      const html = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.text, lineHeight: 1.7, marginBottom: 3 }, dangerouslySetInnerHTML: { __html: html } }, i);
+    });
     const NewPolModal = () => {
-      const [f, setF] = (0, import_react.useState)({ id: uid(), titre: "", type: "Environnement", statut: "Brouillon", responsable: `${admin.prenom} ${admin.nom}`, dateCreation: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10), dateMaj: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10), contenu: "", objectifs: [], version: "1.0" });
+      const [f, setF] = (0, import_react.useState)({ id: uid(), titre: "", type: "Environnement", statut: "Brouillon", responsable: `${admin.prenom} ${admin.nom}`, dateCreation: todayStr(), dateMaj: todayStr(), contenu: "", objectifs: [], version: "1.0" });
       const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
-      const useTemplate = (t) => set("contenu", RSE_TEMPLATES[t] || "");
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Nouvelle politique RSE", subtitle: "Cr\xE9ez une politique de z\xE9ro ou partez d'un mod\xE8le", onClose: () => setShowNewModal(false), width: 620, children: [
+      const lm = RSE_LEGAL_MAP[f.type];
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Nouvelle politique RSE", subtitle: "Choisissez un type et partez d'un mod\xE8le pr\xE9-rempli", onClose: () => setShowNew(false), width: 640, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Titre de la politique", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.titre, onChange: (e) => set("titre", e.target.value), placeholder: "Ex: Politique Environnementale" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.type, onChange: (e) => set("type", e.target.value), children: TYPES_RSE.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Titre de la politique", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.titre, onChange: (e) => set("titre", e.target.value), placeholder: "Ex: Politique Environnementale 2025" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type de politique", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.type, onChange: (e) => set("type", e.target.value), children: TYPES_RSE.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Responsable", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.responsable, onChange: (e) => set("responsable", e.target.value) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Statut initial", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.statut, onChange: (e) => set("statut", e.target.value), children: STATUTS_RSE.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s)) }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 16 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.sub, marginBottom: 8 }, children: "Partir d'un mod\xE8le" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }, children: Object.keys(RSE_TEMPLATES).map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => {
-            useTemplate(t);
-            set("titre", t);
-          }, style: { padding: "8px 12px", background: f.contenu === RSE_TEMPLATES[t] ? C.brandLight : C.bg, border: `1px solid ${f.contenu === RSE_TEMPLATES[t] ? C.accent : C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 12, color: C.text }, children: [
-            "\u{1F4C4} ",
-            t
-          ] }, t)) })
+        lm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 10, padding: 16, marginBottom: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 700, color: C.brand, marginBottom: 8 }, children: [
+            "\u2696\uFE0F Cadre l\xE9gal applicable \u2014 ",
+            f.type
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10 }, children: lm.lois.map((l) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l, color: "brand" }, l)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.muted, marginBottom: 6 }, children: "Articles de loi cl\xE9s :" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { style: { paddingLeft: 16 }, children: lm.articles.map((a, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 11, color: C.sub, lineHeight: 1.7, fontFamily: "monospace" }, children: a }, i)) })
         ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.sub, marginBottom: 8 }, children: "Partir d'un mod\xE8le pr\xE9-rempli" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 16 }, children: Object.keys(RSE_TEMPLATES).map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          "button",
+          {
+            onClick: () => {
+              set("contenu", RSE_TEMPLATES[t]);
+              if (!f.titre) set("titre", t);
+            },
+            style: { padding: "8px 12px", background: f.contenu === RSE_TEMPLATES[t] ? C.brandLight : C.bg, border: `1px solid ${f.contenu === RSE_TEMPLATES[t] ? C.accent : C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 12, color: C.text },
+            children: [
+              "\u{1F4C4} ",
+              t
+            ]
+          },
+          t
+        )) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setShowNewModal(false), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setShowNew(false), children: "Annuler" }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
             setRse((r) => ({ ...r, politiques: [...r.politiques, f] }));
-            setShowNewModal(false);
+            setShowNew(false);
             setSelected(f.id);
             setView("editor");
           }, disabled: !f.titre, children: "Cr\xE9er la politique" })
@@ -13886,63 +13759,75 @@ ${pol ? `La politique en cours d'\xE9dition : "${pol.titre}" (${pol.type}, statu
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, marginBottom: 24 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 22, fontWeight: 700, color: C.text, fontFamily: "'DM Serif Display',serif", marginBottom: 4 }, children: "Politiques RSE" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted }, children: "Cr\xE9ez, g\xE9rez et optimisez vos politiques de responsabilit\xE9 soci\xE9tale avec l'aide de l'IA." })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted }, children: "R\xE9digez, g\xE9rez et optimisez vos politiques avec l'aide de l'IA et du cadre l\xE9gal." })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { icon: "\u{1F916}", variant: "outline", onClick: () => setView("ai"), children: "Assistant IA RSE" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { icon: "+", onClick: () => setShowNewModal(true), children: "Nouvelle politique" })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => {
+          setView("ai");
+        }, children: "\u{1F916} Assistant IA" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setShowNew(true), children: "+ Nouvelle politique" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 24 }, children: STATUTS_RSE.slice(0, 4).map((s) => {
-        const count = rse.politiques.filter((p) => p.statut === s).length;
-        const colors = { Brouillon: "default", Valid\u00E9: "brand", "En r\xE9vision": "amber", Publi\u00E9: "green", Archiv\u00E9: "default" };
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: "14px 18px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 4 }, children: s }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 24, fontWeight: 700, fontFamily: "'DM Serif Display',serif", color: C.text }, children: count })
-        ] }, s);
-      }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 24 }, children: STATUTS_RSE.slice(0, 4).map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: "14px 18px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 4 }, children: s }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 24, fontWeight: 700, fontFamily: "'DM Serif Display',serif", color: C.text }, children: rse.politiques.filter((p) => p.statut === s).length })
+      ] }, s)) }),
       rse.politiques.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "60px 24px", background: C.surface, borderRadius: 12, border: `1px solid ${C.border}` }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 48, marginBottom: 16 }, children: "\u{1F4DC}" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 16, fontWeight: 700, marginBottom: 8 }, children: "Aucune politique RSE" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted, marginBottom: 24 }, children: "Commencez par cr\xE9er votre premi\xE8re politique ou laissez l'IA vous guider." }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, justifyContent: "center" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", icon: "\u{1F916}", onClick: () => setView("ai"), children: "Demander \xE0 l'IA" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { icon: "+", onClick: () => setShowNewModal(true), children: "Cr\xE9er une politique" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setView("ai"), children: "\u{1F916} Assistant IA" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setShowNew(true), children: "+ Cr\xE9er une politique" })
         ] })
       ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }, children: rse.politiques.map((p) => {
-        const avgAvancement = p.objectifs.length ? Math.round(p.objectifs.reduce((s, o) => s + o.avancement, 0) / p.objectifs.length) : 0;
-        const statColors = { Brouillon: "default", "En r\xE9vision": "amber", Valid\u00E9: "brand", Publi\u00E9: "green", Archiv\u00E9: "default" };
+        const avg = p.objectifs.length ? Math.round(p.objectifs.reduce((s, o) => s + o.avancement, 0) / p.objectifs.length) : 0;
+        const sc = { Brouillon: "default", "En r\xE9vision": "amber", Valid\u00E9: "brand", Publi\u00E9: "green", Archiv\u00E9: "default" };
+        const lm = RSE_LEGAL_MAP[p.type];
+        const handleExport = () => {
+          const html = `
+                <h2>${p.titre}</h2>
+                <p><strong>Type :</strong> ${p.type} | <strong>Statut :</strong> ${p.statut} | <strong>Version :</strong> ${p.version}</p>
+                <p><strong>Responsable :</strong> ${p.responsable} | <strong>Mis \xE0 jour :</strong> ${p.dateMaj}</p>
+                ${lm ? `<h2>Cadre l\xE9gal applicable</h2><ul>${lm.lois.map((l) => `<li>${l}</li>`).join("")}</ul><h2>Articles de r\xE9f\xE9rence</h2><ul>${lm.articles.map((a) => `<li>${a}</li>`).join("")}</ul>` : ""}
+                <h2>Contenu de la politique</h2>
+                <div>${p.contenu.replace(/\n/g, "<br/>")}</div>
+                ${p.objectifs.length ? `<h2>Objectifs & KPIs</h2><table><tr><th>Objectif</th><th>Indicateur</th><th>\xC9ch\xE9ance</th><th>Avancement</th></tr>${p.objectifs.map((o) => `<tr><td>${o.titre}</td><td>${o.indicateur}</td><td>${o.echeance}</td><td>${o.avancement}%</td></tr>`).join("")}</table>` : ""}
+              `;
+          exportPDF(p.titre, html);
+        };
         return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 12 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 10 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 700, fontSize: 14, marginBottom: 6 }, children: p.titre }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.type }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: statColors[p.statut] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: sc[p.statut] }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 11, color: C.muted }, children: [
                 "v",
                 p.version
               ] })
             ] })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.muted, marginBottom: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.muted, marginBottom: 10 }, children: [
             "\u{1F464} ",
             p.responsable,
-            " \xB7 Mis \xE0 jour ",
+            " \xB7 ",
             p.dateMaj
           ] }),
-          p.objectifs.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 14 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 4 }, children: [
+          lm && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 10 }, children: lm.lois.slice(0, 3).map((l) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: C.brandLight, color: C.brandMid, padding: "2px 7px", borderRadius: 99, fontWeight: 600 }, children: l }, l)) }),
+          p.objectifs.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { color: C.sub }, children: [
                 p.objectifs.length,
                 " objectif",
                 p.objectifs.length > 1 ? "s" : ""
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontWeight: 600 }, children: [
-                avgAvancement,
-                "% moy."
+                avg,
+                "%"
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${avgAvancement}%`, background: avgAvancement >= 75 ? C.success : avgAvancement >= 40 ? C.accent : C.warning, borderRadius: 99 } }) })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${avg}%`, background: C.accent, borderRadius: 99 } }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, borderTop: `1px solid ${C.border}`, paddingTop: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6, borderTop: `1px solid ${C.border}`, paddingTop: 12, flexWrap: "wrap" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => {
               setSelected(p.id);
               setView("editor");
@@ -13950,128 +13835,138 @@ ${pol ? `La politique en cours d'\xE9dition : "${pol.titre}" (${pol.type}, statu
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => {
               setSelected(p.id);
               setView("ai");
-              setAiMessages([{ role: "assistant", content: `Bonjour ! Je suis votre assistant IA RSE. Je vois que vous travaillez sur la politique **"${p.titre}"** (${p.type}, statut: ${p.statut}).
+              setAiMessages([{ role: "assistant", content: `Bonjour ! Je vais analyser votre politique **"${p.titre}"** (${p.type}).
+
+Cadre l\xE9gal applicable : ${lm?.lois.join(", ") || "\u2014"}
 
 Je peux vous aider \xE0 :
-- **Am\xE9liorer** le contenu et la structure
-- **V\xE9rifier** la conformit\xE9 r\xE9glementaire
-- **Proposer** des objectifs SMART pertinents
-- **Identifier** les lacunes par rapport aux exigences CSRD
+- Am\xE9liorer le contenu et v\xE9rifier la conformit\xE9
+- Proposer des objectifs SMART et des KPIs
+- Citer les articles de loi pertinents
+- R\xE9diger des clauses manquantes
 
-Que souhaitez-vous faire ?` }]);
-            }, children: "\u{1F916} IA" }),
+Que souhaitez-vous am\xE9liorer ?` }]);
+            }, children: " \u{1F916} IA" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: handleExport, children: "\u{1F4C4} PDF" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setRse((r) => ({ ...r, politiques: r.politiques.filter((x) => x.id !== p.id) })), children: "Supprimer" })
           ] })
         ] }, p.id);
       }) }),
-      showNewModal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NewPolModal, {})
+      showNew && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NewPolModal, {})
     ] });
-    if (view === "editor" && pol) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", height: "calc(100vh - 110px)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", small: true, onClick: () => setView("list"), children: "\u2190 Retour" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { style: { fontSize: 15, fontWeight: 700, flex: 1 }, children: pol.titre }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: pol.statut, onChange: (e) => updatePol((p) => ({ ...p, statut: e.target.value })), style: { width: 150, padding: "6px 10px", fontSize: 13 }, children: STATUTS_RSE.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", icon: "\u{1F916}", onClick: () => setView("ai"), children: "Assistant IA" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, icon: "\u2713", children: "Enregistrer" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 300px", gap: 16, flex: 1, overflow: "hidden" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 12, overflow: "auto" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px", marginBottom: 4 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Titre", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.titre, onChange: (e) => updatePol((p) => ({ ...p, titre: e.target.value })) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: pol.type, onChange: (e) => updatePol((p) => ({ ...p, type: e.target.value })), children: TYPES_RSE.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Responsable", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.responsable, onChange: (e) => updatePol((p) => ({ ...p, responsable: e.target.value })) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Version", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.version, onChange: (e) => updatePol((p) => ({ ...p, version: e.target.value })) }) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20, flex: 1 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 12 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.sub }, children: "Contenu de la politique" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "Format Markdown", color: "blue" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              "textarea",
-              {
-                value: pol.contenu,
-                onChange: (e) => updatePol((p) => ({ ...p, contenu: e.target.value })),
-                style: { width: "100%", minHeight: 320, fontFamily: "'Sora',sans-serif", fontSize: 13, lineHeight: 1.8, padding: "12px 16px", border: `1px solid ${C.border}`, borderRadius: 8, resize: "vertical" },
-                placeholder: "R\xE9digez votre politique ici (Markdown support\xE9)\u2026"
-              }
-            )
-          ] })
+    if (view === "editor" && pol) {
+      const lm = RSE_LEGAL_MAP[pol.type];
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", height: "calc(100vh - 110px)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", small: true, onClick: () => setView("list"), children: "\u2190 Retour" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { style: { fontSize: 15, fontWeight: 700, flex: 1 }, children: pol.titre }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: pol.statut, onChange: (e) => updatePol((p) => ({ ...p, statut: e.target.value })), style: { width: 150, padding: "6px 10px", fontSize: 13 }, children: STATUTS_RSE.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => setView("ai"), children: "\u{1F916} IA" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, onClick: () => {
+            const html = `<h2>${pol.titre}</h2><p>${pol.contenu.replace(/\n/g, "<br/>")}</p>${pol.objectifs.length ? `<h2>Objectifs</h2><table><tr><th>Titre</th><th>Indicateur</th><th>\xC9ch\xE9ance</th><th>Avancement</th></tr>${pol.objectifs.map((o) => `<tr><td>${o.titre}</td><td>${o.indicateur}</td><td>${o.echeance}</td><td>${o.avancement}%</td></tr>`).join("")}</table>` : ""}`;
+            exportPDF(pol.titre, html);
+          }, children: "\u{1F4C4} Exporter PDF" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { overflow: "auto" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 14 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 700 }, children: "Objectifs & KPIs" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, onClick: () => updatePol((p) => ({ ...p, objectifs: [...p.objectifs, { id: uid(), titre: "", echeance: "", avancement: 0, indicateur: "" }] })), children: "+ Ajouter" })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 300px", gap: 16, flex: 1, overflow: "hidden" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 12, overflow: "auto" }, children: [
+            lm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 10, padding: "12px 16px", border: `1px solid #BDE5CF` }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 6 }, children: [
+                "\u2696\uFE0F Cadre l\xE9gal applicable \u2014 ",
+                pol.type
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 6 }, children: lm.lois.map((l) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l, color: "brand" }, l)) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 10, color: C.brandMid }, children: [
+                lm.articles.slice(0, 2).join(" \xB7 "),
+                " ",
+                lm.articles.length > 2 ? `+ ${lm.articles.length - 2} autres` : ""
+              ] })
             ] }),
-            pol.objectifs.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 0", borderBottom: `1px solid ${C.border}` }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: o.titre, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, titre: e.target.value } : x) })), placeholder: "Titre de l'objectif", style: { marginBottom: 8 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 8 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: o.echeance, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, echeance: e.target.value } : x) })), style: { fontSize: 12, padding: "5px 8px" } }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: o.indicateur, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, indicateur: e.target.value } : x) })), placeholder: "Indicateur (%, tCO\u2082\u2026)", style: { fontSize: 12, padding: "5px 8px" } })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 11, color: C.muted, width: 28 }, children: [
-                  o.avancement,
-                  "%"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "range", min: "0", max: "100", value: o.avancement, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, avancement: parseInt(e.target.value) } : x) })), style: { flex: 1, width: "auto" } }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => updatePol((p) => ({ ...p, objectifs: p.objectifs.filter((_, j) => j !== i) })), style: { background: "none", border: "none", cursor: "pointer", color: C.danger, fontSize: 16, padding: 0 }, children: "\xD7" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99, marginTop: 6 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${o.avancement}%`, background: o.avancement >= 75 ? C.success : o.avancement >= 40 ? C.accent : C.warning, borderRadius: 99 } }) })
-            ] }, o.id)),
-            pol.objectifs.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted, textAlign: "center", padding: "16px 0" }, children: "Aucun objectif d\xE9fini" })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Titre", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.titre, onChange: (e) => updatePol((p) => ({ ...p, titre: e.target.value })) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: pol.type, onChange: (e) => updatePol((p) => ({ ...p, type: e.target.value })), children: TYPES_RSE.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Responsable", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.responsable, onChange: (e) => updatePol((p) => ({ ...p, responsable: e.target.value })) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Version", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: pol.version, onChange: (e) => updatePol((p) => ({ ...p, version: e.target.value })) }) })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20, flex: 1 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.sub, marginBottom: 10 }, children: "Contenu de la politique" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "textarea",
+                {
+                  value: pol.contenu,
+                  onChange: (e) => updatePol((p) => ({ ...p, contenu: e.target.value })),
+                  style: { width: "100%", minHeight: 320, fontSize: 13, lineHeight: 1.8, padding: "12px 16px", border: `1px solid ${C.border}`, borderRadius: 8, resize: "vertical" },
+                  placeholder: "R\xE9digez votre politique ici\u2026"
+                }
+              )
+            ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18, marginTop: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.sub, marginBottom: 12, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Aper\xE7u" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "prose", style: { overflow: "auto", maxHeight: 300 }, children: pol.contenu.split("\n").map((line, i) => {
-              if (line.startsWith("# ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { style: { fontSize: 16, fontWeight: 700, color: C.brand, margin: "0 0 12px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(2) }, i);
-              if (line.startsWith("## ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { style: { fontSize: 13, fontWeight: 700, color: C.text, margin: "14px 0 6px", borderBottom: `1px solid ${C.border}`, paddingBottom: 4 }, children: line.slice(3) }, i);
-              if (line.startsWith("- ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 12, color: C.sub, lineHeight: 1.7, marginLeft: 16 }, children: line.slice(2) }, i);
-              if (line === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}, i);
-              return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.sub, lineHeight: 1.7 }, children: line }, i);
-            }) })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { overflow: "auto" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18, marginBottom: 12 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 12 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 700 }, children: "Objectifs & KPIs" }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, onClick: () => updatePol((p) => ({ ...p, objectifs: [...p.objectifs, { id: uid(), titre: "", echeance: "", avancement: 0, indicateur: "" }] })), children: "+ Ajouter" })
+              ] }),
+              pol.objectifs.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "10px 0", borderBottom: `1px solid ${C.border}` }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: o.titre, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, titre: e.target.value } : x) })), placeholder: "Titre de l'objectif", style: { marginBottom: 6, fontSize: 12 } }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 6 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: o.echeance, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, echeance: e.target.value } : x) })), style: { fontSize: 11, padding: "4px 8px" } }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: o.indicateur, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, indicateur: e.target.value } : x) })), placeholder: "Unit\xE9 (%,tCO\u2082\u2026)", style: { fontSize: 11, padding: "4px 8px" } })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 11, color: C.muted, width: 28 }, children: [
+                    o.avancement,
+                    "%"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "range", min: "0", max: "100", step: "1", value: o.avancement, onChange: (e) => updatePol((p) => ({ ...p, objectifs: p.objectifs.map((x, j) => j === i ? { ...x, avancement: parseInt(e.target.value) } : x) })), style: { flex: 1, width: "auto" } }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => updatePol((p) => ({ ...p, objectifs: p.objectifs.filter((_, j) => j !== i) })), style: { background: "none", border: "none", cursor: "pointer", color: C.danger, fontSize: 16, padding: 0 }, children: "\xD7" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 3, background: C.bg, borderRadius: 99, marginTop: 4 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${o.avancement}%`, background: o.avancement >= 75 ? C.success : o.avancement >= 40 ? C.accent : C.warning, borderRadius: 99 } }) })
+              ] }, o.id)),
+              pol.objectifs.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted, textAlign: "center", padding: "12px 0" }, children: "Aucun objectif d\xE9fini" })
+            ] }),
+            lm && lm.objectifsSugg\u00E9r\u00E9s && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 12, border: `1px solid ${C.border}`, padding: 16 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.sub, marginBottom: 10 }, children: "\u{1F4A1} Objectifs sugg\xE9r\xE9s" }),
+              lm.objectifsSugg\u00E9r\u00E9s.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+                "button",
+                {
+                  onClick: () => updatePol((p) => ({ ...p, objectifs: [...p.objectifs, { id: uid(), titre: o.replace(/{([^}]+)}/g, "[\xC0 d\xE9finir]"), echeance: "", avancement: 0, indicateur: "" }] })),
+                  style: { display: "block", width: "100%", padding: "7px 10px", marginBottom: 4, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 11, color: C.sub, lineHeight: 1.5 },
+                  children: [
+                    "+ ",
+                    o
+                  ]
+                },
+                i
+              ))
+            ] })
           ] })
         ] })
-      ] })
-    ] });
-    if (view === "ai") return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", height: "calc(100vh - 110px)" }, children: [
+      ] });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", height: "calc(100vh - 110px)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", small: true, onClick: () => setView("list"), children: "\u2190 Retour" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 15, fontWeight: 700 }, children: "\u{1F916} Assistant IA RSE" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted }, children: "Propuls\xE9 par Claude \xB7 Expert en l\xE9gislation ESG fran\xE7aise et europ\xE9enne" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.muted }, children: "Propuls\xE9 par Claude \xB7 Expert l\xE9gislation ESG fran\xE7aise et europ\xE9enne" })
         ] }),
-        !apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "Cl\xE9 API requise \u2014 voir Param\xE8tres", color: "amber" })
+        !apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "Cl\xE9 API \xE0 configurer dans Param\xE8tres", color: "amber" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 260px", gap: 16, flex: 1, overflow: "hidden" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 240px", gap: 16, flex: 1, overflow: "hidden" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: [
-          aiMessages.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: 24 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 700, color: C.text, marginBottom: 16 }, children: "Que puis-je faire pour vous ?" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }, children: [
-              "Quelles sont mes obligations CSRD en tant que PME ?",
-              "R\xE9dige une politique environnementale conforme ESRS E1 pour une PME de 50 salari\xE9s",
-              "Quels objectifs RSE puis-je fixer pour r\xE9duire mon empreinte carbone ?",
-              "Explique-moi le devoir de vigilance et ses impacts pour mon entreprise",
-              "Comment am\xE9liorer mon index \xE9galit\xE9 professionnelle ?",
-              "Cr\xE9e un plan d'action RSE pour obtenir la certification ISO 14001"
-            ].map((q, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => {
-              setAiPrompt(q);
-            }, style: { padding: "10px 14px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, cursor: "pointer", textAlign: "left", fontSize: 12, color: C.text, lineHeight: 1.5 }, children: q }, i)) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: "16px 24px" }, children: [
-            aiMessages.map((m, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginBottom: 16, display: "flex", flexDirection: "column", alignItems: m.role === "user" ? "flex-end" : "flex-start" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 10, maxWidth: "85%", flexDirection: m.role === "user" ? "row-reverse" : "row" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: "16px 20px" }, children: [
+            aiMessages.map((m, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginBottom: 14, display: "flex", flexDirection: "column", alignItems: m.role === "user" ? "flex-end" : "flex-start" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 8, maxWidth: "88%", flexDirection: m.role === "user" ? "row-reverse" : "row" }, children: [
               m.role === "assistant" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 28, height: 28, borderRadius: "50%", background: C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: "\u{1F33F}" }),
               m.role === "user" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${admin.prenom} ${admin.nom}`, size: 28 }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: m.role === "user" ? C.brand : C.bg, color: m.role === "user" ? "#fff" : C.text, padding: "12px 16px", borderRadius: m.role === "user" ? "12px 12px 4px 12px" : "12px 12px 12px 4px", maxWidth: "100%" }, children: m.role === "assistant" ? renderMarkdown(m.content) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, lineHeight: 1.7 }, children: m.content }) })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: m.role === "user" ? C.brand : C.bg, color: m.role === "user" ? "#fff" : C.text, padding: "10px 14px", borderRadius: m.role === "user" ? "12px 12px 4px 12px" : "12px 12px 12px 4px", maxWidth: "100%" }, children: m.role === "assistant" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: renderMD(m.content) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, lineHeight: 1.7 }, children: m.content }) })
             ] }) }, i)),
-            aiLoading && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, alignItems: "center" }, children: [
+            aiLoading && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 28, height: 28, borderRadius: "50%", background: C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }, children: "\u{1F33F}" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.bg, padding: "10px 16px", borderRadius: "12px 12px 12px 4px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 4 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 6, height: 6, borderRadius: "50%", background: C.accent, animation: `pulse 1.2s ease-in-out ${i * 0.2}s infinite` } }, i)) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.bg, padding: "10px 14px", borderRadius: "12px 12px 12px 4px", display: "flex", gap: 4 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 6, height: 6, borderRadius: "50%", background: C.accent, animation: `pulse 1.2s ease-in-out ${i * 0.2}s infinite` } }, i)) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { ref: chatEndRef })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "16px 24px", borderTop: `1px solid ${C.border}`, display: "flex", gap: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 20px", borderTop: `1px solid ${C.border}`, display: "flex", gap: 8 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "textarea",
               {
@@ -14084,50 +13979,35 @@ Que souhaitez-vous faire ?` }]);
                   }
                 },
                 placeholder: "Posez votre question RSE / l\xE9gislation\u2026 (Entr\xE9e pour envoyer)",
-                style: { flex: 1, minHeight: 48, maxHeight: 120, resize: "none", fontSize: 13, lineHeight: 1.6 }
+                style: { flex: 1, minHeight: 44, maxHeight: 120, resize: "none", fontSize: 13, lineHeight: 1.6 }
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: sendAI, disabled: aiLoading || !aiPrompt.trim(), variant: "accent", children: "Envoyer" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { overflow: "auto", display: "flex", flexDirection: "column", gap: 12 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.sub, marginBottom: 12, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Contexte entreprise" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { fontSize: 12, color: C.text, lineHeight: 2 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-                "\u{1F4CA} Score ESG global : ",
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "\u2014" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-                "\u{1F4DC} ",
-                rse.politiques.length,
-                " politique",
-                rse.politiques.length > 1 ? "s" : "",
-                " RSE"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-                "\u2705 ",
-                rse.politiques.filter((p) => p.statut === "Publi\xE9").length,
-                " publi\xE9e",
-                rse.politiques.filter((p) => p.statut === "Publi\xE9").length > 1 ? "s" : ""
-              ] })
-            ] })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { overflow: "auto", display: "flex", flexDirection: "column", gap: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 16 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Questions rapides" }),
+            ["Quelles sont mes obligations CSRD ?", "Quelles lois s'appliquent \xE0 une PME de 80 salari\xE9s ?", "R\xE9dige une politique environnementale conforme ESRS E1", "Analyse ma conformit\xE9 Sapin II", "Comment am\xE9liorer mon index \xE9galit\xE9 F/H ?", "Plan d'action pour obtenir ISO 14001", "Qu'est-ce que le devoir de vigilance ?"].map((q, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setAiPrompt(q), style: { display: "block", width: "100%", padding: "8px 10px", marginBottom: 4, background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 11, color: C.text, lineHeight: 1.4 }, children: q }, i))
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.sub, marginBottom: 12, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Actions rapides" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 6 }, children: ["Analyser ma conformit\xE9 CSRD", "R\xE9diger un code \xE9thique", "Plan d'action biodiversit\xE9", "Diagnostic RSE complet", "Politique achats durables"].map((a) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setAiPrompt(a), style: { padding: "8px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 12, color: C.text }, children: a }, a)) })
-          ] }),
-          rse.politiques.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.sub, marginBottom: 12, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Mes politiques" }),
-            rse.politiques.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setAiPrompt(`Analyse et am\xE9liore ma politique "${p.titre}" (${p.type})`), style: { width: "100%", padding: "8px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 12, color: C.text, marginBottom: 4, display: "flex", justifyContent: "space-between", alignItems: "center" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: p.titre }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: p.statut === "Publi\xE9" ? "green" : p.statut === "Valid\xE9" ? "brand" : "amber" })
-            ] }, p.id))
+          rse.politiques.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 16 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Mes politiques" }),
+            rse.politiques.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+              "button",
+              {
+                onClick: () => setAiPrompt(`Analyse et am\xE9liore ma politique "${p.titre}" (${p.type}) \u2014 cite les articles de loi pertinents`),
+                style: { width: "100%", padding: "7px 10px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 11, color: C.text, marginBottom: 4, display: "flex", justifyContent: "space-between", alignItems: "center" },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: p.titre }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: p.statut, color: p.statut === "Publi\xE9" ? "green" : p.statut === "Valid\xE9" ? "brand" : "amber" })
+                ]
+              },
+              p.id
+            ))
           ] })
         ] })
       ] })
     ] });
-    return null;
   }
   function SalariesView({ employees, setEmployees }) {
     const [modal, setModal] = (0, import_react.useState)(null);
@@ -14147,7 +14027,7 @@ Que souhaitez-vous faire ?` }]);
       const blank = { id: uid(), nom: "", prenom: "", poste: "", dept: "", contrat: "CDI", dateEntree: "", email: "", genre: "F", formation: "", salaire: "" };
       const [f, setF] = (0, import_react.useState)(emp || blank);
       const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: emp ? "Modifier" : "Ajouter un salari\xE9", onClose: () => setModal(null), width: 600, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: emp ? "Modifier le salari\xE9" : "Ajouter un salari\xE9", onClose: () => setModal(null), width: 600, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Pr\xE9nom", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.prenom, onChange: (e) => set("prenom", e.target.value), placeholder: "Marie" }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Nom", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.nom, onChange: (e) => set("nom", e.target.value), placeholder: "Dupont" }) }),
@@ -14164,7 +14044,7 @@ Que souhaitez-vous faire ?` }]);
           ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Date d'entr\xE9e", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: f.dateEntree, onChange: (e) => set("dateEntree", e.target.value) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Email", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "email", value: f.email, onChange: (e) => set("email", e.target.value) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Formation h/an", hint: "ESG social", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: f.formation, onChange: (e) => set("formation", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Formation h/an", hint: "Indicateur ESG Social", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: f.formation, onChange: (e) => set("formation", e.target.value) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Salaire brut annuel (\u20AC)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: f.salaire, onChange: (e) => set("salaire", e.target.value) }) })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 8 }, children: [
@@ -14173,22 +14053,30 @@ Que souhaitez-vous faire ?` }]);
         ] })
       ] });
     };
+    const handleExport = () => {
+      const csv = "\uFEFFPr\xE9nom,Nom,Poste,D\xE9partement,Contrat,Email,Genre,Formation(h),Salaire(\u20AC)\n" + employees.map((e) => `${e.prenom},${e.nom},"${e.poste}",${e.dept},${e.contrat},${e.email},${e.genre},${e.formation || ""},${e.salaire || ""}`).join("\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      a.download = `salaries-${todayStr()}.csv`;
+      a.click();
+    };
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, marginBottom: 20 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: search, onChange: (e) => setSearch(e.target.value), placeholder: "Rechercher\u2026", style: { maxWidth: 280 } }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: dept, onChange: (e) => setDept(e.target.value), style: { width: 160 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Tous les depts" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: dept, onChange: (e) => setDept(e.target.value), style: { width: 180 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Tous les d\xE9partements" }),
           depts.map((d) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: d }, d))
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { flex: 1 } }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Ajouter" })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: handleExport, children: "\u2B07 Export CSV" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Ajouter un salari\xE9" })
       ] }),
       filtered.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "60px 24px" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 32, marginBottom: 12 }, children: "\u{1F464}" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 600, marginBottom: 20 }, children: "Aucun salari\xE9" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Ajouter" })
       ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Salari\xE9", "Poste", "D\xE9partement", "Contrat", "Formation", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Salari\xE9", "Poste", "D\xE9partement", "Contrat", "Formation", "Salaire", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: filtered.map((e, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { style: { borderBottom: i < filtered.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${e.prenom} ${e.nom}`, size: 34 }),
@@ -14203,8 +14091,9 @@ Que souhaitez-vous faire ?` }]);
           ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13, color: C.sub }, children: e.poste }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: e.dept || "\u2014" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: e.contrat, color: e.contrat === "CDI" ? "green" : "blue" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: e.contrat, color: e.contrat === "CDI" ? "green" : e.contrat === "Stage" || e.contrat === "Alternance" ? "blue" : "amber" }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13 }, children: e.formation ? `${e.formation}h` : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.muted }, children: "\u2014" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13 }, children: e.salaire ? `${Number(e.salaire).toLocaleString("fr-FR")} \u20AC` : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.muted }, children: "\u2014" }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => setModal(e), children: "Modifier" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setConfirm(e.id), children: "Supprimer" })
@@ -14212,7 +14101,7 @@ Que souhaitez-vous faire ?` }]);
         ] }, e.id)) })
       ] }) }),
       modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmpModal, { emp: modal === "new" ? null : modal }),
-      confirm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Supprimer ?", onClose: () => setConfirm(null), width: 380, children: [
+      confirm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Supprimer ce salari\xE9 ?", onClose: () => setConfirm(null), width: 380, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, color: C.sub, marginBottom: 20 }, children: "Action irr\xE9versible." }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setConfirm(null), children: "Annuler" }),
@@ -14222,236 +14111,6 @@ Que souhaitez-vous faire ?` }]);
           }, children: "Supprimer" })
         ] })
       ] })
-    ] });
-  }
-  function FournisseursView({ fournisseurs, setFournisseurs }) {
-    const [modal, setModal] = (0, import_react.useState)(null);
-    const [confirm, setConfirm] = (0, import_react.useState)(null);
-    const CATS = ["Impression", "Mat\xE9riel IT", "\xC9nergie", "Logistique", "Services", "Fournitures", "Sous-traitance", "Conseil"];
-    const avg = fournisseurs.length ? Math.round(fournisseurs.reduce((s, f) => s + f.scoreESG, 0) / fournisseurs.length) : 0;
-    const FModal = ({ f: initF }) => {
-      const blank = { id: uid(), nom: "", categorie: "", scoreESG: 50, evaluation: "Bon", certifications: "", contact: "", pays: "France", depuis: "", notes: "" };
-      const [f, setF] = (0, import_react.useState)(initF || blank);
-      const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: initF ? "Modifier" : "Ajouter un fournisseur", onClose: () => setModal(null), width: 580, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Raison sociale", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.nom, onChange: (e) => set("nom", e.target.value) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cat\xE9gorie", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: f.categorie, onChange: (e) => set("categorie", e.target.value), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "\u2014" }),
-            CATS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: c }, c))
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Score ESG (0-100)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", min: "0", max: "100", value: f.scoreESG, onChange: (e) => set("scoreESG", parseInt(e.target.value) || 0) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9valuation", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.evaluation, onChange: (e) => set("evaluation", e.target.value), children: ["Excellent", "Bon", "Moyen", "Insuffisant"].map((x) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: x }, x)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Certifications", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.certifications, onChange: (e) => set("certifications", e.target.value), placeholder: "ISO 14001, EcoVadis\u2026" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Pays", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.pays, onChange: (e) => set("pays", e.target.value) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Email contact", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.contact, onChange: (e) => set("contact", e.target.value) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Client depuis", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.depuis, onChange: (e) => set("depuis", e.target.value) }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Notes", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { value: f.notes, onChange: (e) => set("notes", e.target.value) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setModal(null), children: "Annuler" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
-            setFournisseurs((p) => p.find((x) => x.id === f.id) ? p.map((x) => x.id === f.id ? f : x) : [...p, f]);
-            setModal(null);
-          }, disabled: !f.nom, children: "Enregistrer" })
-        ] })
-      ] });
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Fournisseurs", value: fournisseurs.length, icon: "\u{1F91D}", sub: "dans le panel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Score ESG moyen", value: avg, unit: "/100", icon: "\u2B50", color: avg >= 70 ? C.success : avg >= 50 ? C.warning : C.danger }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Conformes \u226570", value: fournisseurs.filter((f) => f.scoreESG >= 70).length, icon: "\u2705", color: C.success })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", marginBottom: 12 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Ajouter" }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Fournisseur", "Cat\xE9gorie", "Score ESG", "\xC9valuation", "Certifications", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: fournisseurs.map((f, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { style: { borderBottom: i < fournisseurs.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", { style: { padding: "12px 16px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 600, fontSize: 13 }, children: f.nom }),
-            f.contact && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted }, children: f.contact })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: f.categorie || "\u2014" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 60, height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${f.scoreESG}%`, background: f.scoreESG >= 70 ? C.success : f.scoreESG >= 50 ? C.warning : C.danger, borderRadius: 99 } }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, fontWeight: 600, color: f.scoreESG >= 70 ? C.success : f.scoreESG >= 50 ? C.warning : C.danger }, children: f.scoreESG })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: f.evaluation || "\u2014", color: f.evaluation === "Excellent" ? "green" : f.evaluation === "Bon" ? "brand" : f.evaluation === "Moyen" ? "amber" : "red" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 12, color: C.sub }, children: f.certifications || /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.muted }, children: "\u2014" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => setModal(f), children: "Modifier" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setConfirm(f.id), children: "Supprimer" })
-          ] }) })
-        ] }, f.id)) })
-      ] }) }),
-      modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FModal, { f: modal === "new" ? null : modal }),
-      confirm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Supprimer ?", onClose: () => setConfirm(null), width: 380, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, color: C.sub, marginBottom: 20 }, children: "Action irr\xE9versible." }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setConfirm(null), children: "Annuler" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { danger: true, onClick: () => {
-            setFournisseurs((p) => p.filter((x) => x.id !== confirm));
-            setConfirm(null);
-          }, children: "Supprimer" })
-        ] })
-      ] })
-    ] });
-  }
-  function EsgView({ esg, setEsg, onSave }) {
-    const [tab, setTab] = (0, import_react.useState)("env");
-    const setEnv = (k, v) => setEsg((p) => ({ ...p, env: { ...p.env, [k]: v } }));
-    const setSoc = (k, v) => setEsg((p) => ({ ...p, soc: { ...p.soc, [k]: v } }));
-    const setGov = (k, v) => setEsg((p) => ({ ...p, gov: { ...p.gov, [k]: v } }));
-    const tabs = [{ id: "env", icon: "\u{1F331}", label: "Environnement" }, { id: "soc", icon: "\u{1F465}", label: "Social" }, { id: "gov", icon: "\u{1F3DB}\uFE0F", label: "Gouvernance" }];
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 4, marginBottom: 24, background: C.bg, padding: 4, borderRadius: 10, width: "fit-content" }, children: tabs.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setTab(t.id), style: { padding: "7px 18px", borderRadius: 8, fontSize: 13, fontWeight: tab === t.id ? 600 : 400, background: tab === t.id ? C.surface : "transparent", color: tab === t.id ? C.text : C.sub, border: tab === t.id ? `1px solid ${C.border}` : "1px solid transparent", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: t.icon }),
-        t.label
-      ] }, t.id)) }),
-      tab === "env" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Consommation \xE9nerg\xE9tique (kWh/an)", hint: "\xC9lectricit\xE9 + gaz", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.energie, onChange: (e) => setEnv("energie", e.target.value), placeholder: "148000" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9nergies renouvelables (%)", hint: "Contrat vert, RECs", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.renouvelable, onChange: (e) => setEnv("renouvelable", e.target.value), placeholder: "38" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9missions CO\u2082 Scope 1+2 (tCO\u2082)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.co2, onChange: (e) => setEnv("co2", e.target.value), placeholder: "210" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9missions CO\u2082 Scope 3 (tCO\u2082)", hint: "Optionnel", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.scope3, onChange: (e) => setEnv("scope3", e.target.value), placeholder: "620" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Consommation d'eau (m\xB3/an)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.eau, onChange: (e) => setEnv("eau", e.target.value), placeholder: "2400" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "D\xE9chets recycl\xE9s (%)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.dechets, onChange: (e) => setEnv("dechets", e.target.value), placeholder: "68" }) })
-      ] }),
-      tab === "soc" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9cart r\xE9mun\xE9ration F/H (%)", hint: "Index \xE9galit\xE9", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.ecartSalaire, onChange: (e) => setSoc("ecartSalaire", e.target.value), placeholder: "7.2" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Formation / salari\xE9 / an (h)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.formation, onChange: (e) => setSoc("formation", e.target.value), placeholder: "21" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de turnover (%)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.turnover, onChange: (e) => setSoc("turnover", e.target.value), placeholder: "9.5" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux fr\xE9quence accidents (TF)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.accidents, onChange: (e) => setSoc("accidents", e.target.value), placeholder: "2.1" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Travailleurs handicap\xE9s (%)", hint: "OETH min. 6%", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.handicap, onChange: (e) => setSoc("handicap", e.target.value), placeholder: "4.1" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Satisfaction salari\xE9s (%)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.satisfaction, onChange: (e) => setSoc("satisfaction", e.target.value), placeholder: "78" }) })
-      ] }),
-      tab === "gov" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Femmes en direction (%)", hint: "Conseil ou CODIR", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.femmesDirigeantes, onChange: (e) => setGov("femmesDirigeantes", e.target.value), placeholder: "44" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Form\xE9s \xE9thique (%)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.ethique, onChange: (e) => setGov("ethique", e.target.value), placeholder: "82" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Fr\xE9quence audits", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: esg.gov.auditFreq, onChange: (e) => setGov("auditFreq", e.target.value), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "quarterly", children: "Trimestrielle" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "biannual", children: "Semestrielle" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "annual", children: "Annuelle" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "none", children: "Aucun" })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Fournisseurs \xE9valu\xE9s ESG (%)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.fournisseursEvalues, onChange: (e) => setGov("fournisseursEvalues", e.target.value), placeholder: "65" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { gridColumn: "1/-1" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "14px 16px", background: C.bg, borderRadius: 10, border: `1px solid ${C.border}` }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "checkbox", checked: esg.gov.whistleblower, onChange: (e) => setGov("whistleblower", e.target.checked), style: { width: "auto", accentColor: C.accent } }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 500, fontSize: 13 }, children: "Dispositif d'alerte \xE9thique (whistleblower)" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 2 }, children: "Obligation Sapin II d\xE8s 50 salari\xE9s" })
-          ] })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginTop: 24, display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: onSave, children: "\u2713 Enregistrer" }) })
-    ] });
-  }
-  function RapportView({ data }) {
-    const sc = calcScores(data.esg);
-    const [done, setDone] = (0, import_react.useState)(false);
-    const [gen, setGen] = (0, import_react.useState)(false);
-    const grade = (v) => v >= 80 ? "A" : v >= 65 ? "B" : v >= 50 ? "C" : "D";
-    const checklist = [{ label: "Bilan carbone Scope 1+2", done: !!data.esg.env.co2 }, { label: "Bilan carbone Scope 3", done: !!data.esg.env.scope3 }, { label: "Index \xE9galit\xE9 F/H", done: !!data.esg.soc.ecartSalaire }, { label: "Plan de formation", done: !!data.esg.soc.formation }, { label: "Diversit\xE9 en direction", done: !!data.esg.gov.femmesDirigeantes }, { label: "Dispositif d'alerte \xE9thique", done: data.esg.gov.whistleblower }, { label: "Panel fournisseurs \xE9valu\xE9", done: data.fournisseurs.length > 0 }, { label: "Politiques RSE publi\xE9es", done: data.rse.politiques.some((p) => p.statut === "Publi\xE9") }, { label: "Documents vers\xE9s", done: data.documents.length > 0 }, { label: "Donn\xE9es eau et \xE9nergie", done: !!data.esg.env.energie }];
-    const pct = Math.round(checklist.filter((c) => c.done).length / checklist.length * 100);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 24 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Score global", value: sc.total, unit: "/100", sub: `Note ${grade(sc.total)}`, color: sc.total >= 65 ? C.success : C.warning }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Environnement", value: sc.E, unit: "/100", sub: `Note ${grade(sc.E)}`, color: C.accent }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Social", value: sc.S, unit: "/100", sub: `Note ${grade(sc.S)}`, color: "#0F766E" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Gouvernance", value: sc.G, unit: "/100", sub: `Note ${grade(sc.G)}`, color: C.purple })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 280px", gap: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 15, fontWeight: 600 }, children: "Rapport de durabilit\xE9 CSRD 2025" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.muted, marginTop: 2 }, children: [
-                data.company.name,
-                " \xB7 ",
-                data.employees.length,
-                " salari\xE9s"
-              ] })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "ESRS Conforme", color: "green" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 20 }, children: [{ label: "E1 \u2013 Changement climatique", done: !!data.esg.env.co2, note: data.esg.env.co2 ? `${data.esg.env.co2} tCO\u2082` : "Manquant" }, { label: "E3 \u2013 Eau", done: !!data.esg.env.eau, note: data.esg.env.eau ? `${data.esg.env.eau} m\xB3` : "Manquant" }, { label: "S1 \u2013 Personnel", done: !!data.esg.soc.ecartSalaire, note: !!data.esg.soc.ecartSalaire ? "Compl\xE9t\xE9" : "Manquant" }, { label: "S2 \u2013 Cha\xEEne de valeur", done: data.fournisseurs.length > 0, note: data.fournisseurs.length > 0 ? `${data.fournisseurs.length} fourn.` : "Manquant" }, { label: "G1 \u2013 \xC9thique", done: data.esg.gov.whistleblower, note: data.esg.gov.whistleblower ? "Actif" : "Manquant" }, { label: "G2 \u2013 Diversit\xE9", done: !!data.esg.gov.femmesDirigeantes, note: data.esg.gov.femmesDirigeantes ? `${data.esg.gov.femmesDirigeantes}%` : "Manquant" }].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 14px", borderRadius: 8, background: item.done ? C.successLight : C.bg, border: `1px solid ${item.done ? "#A7F3D0" : C.border}` }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12 }, children: item.done ? "\u2705" : "\u2B1C" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.text, marginTop: 4, lineHeight: 1.4 }, children: item.label }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: item.done ? C.success : C.muted, marginTop: 2 }, children: item.note })
-          ] }, i)) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => {
-            setGen(true);
-            setTimeout(() => {
-              setGen(false);
-              setDone(true);
-            }, 2200);
-          }, disabled: gen, style: { width: "100%", padding: 13, borderRadius: 10, fontSize: 14, fontWeight: 600, background: gen ? C.bg : C.brand, color: gen ? C.muted : "#fff", border: `1px solid ${gen ? C.border : C.brand}`, cursor: gen ? "not-allowed" : "pointer" }, children: gen ? "\u23F3 G\xE9n\xE9ration en cours\u2026" : done ? "\u2705 T\xE9l\xE9charger le rapport PDF" : "\u{1F4C4} G\xE9n\xE9rer le rapport complet" }),
-          done && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.success, textAlign: "center", marginTop: 8 }, children: "Rapport CSRD 2025 \xB7 32 pages \xB7 Conforme ESRS E1\u2013G2" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 4 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 600 }, children: "Compl\xE9tude" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 16, fontWeight: 700, color: pct >= 80 ? C.success : C.warning }, children: [
-              pct,
-              "%"
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99, marginBottom: 16 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${pct}%`, background: pct >= 80 ? C.success : C.warning, borderRadius: 99 } }) }),
-          checklist.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < checklist.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12 }, children: item.done ? "\u2705" : "\u2B1C" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, color: item.done ? C.text : C.muted }, children: item.label })
-          ] }, i))
-        ] })
-      ] })
-    ] });
-  }
-  function DocumentsView({ documents, setDocuments }) {
-    const [modal, setModal] = (0, import_react.useState)(false);
-    const TYPES = ["Politique", "Rapport", "Donn\xE9es", "Charte", "Certification", "Proc\xE9dure", "Autre"];
-    const TAGS = ["RSE", "Environnement", "Social", "Gouvernance", "RH", "Juridique", "Finance"];
-    const tagColor = (t) => t === "Environnement" ? "green" : t === "Social" ? "blue" : t === "Gouvernance" ? "purple" : t === "RSE" ? "brand" : t === "RH" ? "amber" : "default";
-    const DocModal = () => {
-      const [f, setF] = (0, import_react.useState)({ id: uid(), nom: "", type: "Rapport", date: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10), taille: "", tag: "RSE" });
-      const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Ajouter un document", onClose: () => setModal(false), width: 500, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Nom du document", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.nom, onChange: (e) => set("nom", e.target.value), placeholder: "Ex: Bilan Carbone 2025.pdf" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.type, onChange: (e) => set("type", e.target.value), children: TYPES.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cat\xE9gorie", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.tag, onChange: (e) => set("tag", e.target.value), children: TAGS.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Date", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: f.date, onChange: (e) => set("date", e.target.value) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taille", hint: "Ex: 2.4 Mo", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.taille, onChange: (e) => set("taille", e.target.value) }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 8 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setModal(false), children: "Annuler" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
-            setDocuments((p) => [...p, f]);
-            setModal(false);
-          }, disabled: !f.nom, children: "Ajouter" })
-        ] })
-      ] });
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", marginBottom: 16 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal(true), children: "+ Ajouter un document" }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Document", "Type", "Cat\xE9gorie", "Date", "Taille", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: documents.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { style: { borderBottom: i < documents.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 20 }, children: d.nom.endsWith(".pdf") ? "\u{1F4C4}" : d.nom.endsWith(".xlsx") ? "\u{1F4CA}" : "\u{1F4C1}" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 500, fontSize: 13 }, children: d.nom })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: d.type }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: d.tag, color: tagColor(d.tag) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13, color: C.sub }, children: d.date }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13, color: C.muted }, children: d.taille }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setDocuments((p) => p.filter((x) => x.id !== d.id)), children: "Supprimer" }) })
-          ] }, d.id)) })
-        ] }),
-        documents.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "40px 0", color: C.muted }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 32, marginBottom: 8 }, children: "\u{1F4C1}" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Aucun document" })
-        ] })
-      ] }),
-      modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocModal, {})
     ] });
   }
   function PostesView({ postes, setPostes }) {
@@ -14469,15 +14128,15 @@ Que souhaitez-vous faire ?` }]);
       const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
       return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: initP ? "Modifier la fiche" : "Cr\xE9er une fiche de poste", onClose: () => setModal(null), width: 560, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Intitul\xE9", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.titre, onChange: (e) => set("titre", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Intitul\xE9", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.titre, onChange: (e) => set("titre", e.target.value), placeholder: "Ex: Responsable ESG" }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "D\xE9partement", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: f.dept, onChange: (e) => set("dept", e.target.value), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "\u2014" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "S\xE9lectionner" }),
             DEPTS.map((d) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: d }, d))
           ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Niveau", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.niveau, onChange: (e) => set("niveau", e.target.value), children: ["Junior", "Confirm\xE9", "Senior", "Lead", "Manager"].map((n) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: n }, n)) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Contrat", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.contrat, onChange: (e) => set("contrat", e.target.value), children: CONTRATS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: c }, c)) }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Description", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { value: f.description, onChange: (e) => set("description", e.target.value) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Description", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { value: f.description, onChange: (e) => set("description", e.target.value), placeholder: "Missions, responsabilit\xE9s\u2026" }) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Comp\xE9tences", hint: "S\xE9par\xE9es par des virgules", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.competences, onChange: (e) => set("competences", e.target.value) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 24, marginBottom: 20 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 13 }, children: [
@@ -14537,6 +14196,285 @@ Que souhaitez-vous faire ?` }]);
       ] })
     ] });
   }
+  function FournisseursView({ fournisseurs, setFournisseurs }) {
+    const [modal, setModal] = (0, import_react.useState)(null);
+    const [confirm, setConfirm] = (0, import_react.useState)(null);
+    const CATS = ["Impression", "Mat\xE9riel IT", "\xC9nergie", "Logistique", "Services", "Fournitures", "Sous-traitance", "Conseil"];
+    const avg = fournisseurs.length ? Math.round(fournisseurs.reduce((s, f) => s + f.scoreESG, 0) / fournisseurs.length) : 0;
+    const handleExport = () => {
+      const csv = "\uFEFFNom,Cat\xE9gorie,Score ESG,\xC9valuation,Certifications,Pays,Depuis\n" + fournisseurs.map((f) => `"${f.nom}",${f.categorie || ""},${f.scoreESG},"${f.evaluation}","${f.certifications || ""}",${f.pays},${f.depuis || ""}`).join("\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      a.download = `fournisseurs-${todayStr()}.csv`;
+      a.click();
+    };
+    const FModal = ({ f: initF }) => {
+      const blank = { id: uid(), nom: "", categorie: "", scoreESG: 50, evaluation: "Bon", certifications: "", contact: "", pays: "France", depuis: "", notes: "" };
+      const [f, setF] = (0, import_react.useState)(initF || blank);
+      const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: initF ? "Modifier le fournisseur" : "Ajouter un fournisseur", onClose: () => setModal(null), width: 580, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Raison sociale", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.nom, onChange: (e) => set("nom", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cat\xE9gorie", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: f.categorie, onChange: (e) => set("categorie", e.target.value), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "\u2014" }),
+            CATS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: c }, c))
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Score ESG (0-100)", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", min: "0", max: "100", value: f.scoreESG, onChange: (e) => set("scoreESG", parseInt(e.target.value) || 0) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9valuation", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.evaluation, onChange: (e) => set("evaluation", e.target.value), children: ["Excellent", "Bon", "Moyen", "Insuffisant"].map((x) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: x }, x)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Certifications", hint: "ISO 14001, EcoVadis\u2026", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.certifications, onChange: (e) => set("certifications", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Pays", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.pays, onChange: (e) => set("pays", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Email contact", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "email", value: f.contact, onChange: (e) => set("contact", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Client depuis", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.depuis, onChange: (e) => set("depuis", e.target.value), placeholder: "Ex: 2022" }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Notes internes", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { value: f.notes, onChange: (e) => set("notes", e.target.value) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setModal(null), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
+            setFournisseurs((p) => p.find((x) => x.id === f.id) ? p.map((x) => x.id === f.id ? f : x) : [...p, f]);
+            setModal(null);
+          }, disabled: !f.nom, children: "Enregistrer" })
+        ] })
+      ] });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Fournisseurs", value: fournisseurs.length, icon: "\u{1F91D}", sub: "dans le panel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Score ESG moyen", value: avg, unit: "/100", icon: "\u2B50", color: avg >= 70 ? C.success : avg >= 50 ? C.warning : C.danger, sub: "sur l'ensemble du panel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Conformes \u226570", value: fournisseurs.filter((f) => f.scoreESG >= 70).length, icon: "\u2705", color: C.success, sub: "fournisseurs avec bon score ESG" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8, marginBottom: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: handleExport, children: "\u2B07 Export CSV" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Ajouter un fournisseur" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Fournisseur", "Cat\xE9gorie", "Score ESG", "\xC9valuation", "Certifications", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: fournisseurs.map((f, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { style: { borderBottom: i < fournisseurs.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", { style: { padding: "12px 16px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 600, fontSize: 13 }, children: f.nom }),
+            f.contact && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted }, children: f.contact })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: f.categorie || "\u2014" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 60, height: 4, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${f.scoreESG}%`, background: f.scoreESG >= 70 ? C.success : f.scoreESG >= 50 ? C.warning : C.danger, borderRadius: 99 } }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, fontWeight: 600, color: f.scoreESG >= 70 ? C.success : f.scoreESG >= 50 ? C.warning : C.danger }, children: f.scoreESG })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: f.evaluation || "\u2014", color: f.evaluation === "Excellent" ? "green" : f.evaluation === "Bon" ? "brand" : f.evaluation === "Moyen" ? "amber" : "red" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 12, color: C.sub }, children: f.certifications || /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.muted }, children: "\u2014" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => setModal(f), children: "Modifier" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setConfirm(f.id), children: "Supprimer" })
+          ] }) })
+        ] }, f.id)) })
+      ] }) }),
+      modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FModal, { f: modal === "new" ? null : modal }),
+      confirm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Supprimer ?", onClose: () => setConfirm(null), width: 380, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, color: C.sub, marginBottom: 20 }, children: "Action irr\xE9versible." }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setConfirm(null), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { danger: true, onClick: () => {
+            setFournisseurs((p) => p.filter((x) => x.id !== confirm));
+            setConfirm(null);
+          }, children: "Supprimer" })
+        ] })
+      ] })
+    ] });
+  }
+  function EsgView({ esg, setEsg, onSave }) {
+    const [tab, setTab] = (0, import_react.useState)("env");
+    const setEnv = (k, v) => setEsg((p) => ({ ...p, env: { ...p.env, [k]: v } }));
+    const setSoc = (k, v) => setEsg((p) => ({ ...p, soc: { ...p.soc, [k]: v } }));
+    const setGov = (k, v) => setEsg((p) => ({ ...p, gov: { ...p.gov, [k]: v } }));
+    const tabs = [{ id: "env", icon: "\u{1F331}", label: "Environnement" }, { id: "soc", icon: "\u{1F465}", label: "Social" }, { id: "gov", icon: "\u{1F3DB}\uFE0F", label: "Gouvernance" }];
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 4, marginBottom: 24, background: C.bg, padding: 4, borderRadius: 10, width: "fit-content" }, children: tabs.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setTab(t.id), style: { padding: "7px 18px", borderRadius: 8, fontSize: 13, fontWeight: tab === t.id ? 600 : 400, background: tab === t.id ? C.surface : "transparent", color: tab === t.id ? C.text : C.sub, border: tab === t.id ? `1px solid ${C.border}` : "1px solid transparent", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: t.icon }),
+        t.label
+      ] }, t.id)) }),
+      tab === "env" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Consommation \xE9nerg\xE9tique (kWh/an)", hint: "\xC9lectricit\xE9 + gaz \u2014 tous sites \u2014 Art. R.229-45 Code env.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.energie, onChange: (e) => setEnv("energie", e.target.value), placeholder: "Ex: 148000" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Part d'\xE9nergies renouvelables (%)", hint: "Contrat vert, production propre, RECs", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.renouvelable, onChange: (e) => setEnv("renouvelable", e.target.value), placeholder: "Ex: 38" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9missions CO\u2082 Scope 1+2 (tCO\u2082)", hint: "Obligatoire BEGES \u2014 Art. L.229-25 Code env.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.co2, onChange: (e) => setEnv("co2", e.target.value), placeholder: "Ex: 210" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9missions CO\u2082 Scope 3 (tCO\u2082)", hint: "Achats, d\xE9placements, aval \u2014 recommand\xE9 ADEME", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.scope3, onChange: (e) => setEnv("scope3", e.target.value), placeholder: "Ex: 620" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Consommation d'eau (m\xB3/an)", hint: "ESRS E3 \u2014 Ressources en eau", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.eau, onChange: (e) => setEnv("eau", e.target.value), placeholder: "Ex: 2400" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de d\xE9chets recycl\xE9s (%)", hint: "Loi AGEC \u2014 Art. L.541-10 Code env.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.env.dechets, onChange: (e) => setEnv("dechets", e.target.value), placeholder: "Ex: 68" }) })
+      ] }),
+      tab === "soc" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9cart de r\xE9mun\xE9ration F/H (%)", hint: "Index \xE9galit\xE9 \u2014 Art. L.1142-8 CT \u2014 Obligatoire \u226550 sal.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.ecartSalaire, onChange: (e) => setSoc("ecartSalaire", e.target.value), placeholder: "Ex: 7.2" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Heures de formation / salari\xE9 / an", hint: "Art. L.6315-1 CT \u2014 Entretien professionnel obligatoire", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.formation, onChange: (e) => setSoc("formation", e.target.value), placeholder: "Ex: 21" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de turnover (%)", hint: "ESRS S1 \u2014 Indicateur de r\xE9tention et qualit\xE9 de vie au travail", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.turnover, onChange: (e) => setSoc("turnover", e.target.value), placeholder: "Ex: 9.5" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de fr\xE9quence des accidents (TF)", hint: "Art. R.4121-1 CT \u2014 DUERP \u2014 Nb accidents / 1 000 000 h", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.accidents, onChange: (e) => setSoc("accidents", e.target.value), placeholder: "Ex: 2.1" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de travailleurs handicap\xE9s (%)", hint: "OETH \u2014 Art. L.5212-1 CT \u2014 Obligatoire \u226520 sal. \u2014 Cible 6%", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.handicap, onChange: (e) => setSoc("handicap", e.target.value), placeholder: "Ex: 4.1" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taux de satisfaction des salari\xE9s (%)", hint: "eNPS ou enqu\xEAte interne \u2014 ESRS S1-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.soc.satisfaction, onChange: (e) => setSoc("satisfaction", e.target.value), placeholder: "Ex: 78" }) })
+      ] }),
+      tab === "gov" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Part de femmes en direction (%)", hint: "ESRS G1 \u2014 Loi PACTE \u2014 Conseil ou CODIR", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.femmesDirigeantes, onChange: (e) => setGov("femmesDirigeantes", e.target.value), placeholder: "Ex: 44" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Salari\xE9s form\xE9s \xE0 l'\xE9thique (%)", hint: "Art. 17 Loi Sapin II \u2014 Formation anticorruption obligatoire", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.ethique, onChange: (e) => setGov("ethique", e.target.value), placeholder: "Ex: 82" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Fr\xE9quence des audits internes", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: esg.gov.auditFreq, onChange: (e) => setGov("auditFreq", e.target.value), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "quarterly", children: "Trimestrielle" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "biannual", children: "Semestrielle" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "annual", children: "Annuelle" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "none", children: "Aucun audit formalis\xE9" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Fournisseurs \xE9valu\xE9s ESG (%)", hint: "Loi Vigilance \u2014 Art. L.225-102-4 Code com. \u2014 Devoir de vigilance", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "number", value: esg.gov.fournisseursEvalues, onChange: (e) => setGov("fournisseursEvalues", e.target.value), placeholder: "Ex: 65" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { gridColumn: "1/-1" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "14px 16px", background: C.bg, borderRadius: 10, border: `1px solid ${C.border}` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "checkbox", checked: esg.gov.whistleblower, onChange: (e) => setGov("whistleblower", e.target.checked), style: { width: "auto", accentColor: C.accent } }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 500, fontSize: 13 }, children: "Dispositif d'alerte \xE9thique (whistleblower) en place" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 2 }, children: "Obligatoire \u226550 salari\xE9s \u2014 Loi Waserman (2022) & Art. 8 Loi Sapin II" })
+          ] })
+        ] }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginTop: 24, display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: onSave, children: "\u2713 Enregistrer les donn\xE9es ESG" }) })
+    ] });
+  }
+  function DocumentsView({ documents, setDocuments }) {
+    const [modal, setModal] = (0, import_react.useState)(false);
+    const TYPES = ["Politique", "Rapport", "Donn\xE9es", "Charte", "Certification", "Proc\xE9dure", "Contrat", "Autre"];
+    const TAGS = ["RSE", "Environnement", "Social", "Gouvernance", "RH", "Juridique", "Finance"];
+    const tagColor = (t) => t === "Environnement" ? "green" : t === "Social" ? "blue" : t === "Gouvernance" ? "purple" : t === "RSE" ? "brand" : t === "RH" ? "amber" : "default";
+    const DocModal = () => {
+      const [f, setF] = (0, import_react.useState)({ id: uid(), nom: "", type: "Rapport", date: todayStr(), taille: "", tag: "RSE" });
+      const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Ajouter un document", onClose: () => setModal(false), width: 500, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Nom du document", required: true, hint: "Ex: Bilan Carbone 2025.pdf", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.nom, onChange: (e) => set("nom", e.target.value) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Type", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.type, onChange: (e) => set("type", e.target.value), children: TYPES.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cat\xE9gorie", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.tag, onChange: (e) => set("tag", e.target.value), children: TAGS.map((t) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: t }, t)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Date", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: f.date, onChange: (e) => set("date", e.target.value) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taille", hint: "Ex: 2.4 Mo", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.taille, onChange: (e) => set("taille", e.target.value) }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 8 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setModal(false), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
+            setDocuments((p) => [...p, f]);
+            setModal(false);
+          }, disabled: !f.nom, children: "Ajouter" })
+        ] })
+      ] });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", marginBottom: 16 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal(true), children: "+ Ajouter un document" }) }),
+      documents.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "60px 24px", background: C.surface, borderRadius: 12, border: `1px solid ${C.border}` }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 32, marginBottom: 12 }, children: "\u{1F4C1}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 600, marginBottom: 20 }, children: "Aucun document" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal(true), children: "+ Ajouter" })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { style: { background: C.bg }, children: ["Document", "Type", "Cat\xE9gorie", "Date", "Taille", "Actions"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", { style: { padding: "10px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.muted, letterSpacing: 0.4, textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }, children: h }, h)) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: documents.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { style: { borderBottom: i < documents.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 20 }, children: d.nom.endsWith(".pdf") ? "\u{1F4C4}" : d.nom.endsWith(".xlsx") ? "\u{1F4CA}" : "\u{1F4C1}" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 500, fontSize: 13 }, children: d.nom })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: d.type }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: d.tag, color: tagColor(d.tag) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13, color: C.sub }, children: d.date }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px", fontSize: 13, color: C.muted }, children: d.taille || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", { style: { padding: "12px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, variant: "outline", onClick: () => {
+              const html = `<h2>${d.nom}</h2><p><strong>Type :</strong> ${d.type} | <strong>Cat\xE9gorie :</strong> ${d.tag} | <strong>Date :</strong> ${d.date} | <strong>Taille :</strong> ${d.taille || "\u2014"}</p><p>Ce document est r\xE9f\xE9renc\xE9 dans la biblioth\xE8que documentaire EcoScore.</p>`;
+              exportPDF(`Fiche document \u2014 ${d.nom}`, html);
+            }, children: "\u{1F4C4} PDF" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { small: true, danger: true, onClick: () => setDocuments((p) => p.filter((x) => x.id !== d.id)), children: "Supprimer" })
+          ] }) })
+        ] }, d.id)) })
+      ] }) }),
+      modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocModal, {})
+    ] });
+  }
+  function RapportView({ data, onScoreDetail }) {
+    const sc = calcScores(data.esg);
+    const [done, setDone] = (0, import_react.useState)(false);
+    const [gen, setGen] = (0, import_react.useState)(false);
+    const grade = (v) => v >= 80 ? "A" : v >= 65 ? "B" : v >= 50 ? "C" : "D";
+    const checklist = [{ label: "Bilan carbone Scope 1+2", done: !!data.esg.env.co2 }, { label: "Bilan carbone Scope 3", done: !!data.esg.env.scope3 }, { label: "Index \xE9galit\xE9 F/H (Art. L.1142-8 CT)", done: !!data.esg.soc.ecartSalaire }, { label: "Plan de formation (Art. L.6315-1 CT)", done: !!data.esg.soc.formation }, { label: "Turnover & r\xE9tention", done: !!data.esg.soc.turnover }, { label: "Diversit\xE9 en direction (Loi PACTE)", done: !!data.esg.gov.femmesDirigeantes }, { label: "Dispositif alerte \xE9thique (Sapin II)", done: data.esg.gov.whistleblower }, { label: "Panel fournisseurs \xE9valu\xE9 (Loi Vigilance)", done: data.fournisseurs.length > 0 }, { label: "Politiques RSE publi\xE9es", done: data.rse.politiques.some((p) => p.statut === "Publi\xE9") }, { label: "Documents ESG vers\xE9s", done: data.documents.length > 0 }];
+    const pct = Math.round(checklist.filter((c) => c.done).length / checklist.length * 100);
+    const handleGenerate = () => {
+      setGen(true);
+      setTimeout(() => {
+        setGen(false);
+        setDone(true);
+        const html = `
+        <h2>Synth\xE8se des scores ESG</h2>
+        <table><tr><th>Pilier</th><th>Score</th><th>Note</th></tr>
+        <tr><td>Environnement</td><td>${sc.E}/100</td><td>${grade(sc.E)}</td></tr>
+        <tr><td>Social</td><td>${sc.S}/100</td><td>${grade(sc.S)}</td></tr>
+        <tr><td>Gouvernance</td><td>${sc.G}/100</td><td>${grade(sc.G)}</td></tr>
+        <tr><td><strong>Score global</strong></td><td><strong>${sc.total}/100</strong></td><td><strong>${grade(sc.total)}</strong></td></tr>
+        </table>
+        <h2>Donn\xE9es environnementales</h2>
+        <table><tr><th>Indicateur</th><th>Valeur</th></tr>
+        <tr><td>\xC9missions CO\u2082 Scope 1+2</td><td>${data.esg.env.co2 || "\u2014"} tCO\u2082</td></tr>
+        <tr><td>\xC9missions CO\u2082 Scope 3</td><td>${data.esg.env.scope3 || "\u2014"} tCO\u2082</td></tr>
+        <tr><td>\xC9nergie totale</td><td>${data.esg.env.energie || "\u2014"} kWh</td></tr>
+        <tr><td>\xC9nergies renouvelables</td><td>${data.esg.env.renouvelable || "\u2014"}%</td></tr>
+        <tr><td>D\xE9chets recycl\xE9s</td><td>${data.esg.env.dechets || "\u2014"}%</td></tr>
+        </table>
+        <h2>Donn\xE9es sociales</h2>
+        <table><tr><th>Indicateur</th><th>Valeur</th><th>Cadre l\xE9gal</th></tr>
+        <tr><td>\xC9cart de r\xE9mun\xE9ration F/H</td><td>${data.esg.soc.ecartSalaire || "\u2014"}%</td><td>Art. L.1142-8 CT</td></tr>
+        <tr><td>Formation / salari\xE9 / an</td><td>${data.esg.soc.formation || "\u2014"} h</td><td>Art. L.6315-1 CT</td></tr>
+        <tr><td>Taux de turnover</td><td>${data.esg.soc.turnover || "\u2014"}%</td><td>ESRS S1</td></tr>
+        <tr><td>Taux OETH</td><td>${data.esg.soc.handicap || "\u2014"}%</td><td>Art. L.5212-1 CT</td></tr>
+        </table>
+        <h2>Donn\xE9es de gouvernance</h2>
+        <table><tr><th>Indicateur</th><th>Valeur</th><th>Cadre l\xE9gal</th></tr>
+        <tr><td>Femmes en direction</td><td>${data.esg.gov.femmesDirigeantes || "\u2014"}%</td><td>Loi PACTE</td></tr>
+        <tr><td>Formation \xE9thique</td><td>${data.esg.gov.ethique || "\u2014"}%</td><td>Loi Sapin II</td></tr>
+        <tr><td>Dispositif alerte \xE9thique</td><td>${data.esg.gov.whistleblower ? "Oui" : "Non"}</td><td>Loi Waserman 2022</td></tr>
+        <tr><td>Fournisseurs \xE9valu\xE9s ESG</td><td>${data.esg.gov.fournisseursEvalues || "\u2014"}%</td><td>Loi Vigilance</td></tr>
+        </table>
+        <h2>Conformit\xE9 CSRD \u2014 Checklist</h2>
+        <ul>${checklist.map((c) => `<li>${c.done ? "\u2705" : "\u2B1C"} ${c.label}</li>`).join("")}</ul>
+      `;
+        exportPDF("Rapport de Durabilit\xE9 CSRD 2025", html);
+      }, 1800);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 24 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Score global", value: sc.total, unit: "/100", sub: `Note ${grade(sc.total)}`, color: sc.total >= 65 ? C.success : C.warning }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Environnement", value: sc.E, unit: "/100", sub: `Note ${grade(sc.E)}`, color: C.accent }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Social", value: sc.S, unit: "/100", sub: `Note ${grade(sc.S)}`, color: "#0F766E" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Gouvernance", value: sc.G, unit: "/100", sub: `Note ${grade(sc.G)}`, color: C.purple })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 10, marginBottom: 16 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: onScoreDetail, children: "\u{1F50D} Comprendre mon score" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 280px", gap: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 15, fontWeight: 600 }, children: "Rapport de durabilit\xE9 CSRD 2025" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.muted, marginTop: 2 }, children: [
+                "Exercice 2025 \xB7 ",
+                data.employees.length,
+                " salari\xE9s"
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "ESRS Conforme", color: "green" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 20 }, children: [{ label: "E1 \u2013 Changement climatique", done: !!data.esg.env.co2, note: data.esg.env.co2 ? `${data.esg.env.co2} tCO\u2082` : "Manquant" }, { label: "E3 \u2013 Eau", done: !!data.esg.env.eau, note: data.esg.env.eau ? `${data.esg.env.eau} m\xB3` : "Manquant" }, { label: "S1 \u2013 Personnel", done: !!data.esg.soc.ecartSalaire, note: !!data.esg.soc.ecartSalaire ? "Compl\xE9t\xE9" : "Manquant" }, { label: "S2 \u2013 Cha\xEEne valeur", done: data.fournisseurs.length > 0, note: data.fournisseurs.length > 0 ? `${data.fournisseurs.length} fourn.` : "Manquant" }, { label: "G1 \u2013 \xC9thique", done: data.esg.gov.whistleblower, note: data.esg.gov.whistleblower ? "Actif" : "Manquant" }, { label: "G2 \u2013 Diversit\xE9", done: !!data.esg.gov.femmesDirigeantes, note: data.esg.gov.femmesDirigeantes ? `${data.esg.gov.femmesDirigeantes}%` : "Manquant" }].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 14px", borderRadius: 8, background: item.done ? C.successLight : C.bg, border: `1px solid ${item.done ? "#A7F3D0" : C.border}` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12 }, children: item.done ? "\u2705" : "\u2B1C" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 600, color: C.text, marginTop: 4, lineHeight: 1.4 }, children: item.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: item.done ? C.success : C.muted, marginTop: 2 }, children: item.note })
+          ] }, i)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: handleGenerate, disabled: gen, style: { width: "100%", padding: 13, borderRadius: 10, fontSize: 14, fontWeight: 600, background: gen ? C.bg : C.brand, color: gen ? C.muted : "#fff", border: `1px solid ${gen ? C.border : C.brand}`, cursor: gen ? "not-allowed" : "pointer", transition: "all .2s" }, children: gen ? "\u23F3 G\xE9n\xE9ration en cours\u2026" : done ? "\u2705 Rapport g\xE9n\xE9r\xE9 \u2014 Cliquez pour PDF" : "\u{1F4C4} G\xE9n\xE9rer et exporter le rapport complet (PDF)" }),
+          done && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.success, textAlign: "center", marginTop: 8 }, children: "Rapport CSRD 2025 \xB7 Conforme ESRS E1\u2013G1 \xB7 Export PDF disponible" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 20 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 4 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 600 }, children: "Compl\xE9tude donn\xE9es" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 16, fontWeight: 700, color: pct >= 80 ? C.success : C.warning }, children: [
+              pct,
+              "%"
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99, marginBottom: 16 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${pct}%`, background: pct >= 80 ? C.success : C.warning, borderRadius: 99 } }) }),
+          checklist.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < checklist.length - 1 ? `1px solid ${C.border}` : "none" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12 }, children: item.done ? "\u2705" : "\u2B1C" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: item.done ? C.text : C.muted, lineHeight: 1.4 }, children: item.label })
+          ] }, i))
+        ] })
+      ] })
+    ] });
+  }
   function SettingsView({ data, setData }) {
     const [co, setCo] = (0, import_react.useState)(data.company);
     const [ad, setAd] = (0, import_react.useState)(data.admin);
@@ -14545,11 +14483,11 @@ Que souhaitez-vous faire ?` }]);
     const save = () => {
       setData((p) => ({ ...p, company: co, admin: ad, apiKey }));
       setSaved(true);
-      setTimeout(() => setSaved(false), 2200);
+      setTimeout(() => setSaved(false), 2500);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { maxWidth: 660 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24, marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 20 }, children: "Profil administrateur" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 20 }, children: "Mon profil" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16, marginBottom: 20, padding: 16, background: C.bg, borderRadius: 10 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${ad.prenom} ${ad.nom}`, size: 52 }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
@@ -14566,15 +14504,15 @@ Que souhaitez-vous faire ?` }]);
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Pr\xE9nom", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: ad.prenom, onChange: (e) => setAd((p) => ({ ...p, prenom: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Nom", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: ad.nom, onChange: (e) => setAd((p) => ({ ...p, nom: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Email", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "email", value: ad.email, onChange: (e) => setAd((p) => ({ ...p, email: e.target.value })) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "R\xF4le", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: ad.role, onChange: (e) => setAd((p) => ({ ...p, role: e.target.value })) }) })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "R\xF4le / Titre", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: ad.role, onChange: (e) => setAd((p) => ({ ...p, role: e.target.value })) }) })
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24, marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 20 }, children: "Entreprise" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 20 }, children: "Informations de l'entreprise" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Raison sociale", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.name, onChange: (e) => setCo((p) => ({ ...p, name: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "SIREN", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.siren, onChange: (e) => setCo((p) => ({ ...p, siren: e.target.value })) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Secteur", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.sector, onChange: (e) => setCo((p) => ({ ...p, sector: e.target.value })) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Secteur d'activit\xE9", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.sector, onChange: (e) => setCo((p) => ({ ...p, sector: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Taille", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.taille, onChange: (e) => setCo((p) => ({ ...p, taille: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Email", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.email, onChange: (e) => setCo((p) => ({ ...p, email: e.target.value })) }) }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "T\xE9l\xE9phone", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.tel, onChange: (e) => setCo((p) => ({ ...p, tel: e.target.value })) }) })
@@ -14582,15 +14520,22 @@ Que souhaitez-vous faire ?` }]);
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Adresse", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: co.adresse, onChange: (e) => setCo((p) => ({ ...p, adresse: e.target.value })) }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24, marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 8 }, children: "Cl\xE9 API Anthropic (IA)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, marginBottom: 6 }, children: "Cl\xE9 API Anthropic (Assistant IA RSE)" }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.muted, marginBottom: 16 }, children: [
-          "N\xE9cessaire pour l'assistant IA dans le module RSE. Obtenez votre cl\xE9 sur ",
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "https://console.anthropic.com", target: "_blank", style: { color: C.accent }, children: "console.anthropic.com" })
+          "N\xE9cessaire pour utiliser l'assistant IA dans le module RSE. Obtenez votre cl\xE9 sur ",
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "https://console.anthropic.com", target: "_blank", rel: "noreferrer", style: { color: C.accent }, children: "console.anthropic.com" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cl\xE9 API", hint: "sk-ant-\u2026 stock\xE9e localement, jamais transmise en dehors de votre ordinateur", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "password", value: apiKey, onChange: (e) => setApiKey(e.target.value), placeholder: "sk-ant-api03-\u2026" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.warningLight, borderRadius: 8, padding: "10px 14px", marginBottom: 14, border: `1px solid #FDE68A` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: "#92400E", lineHeight: 1.6 }, children: [
+          "\u26A0\uFE0F ",
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Sur Render (cloud) :" }),
+          " la cl\xE9 API doit \xEAtre configur\xE9e dans les variables d'environnement Render (",
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { children: "ANTHROPIC_API_KEY" }),
+          ") pour persister entre les red\xE9marrages. Sinon elle sera perdue au prochain d\xE9ploiement."
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cl\xE9 API (sk-ant-\u2026)", hint: "Stock\xE9e localement et sur le serveur. Ne partagez jamais cette cl\xE9.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "password", value: apiKey, onChange: (e) => setApiKey(e.target.value), placeholder: "sk-ant-api03-\u2026" }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: save, children: "Enregistrer les modifications" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: save, children: "Enregistrer toutes les modifications" }),
         saved && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, color: C.success, fontWeight: 600 }, children: "\u2713 Modifications enregistr\xE9es" })
       ] })
     ] });
@@ -14602,27 +14547,25 @@ Que souhaitez-vous faire ?` }]);
     { id: "fournisseurs", label: "Fournisseurs", icon: "\u25CE", countKey: "fournisseurs" },
     { id: "esg", label: "Donn\xE9es ESG", icon: "\u25C7" },
     { id: "documents", label: "Documents", icon: "\u25FB", countKey: "documents" },
-    { id: "legislation", label: "L\xE9gislation", icon: "\u2696", isNew: true },
-    { id: "rse", label: "Politiques RSE", icon: "\u{1F4DC}", isNew: true },
+    { id: "legislation", label: "L\xE9gislation ESG", icon: "\u2696" },
+    { id: "rse", label: "Politiques RSE", icon: "\u{1F4DC}" },
     { id: "rapport", label: "Rapport CSRD", icon: "\u2261" },
     { id: "settings", label: "Param\xE8tres", icon: "\u2299" }
   ];
   var TITLES = { dashboard: "Tableau de bord", salaries: "Salari\xE9s", postes: "Fiches de poste", fournisseurs: "Fournisseurs", esg: "Donn\xE9es ESG", documents: "Documents", legislation: "L\xE9gislation ESG", rse: "Politiques RSE", rapport: "Rapport CSRD", settings: "Param\xE8tres" };
   function App() {
     const [view, setView] = (0, import_react.useState)("dashboard");
-    const [data, setData, ready] = useStorage("ecoscore_v4", DEFAULT_DATA);
+    const [data, setData, ready] = useStorage("ecoscore_v5", DEFAULT_DATA);
     const [toast, setToast] = (0, import_react.useState)(null);
+    const [showScoreDetail, setShowScoreDetail] = (0, import_react.useState)(false);
     (0, import_react.useEffect)(() => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = GF;
       document.head.appendChild(link);
       const s = document.createElement("style");
-      s.textContent = css;
+      s.textContent = CSS;
       document.head.appendChild(s);
-      const pulse = document.createElement("style");
-      pulse.textContent = `@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}`;
-      document.head.appendChild(pulse);
     }, []);
     const showToast = (msg) => {
       setToast(msg);
@@ -14634,7 +14577,8 @@ Que souhaitez-vous faire ?` }]);
     const setDocuments = (fn) => setData((d) => ({ ...d, documents: typeof fn === "function" ? fn(d.documents) : fn }));
     const setEsg = (fn) => setData((d) => ({ ...d, esg: typeof fn === "function" ? fn(d.esg) : fn }));
     const setRse = (fn) => setData((d) => ({ ...d, rse: typeof fn === "function" ? fn(d.rse) : fn }));
-    if (!ready) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: C.muted, fontSize: 13 }, children: "Chargement\u2026" });
+    if (!ready) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: C.muted, fontSize: 13, fontFamily: "Sora,sans-serif" }, children: "Chargement\u2026" });
+    const scores = calcScores(data.esg);
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "100vh", overflow: "hidden", position: "relative" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 224, flexShrink: 0, background: C.surface, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", padding: "20px 12px" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "4px 8px", marginBottom: 24 }, children: [
@@ -14644,17 +14588,20 @@ Que souhaitez-vous faire ?` }]);
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, letterSpacing: 0.4 }, children: "ESG \xB7 CSRD \xB7 PME" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 10, padding: "10px 12px", marginBottom: 20 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.text, marginBottom: 1 }, children: data.company.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted }, children: data.company.sector })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", { style: { flex: 1, display: "flex", flexDirection: "column", gap: 1, overflow: "auto" }, children: VIEWS.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView(item.id), style: { display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 10px", borderRadius: 8, background: view === item.id ? C.brandLight : "transparent", color: view === item.id ? C.brand : C.sub, border: "none", cursor: "pointer", textAlign: "left", fontSize: 13, fontWeight: view === item.id ? 600 : 400, transition: "all .12s" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", { style: { flex: 1, display: "flex", flexDirection: "column", gap: 1, overflowY: "auto" }, children: VIEWS.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView(item.id), style: { display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 10px", borderRadius: 8, background: view === item.id ? C.brandLight : "transparent", color: view === item.id ? C.brand : C.sub, border: "none", cursor: "pointer", textAlign: "left", fontSize: 13, fontWeight: view === item.id ? 600 : 400, transition: "all .12s" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, width: 16, textAlign: "center" }, children: item.icon }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { flex: 1 }, children: item.label }),
-          item.isNew && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 9, background: C.accent, color: "#fff", padding: "1px 5px", borderRadius: 99, fontWeight: 700 }, children: "NEW" }),
-          item.countKey && !item.isNew && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: view === item.id ? C.brand : C.border, color: view === item.id ? "#fff" : C.muted, padding: "1px 6px", borderRadius: 99 }, children: data[item.countKey]?.length })
+          item.countKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: view === item.id ? C.brand : C.border, color: view === item.id ? "#fff" : C.muted, padding: "1px 6px", borderRadius: 99 }, children: data[item.countKey]?.length })
         ] }, item.id)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { borderTop: `1px solid ${C.border}`, paddingTop: 14, marginTop: 8 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView("settings"), style: { display: "flex", alignItems: "center", gap: 8, padding: "4px 8px", background: "none", border: "none", cursor: "pointer", width: "100%" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { margin: "12px 0", padding: "12px", background: C.bg, borderRadius: 10, textAlign: "center", cursor: "pointer" }, onClick: () => setShowScoreDetail(true), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }, children: "Score ESG global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 24, fontWeight: 800, color: getGradeColor(scores.total), fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: [
+            scores.total,
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 400, color: C.muted }, children: "/100" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.accent, marginTop: 4 }, children: "Voir d\xE9tails \u2192" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { borderTop: `1px solid ${C.border}`, paddingTop: 14 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView("settings"), style: { display: "flex", alignItems: "center", gap: 8, padding: "4px 8px", background: "none", border: "none", cursor: "pointer", width: "100%" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 28 }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "left" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 600, color: C.text }, children: [
@@ -14670,11 +14617,11 @@ Que souhaitez-vous faire ?` }]);
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { height: 54, flexShrink: 0, borderBottom: `1px solid ${C.border}`, background: C.surface, display: "flex", alignItems: "center", padding: "0 28px", gap: 12 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { style: { fontSize: 15, fontWeight: 600, color: C.text, flex: 1 }, children: TITLES[view] }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `${LEGISLATION.length} textes r\xE9f\xE9renc\xE9s`, color: "blue" }),
-          view === "rse" && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "\u26A0\uFE0F Cl\xE9 API requise pour l'IA", color: "amber" }),
+          view === "rse" && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "\u26A0\uFE0F Cl\xE9 API \xE0 configurer (Param\xE8tres)", color: "amber" }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.muted }, children: "Exercice 2025" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: view === "legislation" || view === "rse" ? "hidden" : "auto", padding: view === "legislation" || view === "rse" ? "16px 28px" : "28px" }, children: [
-          view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: view === "legislation" || view === "rse" ? "hidden" : "auto", padding: view === "legislation" || view === "rse" ? "16px 28px" : "28px", animation: "fadeIn .2s ease" }, children: [
+          view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
           view === "salaries" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SalariesView, { employees: data.employees, setEmployees }),
           view === "postes" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PostesView, { postes: data.postes, setPostes }),
           view === "fournisseurs" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FournisseursView, { fournisseurs: data.fournisseurs, setFournisseurs }),
@@ -14682,15 +14629,16 @@ Que souhaitez-vous faire ?` }]);
           view === "documents" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentsView, { documents: data.documents, setDocuments }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LegislationView, {}),
           view === "rse" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RseView, { rse: data.rse, setRse, admin: data.admin, apiKey: data.apiKey }),
-          view === "rapport" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RapportView, { data }),
+          view === "rapport" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RapportView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
           view === "settings" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsView, { data, setData })
         ] })
       ] }),
-      toast && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", bottom: 24, right: 24, background: C.brand, color: "#fff", padding: "12px 20px", borderRadius: 10, fontSize: 13, fontWeight: 500, zIndex: 200, boxShadow: "0 8px 24px rgba(0,0,0,.15)" }, children: toast })
+      showScoreDetail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreExplainModal, { scores, esg: data.esg, onClose: () => setShowScoreDetail(false) }),
+      toast && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", bottom: 24, right: 24, background: C.brand, color: "#fff", padding: "12px 20px", borderRadius: 10, fontSize: 13, fontWeight: 500, zIndex: 200, boxShadow: "0 8px 24px rgba(0,0,0,.15)", animation: "fadeIn .2s ease" }, children: toast })
     ] });
   }
 
-  // home/claude/entry-v4.jsx
+  // home/claude/entry-v5.jsx
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
 })();
