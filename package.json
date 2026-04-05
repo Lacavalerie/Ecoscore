@@ -1,0 +1,15 @@
+{
+  "name": "ecoscore",
+  "version": "4.0.0",
+  "description": "EcoScore — Plateforme ESG & CSRD pour PME",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Jahsan Lacavalerie",
+  "license": "UNLICENSED"
+}
