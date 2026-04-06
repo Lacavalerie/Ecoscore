@@ -35,7 +35,7 @@ function getApiKey(reqKey) {
   try { return JSON.parse(fs.readFileSync(path.join(DIR,'config.json'),'utf8')).anthropicApiKey || ''; } catch { return ''; }
 }
 
-const MIME = {'.html':'text/html','.js':'application/javascript','.css':'text/css','.ico':'image/x-icon','.png':'image/png','.json':'application/json'};
+const MIME = {'.html':'text/html','.js':'application/javascript','.css':'text/css','.ico':'image/x-icon','.png':'image/png','.json':'application/json','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};
 
 // ── Helpers HTTP ───────────────────────────────────────────────────────────────
 function httpRequest(options, body) {
@@ -323,6 +323,15 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ── STATIC FILES ──────────────────────────────────────────────────────────
+  // Serve SVG icons as image/svg+xml for PWA
+  if (req.url === '/icon-192.png' || req.url === '/icon-192.svg') {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192"><rect width="192" height="192" rx="38" fill="#1D3D2E"/><text x="96" y="135" font-size="110" text-anchor="middle">🌿</text></svg>`;
+    res.writeHead(200,{'Content-Type':'image/svg+xml'}); res.end(svg); return;
+  }
+  if (req.url === '/icon-512.png' || req.url === '/icon-512.svg') {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#1D3D2E"/><text x="256" y="350" font-size="280" text-anchor="middle">🌿</text></svg>`;
+    res.writeHead(200,{'Content-Type':'image/svg+xml'}); res.end(svg); return;
+  }
   const filePath = path.join(DIR, req.url==='/'?'index.html':req.url);
   const ext = path.extname(filePath);
   fs.readFile(filePath,(err,data)=>{

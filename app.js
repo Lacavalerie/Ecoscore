@@ -12781,16 +12781,28 @@
   var CSS = `
 @import url('${GF}');
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sora',sans-serif;background:#F7F6F3;color:#18181B;font-size:14px}
-input,select,textarea{font-family:'Sora',sans-serif;font-size:14px;color:#18181B;background:#fff;border:1px solid #E4E4E7;border-radius:8px;padding:8px 12px;width:100%;outline:none;transition:border-color .15s}
+body{font-family:'Sora',sans-serif;background:#F7F6F3;color:#18181B;font-size:14px;-webkit-tap-highlight-color:transparent}
+input,select,textarea{font-family:'Sora',sans-serif;font-size:16px;color:#18181B;background:#fff;border:1px solid #E4E4E7;border-radius:8px;padding:10px 12px;width:100%;outline:none;transition:border-color .15s}
 input:focus,select:focus,textarea:focus{border-color:#3D9A6E;box-shadow:0 0 0 3px #EBF5EF}
 textarea{resize:vertical;min-height:80px}
-button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8px;font-size:13px;font-weight:500;transition:all .15s}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#E4E4E7;border-radius:99px}
+button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8px;font-size:13px;font-weight:500;transition:all .15s;-webkit-tap-highlight-color:transparent}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#E4E4E7;border-radius:99px}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* \u2500\u2500 MOBILE RESPONSIVE \u2500\u2500 */
+@media (max-width: 768px) {
+  input,select{font-size:16px}
+  .mob-hide{display:none!important}
+  .mob-full{width:100%!important}
+  .mob-col{flex-direction:column!important}
+  .mob-stack{grid-template-columns:1fr!important}
+  .mob-p{padding:16px!important}
+  .mob-gap{gap:10px!important}
+}
 `;
   var uid = () => Math.random().toString(36).slice(2, 9);
   var initials = (n) => (n || "").split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
@@ -15983,11 +15995,103 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     rapport: "G\xE9n\xE9rez votre rapport de durabilit\xE9 conforme CSRD",
     settings: "Configuration de votre profil et int\xE9grations"
   };
+  function useIsMobile() {
+    const [mobile, setMobile] = (0, import_react.useState)(window.innerWidth <= 768);
+    (0, import_react.useEffect)(() => {
+      const fn = () => setMobile(window.innerWidth <= 768);
+      window.addEventListener("resize", fn);
+      return () => window.removeEventListener("resize", fn);
+    }, []);
+    return mobile;
+  }
+  var BOTTOM_NAV = [
+    { id: "dashboard", label: "Accueil", icon: "\u25A6" },
+    { id: "plan", label: "Actions", icon: "\u2705" },
+    { id: "esg", label: "Donn\xE9es", icon: "\u25C7" },
+    { id: "legislation", label: "Droit", icon: "\u2696\uFE0F" },
+    { id: "menu", label: "Menu", icon: "\u2630" }
+  ];
+  var ALL_VIEWS_MENU = [
+    { id: "echeances", label: "\xC9ch\xE9ances l\xE9gales", icon: "\u{1F4C5}" },
+    { id: "salaries", label: "Salari\xE9s", icon: "\u{1F464}" },
+    { id: "postes", label: "Fiches de poste", icon: "\u{1F4CB}" },
+    { id: "fournisseurs", label: "Fournisseurs", icon: "\u{1F91D}" },
+    { id: "documents", label: "Documents", icon: "\u{1F4C1}" },
+    { id: "juridique", label: "Recherche juridique", icon: "\u{1F50D}" },
+    { id: "rse", label: "Politiques RSE", icon: "\u{1F4DC}" },
+    { id: "rapport", label: "Rapport CSRD", icon: "\u{1F4CA}" },
+    { id: "settings", label: "Param\xE8tres", icon: "\u2699\uFE0F" }
+  ];
+  function MobileMenuDrawer({ onSelect, onClose, data }) {
+    const scores = calcScores(data.esg);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+      "div",
+      {
+        style: { position: "fixed", inset: 0, zIndex: 200, display: "flex", flexDirection: "column", justifyContent: "flex-end" },
+        onClick: onClose,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", inset: 0, background: "rgba(0,0,0,.45)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { onClick: (e) => e.stopPropagation(), style: {
+            position: "relative",
+            background: "#fff",
+            borderRadius: "20px 20px 0 0",
+            padding: "0 0 32px",
+            animation: "slideUp .25s ease",
+            maxHeight: "85vh",
+            overflow: "auto"
+          }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "center", padding: "12px 0 8px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 40, height: 4, background: "#E4E4E7", borderRadius: 99 } }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { margin: "0 16px 16px", padding: "14px 16px", background: `linear-gradient(135deg,${C.brand},${C.brandMid})`, borderRadius: 14, color: "#fff", display: "flex", alignItems: "center", gap: 12 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: "rgba(255,255,255,.6)", marginBottom: 2 }, children: "Score ESG Global" }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 28, fontWeight: 800, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: [
+                  scores.total,
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,.5)" }, children: "/100" })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginLeft: "auto", display: "flex", gap: 12 }, children: [{ l: "E", s: scores.E }, { l: "S", s: scores.S }, { l: "G", s: scores.G }].map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 16, fontWeight: 700, color: getGradeColor(p.s) }, children: p.s }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 9, color: "rgba(255,255,255,.5)" }, children: p.l })
+              ] }, p.l)) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, padding: "0 16px" }, children: ALL_VIEWS_MENU.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => onSelect(item.id), style: {
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "14px 16px",
+              background: C.bg,
+              borderRadius: 12,
+              border: `1px solid ${C.border}`,
+              cursor: "pointer",
+              textAlign: "left",
+              fontFamily: "Sora,sans-serif"
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 22 }, children: item.icon }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, fontWeight: 500, color: C.text }, children: item.label })
+            ] }, item.id)) }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { margin: "12px 16px 0", padding: "14px 16px", background: C.bg, borderRadius: 12, border: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 12 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 36 }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text }, children: [
+                  data.admin.prenom,
+                  " ",
+                  data.admin.nom
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted }, children: data.admin.role })
+              ] })
+            ] })
+          ] })
+        ]
+      }
+    );
+  }
   function App() {
     const [view, setView] = (0, import_react.useState)("dashboard");
     const [data, setData, saveStatus] = useAppData(DEFAULT_DATA);
     const [toast, setToast] = (0, import_react.useState)(null);
     const [showScoreDetail, setShowScoreDetail] = (0, import_react.useState)(false);
+    const [showMobileMenu, setShowMobileMenu] = (0, import_react.useState)(false);
+    const isMobile = useIsMobile();
     (0, import_react.useEffect)(() => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
@@ -16012,6 +16116,91 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     const grade = getGrade(scores.total);
     const gradeColor = getGradeColor(scores.total);
     const fullscreen = ["legislation", "rse", "juridique"].includes(view);
+    const navigate = (id) => {
+      if (id === "menu") {
+        setShowMobileMenu(true);
+        return;
+      }
+      setView(id);
+      setShowMobileMenu(false);
+    };
+    const content = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: {
+      flex: 1,
+      overflowY: fullscreen ? "hidden" : "auto",
+      padding: isMobile ? fullscreen ? "12px" : "16px" : fullscreen ? "16px 28px" : "28px 32px",
+      animation: "fadeIn .2s ease",
+      paddingBottom: isMobile ? "80px" : void 0
+    }, children: [
+      view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
+      view === "plan" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanActionView, { actions: data.planActions || [], setActions: setPlanActions }),
+      view === "echeances" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EcheancesView, {}),
+      view === "salaries" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SalariesView, { employees: data.employees, setEmployees }),
+      view === "postes" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PostesView, { postes: data.postes, setPostes }),
+      view === "fournisseurs" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FournisseursView, { fournisseurs: data.fournisseurs, setFournisseurs }),
+      view === "esg" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EsgView, { esg: data.esg, setEsg, onSave: () => showToast("Donn\xE9es ESG enregistr\xE9es") }),
+      view === "documents" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentsView, { documents: data.documents, setDocuments }),
+      view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LegislationView, {}),
+      view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RechercheJuridiqueView, { apiKey: data.apiKey }),
+      view === "rse" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RseView, { rse: data.rse, setRse, admin: data.admin, apiKey: data.apiKey }),
+      view === "rapport" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RapportView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
+      view === "settings" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsView, { data, setData })
+    ] });
+    if (isMobile) {
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", height: "100dvh", overflow: "hidden", background: C.bg, position: "relative" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: "#fff", borderBottom: `1px solid ${C.border}`, padding: "12px 16px", display: "flex", alignItems: "center", gap: 10, flexShrink: 0, paddingTop: "max(12px, env(safe-area-inset-top))" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 28, height: 28, borderRadius: 7, background: `linear-gradient(135deg,${C.brand},${C.accent})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: "\u{1F33F}" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 14, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: "EcoScore" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted }, children: TITLES[view] || "ESG & CSRD" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { onClick: () => setShowScoreDetail(true), style: { display: "flex", alignItems: "center", gap: 6, background: C.brandLight, borderRadius: 99, padding: "5px 12px", cursor: "pointer", border: `1px solid #BDE5CF` }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 14, fontWeight: 800, color: gradeColor, fontFamily: "'DM Serif Display',serif" }, children: scores.total }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.muted }, children: "/100" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 700, color: gradeColor }, children: grade })
+          ] }),
+          saveStatus === "saving" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.warning }, children: "\u23F3" }),
+          saveStatus === "saved" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.success }, children: "\u2713" })
+        ] }),
+        content,
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: "#fff",
+          borderTop: `1px solid ${C.border}`,
+          display: "flex",
+          paddingBottom: "env(safe-area-inset-bottom)",
+          zIndex: 100,
+          boxShadow: "0 -4px 20px rgba(0,0,0,.08)"
+        }, children: BOTTOM_NAV.map((item) => {
+          const active = item.id === "menu" ? showMobileMenu : view === item.id;
+          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => navigate(item.id), style: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "10px 4px 8px",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            gap: 3,
+            fontFamily: "Sora,sans-serif"
+          }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 20, lineHeight: 1 }, children: item.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, fontWeight: active ? 700 : 400, color: active ? C.brand : C.muted, transition: "color .15s" }, children: item.label }),
+            active && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 20, height: 2, background: C.accent, borderRadius: 99, marginTop: 2 } })
+          ] }, item.id);
+        }) }),
+        showMobileMenu && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MobileMenuDrawer, { onSelect: navigate, onClose: () => setShowMobileMenu(false), data }),
+        showScoreDetail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreExplainModal, { scores, esg: data.esg, onClose: () => setShowScoreDetail(false) }),
+        toast && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: toast.type === "error" ? C.danger : C.brand, color: "#fff", padding: "10px 20px", borderRadius: 99, fontSize: 13, fontWeight: 500, zIndex: 300, boxShadow: "0 8px 24px rgba(0,0,0,.2)", whiteSpace: "nowrap", animation: "fadeIn .2s ease" }, children: [
+          toast.type === "error" ? "\u26A0\uFE0F" : "\u2713",
+          " ",
+          toast.msg
+        ] })
+      ] });
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "100vh", overflow: "hidden", position: "relative", background: C.bg }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 236, flexShrink: 0, background: "#FFFFFF", borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", overflow: "hidden" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { padding: "18px 16px 14px", borderBottom: `1px solid ${C.border}` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
@@ -16088,27 +16277,13 @@ Que souhaitez-vous am\xE9liorer ?` }]);
           ] }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `${LEGISLATION.length} textes`, color: "blue" }),
           view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "3 sources connect\xE9es", color: "green" }),
-          (view === "rse" || view === "juridique") && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setView("settings"), style: { background: C.warningLight, border: `1px solid #FDE68A`, borderRadius: 8, padding: "5px 12px", cursor: "pointer", fontSize: 11, fontWeight: 600, color: "#92400E", fontFamily: "Sora,sans-serif" }, children: "\u26A0\uFE0F Cl\xE9 API manquante \u2192 Param\xE8tres" }),
+          (view === "rse" || view === "juridique") && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setView("settings"), style: { background: C.warningLight, border: `1px solid #FDE68A`, borderRadius: 8, padding: "5px 12px", cursor: "pointer", fontSize: 11, fontWeight: 600, color: "#92400E", fontFamily: "Sora,sans-serif" }, children: "\u26A0\uFE0F Cl\xE9 API \u2192 Param\xE8tres" }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 5, padding: "4px 12px", borderRadius: 20, background: saveStatus === "saved" ? C.successLight : saveStatus === "saving" ? C.warningLight : C.bg, border: `1px solid ${saveStatus === "saved" ? "#A7F3D0" : saveStatus === "saving" ? "#FDE68A" : C.border}`, transition: "all .3s" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10 }, children: saveStatus === "saving" ? "\u23F3" : saveStatus === "saved" ? "\u2713" : "\u{1F4BE}" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 500, color: saveStatus === "saved" ? C.success : saveStatus === "saving" ? C.warning : C.muted }, children: saveStatus === "saving" ? "Enregistrement\u2026" : saveStatus === "saved" ? "Enregistr\xE9" : "Synchronis\xE9" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: fullscreen ? "hidden" : "auto", padding: fullscreen ? "16px 28px" : "28px 32px", animation: "fadeIn .2s ease" }, children: [
-          view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
-          view === "plan" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanActionView, { actions: data.planActions || [], setActions: setPlanActions }),
-          view === "echeances" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EcheancesView, {}),
-          view === "salaries" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SalariesView, { employees: data.employees, setEmployees }),
-          view === "postes" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PostesView, { postes: data.postes, setPostes }),
-          view === "fournisseurs" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FournisseursView, { fournisseurs: data.fournisseurs, setFournisseurs }),
-          view === "esg" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EsgView, { esg: data.esg, setEsg, onSave: () => showToast("Donn\xE9es ESG enregistr\xE9es") }),
-          view === "documents" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentsView, { documents: data.documents, setDocuments }),
-          view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LegislationView, {}),
-          view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RechercheJuridiqueView, { apiKey: data.apiKey }),
-          view === "rse" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RseView, { rse: data.rse, setRse, admin: data.admin, apiKey: data.apiKey }),
-          view === "rapport" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RapportView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
-          view === "settings" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsView, { data, setData })
-        ] })
+        content
       ] }),
       showScoreDetail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreExplainModal, { scores, esg: data.esg, onClose: () => setShowScoreDetail(false) }),
       toast && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { position: "fixed", bottom: 28, right: 28, background: toast.type === "error" ? C.danger : C.brand, color: "#fff", padding: "12px 20px", borderRadius: 12, fontSize: 13, fontWeight: 500, zIndex: 300, boxShadow: "0 12px 40px rgba(0,0,0,.2)", animation: "slideIn .25s ease", display: "flex", alignItems: "center", gap: 8, fontFamily: "Sora,sans-serif" }, children: [
