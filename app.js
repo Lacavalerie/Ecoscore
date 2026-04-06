@@ -12747,10 +12747,10 @@
     }
   });
 
-  // home/claude/entry-v5.jsx
+  // home/claude/entry-v6.jsx
   var import_client = __toESM(require_client());
 
-  // home/claude/ecoscore-v5.jsx
+  // home/claude/ecoscore-v6-clean.jsx
   var import_react = __toESM(require_react());
   var import_jsx_runtime = __toESM(require_jsx_runtime());
   var GF = "https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap";
@@ -12774,15 +12774,10 @@
     blue: "#3B82F6",
     blueLight: "#EFF6FF",
     purple: "#7C3AED",
-    purpleLight: "#F5F3FF"
+    purpleLight: "#F5F3FF",
+    orange: "#F97316",
+    orangeLight: "#FFF7ED"
   };
-  var uid = () => Math.random().toString(36).slice(2, 9);
-  var initials = (n) => (n || "").split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
-  var avatarPalette = ["#1D3D2E", "#2D5A45", "#3D9A6E", "#0F766E", "#1D4ED8", "#7C3AED", "#BE185D", "#B45309"];
-  var avatarColor = (n) => avatarPalette[(n || "").charCodeAt(0) % avatarPalette.length];
-  var DEPTS = ["Direction", "Tech", "RH", "Op\xE9rations", "Commercial", "Finance", "Marketing", "Juridique"];
-  var CONTRATS = ["CDI", "CDD", "Stage", "Alternance", "Freelance"];
-  var todayStr = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
   var CSS = `
 @import url('${GF}');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -12795,29 +12790,950 @@ button{font-family:'Sora',sans-serif;cursor:pointer;border:none;border-radius:8p
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 `;
+  var uid = () => Math.random().toString(36).slice(2, 9);
+  var initials = (n) => (n || "").split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
+  var avatarPalette = ["#1D3D2E", "#2D5A45", "#3D9A6E", "#0F766E", "#1D4ED8", "#7C3AED", "#BE185D", "#B45309"];
+  var avatarColor = (n) => avatarPalette[(n || "").charCodeAt(0) % avatarPalette.length];
+  var DEPTS = ["Direction", "Tech", "RH", "Op\xE9rations", "Commercial", "Finance", "Marketing", "Juridique", "Communication"];
+  var CONTRATS = ["CDI", "CDD", "Stage", "Alternance", "Freelance", "Int\xE9rim"];
+  var todayStr = () => (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  var daysUntil = (dateStr) => Math.round((new Date(dateStr) - /* @__PURE__ */ new Date()) / (1e3 * 60 * 60 * 24));
+  var formatDate = (d) => new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+  var STORAGE_KEY = "ecoscore_v6";
+  function loadFromLocalStorage(fallback) {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return fallback;
+      const parsed = JSON.parse(raw);
+      return {
+        ...fallback,
+        ...parsed,
+        esg: {
+          ...fallback.esg,
+          ...parsed.esg,
+          env: { ...fallback.esg.env, ...parsed.esg?.env || {} },
+          soc: { ...fallback.esg.soc, ...parsed.esg?.soc || {} },
+          gov: { ...fallback.esg.gov, ...parsed.esg?.gov || {} }
+        },
+        rse: { ...fallback.rse, ...parsed.rse }
+      };
+    } catch {
+      return fallback;
+    }
+  }
+  function saveToLocalStorage(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  async function saveToServer(data) {
+    try {
+      const r = await fetch("/api/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      return r.ok;
+    } catch {
+      return false;
+    }
+  }
+  async function loadFromServer() {
+    try {
+      const r = await fetch("/api/load");
+      if (!r.ok) return null;
+      return await r.json();
+    } catch {
+      return null;
+    }
+  }
   var LEGISLATION = [
-    { id: "csrd", code: "CSRD", titre: "Corporate Sustainability Reporting Directive", type: "Directive UE", categorie: "Reporting", domaine: "Transversal", date: "2022-12-14", entreeVigueur: "2024-01-01", origine: "UE", statut: "En vigueur", seuils: "Grandes entreprises non cot\xE9es >500 sal. d\xE8s 2025. PME cot\xE9es >250 sal. ou >40M\u20AC CA \xE0 partir de 2026. PME non cot\xE9es : norme VSME volontaire.", resume: "Oblige les entreprises \xE0 publier un rapport de durabilit\xE9 standardis\xE9 selon les normes ESRS, int\xE9gr\xE9 au rapport de gestion et audit\xE9 par un tiers ind\xE9pendant.", obligationsCl\u00E9s: ["Rapport de durabilit\xE9 selon les 12 normes ESRS", "Double mat\xE9rialit\xE9 : impacts ET risques financiers", "Audit par un OTI (organisme tiers ind\xE9pendant)", "Int\xE9gration obligatoire dans le rapport de gestion", "Couverture de la cha\xEEne de valeur (Scope 3)", "Plan de transition climatique document\xE9"], articlesLoi: ["Art. 19a Directive 2013/34/UE modifi\xE9e par CSRD", "Art. 29a Directive 2013/34/UE \u2014 Rapport consolid\xE9", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2023/2772 \u2014 ESRS adopt\xE9s", "Consid\xE9rant 44 CSRD \u2014 Principe de double mat\xE9rialit\xE9", "Transposition France : ordonnance n\xB02023-1142 du 6 d\xE9c. 2023"], sanctions: "Amendes jusqu'\xE0 75 000 \u20AC et 5 ans d'emprisonnement (L. 225-102-1 Code de commerce). OTI non consult\xE9 : rapport nul.", lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022L2464", impactPME: "Indirect imm\xE9diat : vos donneurs d'ordres soumis CSRD doivent collecter vos donn\xE9es ESG. Direct : PME cot\xE9es d\xE8s 2026.", tags: ["CSRD", "reporting", "ESRS", "durabilit\xE9", "obligatoire"] },
-    { id: "dpef", code: "DPEF", titre: "D\xE9claration de Performance Extra-Financi\xE8re", type: "Loi fran\xE7aise", categorie: "Reporting", domaine: "Transversal", date: "2017-08-19", entreeVigueur: "2018-01-01", origine: "France", statut: "En vigueur", seuils: "SA/SCA cot\xE9es >500 sal. et >40M\u20AC CA. Non cot\xE9es >500 sal. et >100M\u20AC CA.", resume: "Transposition NFRD. Rapport int\xE9gr\xE9 sur les risques ESG mat\xE9riels, politiques et r\xE9sultats. Audit OTI obligatoire. Remplac\xE9e progressivement par la CSRD.", obligationsCl\u00E9s: ["Description du mod\xE8le d'affaires", "Identification et gestion des risques ESG mat\xE9riels", "Politiques mises en \u0153uvre et indicateurs de r\xE9sultats", "V\xE9rification par OTI accr\xE9dit\xE9 COFRAC", "Informations sociales : emploi, organisation, sant\xE9/s\xE9curit\xE9", "Informations environnementales : \xE9nergie, eau, GES, biodiversit\xE9", "Informations soci\xE9tales : fournisseurs, droits fondamentaux"], articlesLoi: ["Art. L. 225-102-1 Code de commerce", "Art. R. 225-104 \xE0 R. 225-105-2 Code de commerce", "D\xE9cret n\xB02017-1265 du 9 ao\xFBt 2017", "Arr\xEAt\xE9 du 7 mai 2019 \u2014 Modalit\xE9s d'intervention OTI"], sanctions: "Amende jusqu'\xE0 75 000 \u20AC (L. 225-102-1 C.com). Nullit\xE9 possible du rapport de gestion.", lienOfficiel: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038792989", impactPME: "PME hors seuils non soumises. Bonnes pratiques recommand\xE9es pour anticiper la CSRD.", tags: ["DPEF", "rapport", "extra-financier", "OTI", "NFRD"] },
-    { id: "pacte", code: "Loi PACTE", titre: "Loi PACTE \u2014 Raison d'\xEAtre & Soci\xE9t\xE9 \xE0 Mission", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Gouvernance", date: "2019-05-22", entreeVigueur: "2019-05-23", origine: "France", statut: "En vigueur", seuils: "Art. 1833 CC modifi\xE9 : toutes soci\xE9t\xE9s. Raison d'\xEAtre et soci\xE9t\xE9 \xE0 mission : optionnel pour toutes tailles.", resume: "R\xE9forme profonde du droit des soci\xE9t\xE9s. Toute soci\xE9t\xE9 doit g\xE9rer son activit\xE9 en tenant compte des enjeux sociaux et environnementaux. Cr\xE9e la soci\xE9t\xE9 \xE0 mission.", obligationsCl\u00E9s: ["Art. 1833 CC : gestion dans l'int\xE9r\xEAt social incluant enjeux sociaux et environnementaux (TOUTES soci\xE9t\xE9s)", "Art. 1835 CC : possibilit\xE9 d'inscrire une raison d'\xEAtre dans les statuts", "Statut de soci\xE9t\xE9 \xE0 mission : objet \xE9tendu + comit\xE9 de mission + OTI", "Rapport annuel du comit\xE9 de mission (si soci\xE9t\xE9 \xE0 mission)", "Possibilit\xE9 d'indexer les r\xE9mun\xE9rations dirigeants sur crit\xE8res RSE"], articlesLoi: ["Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi (modifi\xE9 Loi PACTE)", "Art. 1835 Code civil \u2014 Raison d'\xEAtre dans les statuts", "Art. L. 210-10 \xE0 L. 210-12 Code de commerce (soci\xE9t\xE9 \xE0 mission)", "Art. R. 210-21 \xE0 R. 210-24 Code de commerce", "D\xE9cret n\xB02020-1 du 2 janvier 2020 \u2014 soci\xE9t\xE9 \xE0 mission"], sanctions: "Responsabilit\xE9 des dirigeants si violation int\xE9r\xEAt social \xE9largi. Perte du statut de soci\xE9t\xE9 \xE0 mission si manquements.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000038496102", impactPME: "Applicable \xE0 TOUTES les PME via l'art. 1833 CC. Raison d'\xEAtre et soci\xE9t\xE9 \xE0 mission : outils de diff\xE9renciation accessibles.", tags: ["PACTE", "raison d'\xEAtre", "mission", "1833", "gouvernance", "RSE"] },
-    { id: "sapin2", code: "Loi Sapin II", titre: "Loi Sapin II \u2014 Anticorruption & Lanceurs d'Alerte", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Gouvernance", date: "2016-12-09", entreeVigueur: "2017-06-01", origine: "France", statut: "En vigueur", seuils: "Programme AFA : >500 sal. et >100M\u20AC CA. Dispositif d'alerte : \u226550 salari\xE9s (renforc\xE9 loi Waserman 2022).", resume: "Cr\xE9e l'AFA (Agence Fran\xE7aise Anticorruption). Programme obligatoire de pr\xE9vention en 8 piliers. Protection \xE9tendue des lanceurs d'alerte.", obligationsCl\u00E9s: ["Code de conduite anticorruption int\xE9gr\xE9 au r\xE8glement int\xE9rieur", "Dispositif d'alerte interne confidentiel (\u226550 sal.)", "Cartographie des risques de corruption", "Proc\xE9dures d'\xE9valuation des tiers (fournisseurs, interm\xE9diaires, clients)", "Formation des salari\xE9s expos\xE9s aux risques", "Dispositifs comptables de contr\xF4le interne", "R\xE9gime disciplinaire li\xE9 au code de conduite", "Contr\xF4le et \xE9valuation interne annuelle des mesures"], articlesLoi: ["Art. 17 Loi n\xB02016-1691 \u2014 Programme anticorruption AFA", "Art. 8 \xE0 16 Loi Sapin II \u2014 Lanceurs d'alerte (abrog\xE9s et remplac\xE9s)", "Loi n\xB02022-401 du 21 mars 2022 (Waserman) \u2014 Protection renforc\xE9e", "Art. L. 1132-3-3 Code du travail \u2014 Protection lanceur d'alerte", "Recommandations AFA 2021 r\xE9vis\xE9es \u2014 Guide pratique 8 piliers"], sanctions: "Amende 200 000 \u20AC (personne physique), 1 000 000 \u20AC (personne morale) + injonction de mise en conformit\xE9 AFA.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000033558528", impactPME: "Dispositif d'alerte obligatoire d\xE8s 50 sal. Programme AFA complet requis d\xE8s 500 sal. et 100M\u20AC CA.", tags: ["Sapin II", "anticorruption", "AFA", "whistleblower", "lanceur d'alerte"] },
-    { id: "vigilance", code: "Loi Vigilance", titre: "Devoir de Vigilance des Soci\xE9t\xE9s M\xE8res", type: "Loi fran\xE7aise", categorie: "Gouvernance", domaine: "Social", date: "2017-03-27", entreeVigueur: "2018-03-27", origine: "France", statut: "En vigueur", seuils: "Soci\xE9t\xE9s fran\xE7aises >5 000 sal. en France ou >10 000 sal. dans le monde (si\xE8ge + filiales).", resume: "Premi\xE8re loi mondiale sur le devoir de vigilance. Obligation d'identifier et pr\xE9venir les risques droits humains, sant\xE9/s\xE9curit\xE9, environnement sur toute la cha\xEEne de valeur.", obligationsCl\u00E9s: ["Cartographie des risques droits fondamentaux, sant\xE9/s\xE9curit\xE9, environnement", "Plan de vigilance publi\xE9 dans le rapport annuel", "Proc\xE9dures d'\xE9valuation filiales, sous-traitants, fournisseurs", "Dispositif d'alerte et de recueil des signalements", "Suivi des mesures et \xE9valuation de leur efficacit\xE9", "Couverture : propres activit\xE9s + filiales + sous-traitants directs et indirects"], articlesLoi: ["Art. L. 225-102-4 Code de commerce \u2014 Plan de vigilance", "Art. L. 225-102-5 Code de commerce \u2014 Responsabilit\xE9 civile", "Loi n\xB02017-399 du 27 mars 2017", "R\xE9f\xE9rentiel BHREDD (Business and Human Rights Due Diligence)", "Rapport annuel : modalit\xE9s de publication"], sanctions: "Mise en demeure par toute personne int\xE9ress\xE9e. Responsabilit\xE9 civile r\xE9paratrice si pr\xE9judice caus\xE9 par manquement.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000034290626", impactPME: "PME sous-traitantes de grands groupes soumis doivent r\xE9pondre \xE0 leurs questionnaires ESG et plans de vigilance.", tags: ["vigilance", "droits humains", "filiales", "sous-traitants", "cha\xEEne valeur"] },
-    { id: "csddd", code: "CS3D / CSDDD", titre: "Corporate Sustainability Due Diligence Directive", type: "Directive UE", categorie: "Gouvernance", domaine: "Transversal", date: "2024-07-13", entreeVigueur: "2027-07-26", origine: "UE", statut: "Transposition en cours", seuils: "Phase 1 (2027) : >5 000 sal. et >1,5 Md\u20AC CA. Phase 2 (2028) : >3 000 sal. et >900M\u20AC. Phase 3 (2029) : >1 000 sal. et >450M\u20AC.", resume: "Version europ\xE9enne du devoir de vigilance. \xC9tend l'obligation \xE0 toute la cha\xEEne de valeur mondiale. Responsabilit\xE9 civile harmonis\xE9e.", obligationsCl\u00E9s: ["Cartographie des risques droits humains et environnement", "Plan de vigilance avec mesures pr\xE9ventives et correctives", "M\xE9canisme de plainte accessible", "Rapport annuel publi\xE9", "Engagement contractuel avec fournisseurs", "Plan de transition Accord de Paris"], articlesLoi: ["Directive UE 2024/1760 du 13 juillet 2024", "Art. 10 CSDDD \u2014 Plan de transition climatique", "Art. 22 CSDDD \u2014 Responsabilit\xE9 civile harmonis\xE9e", "Consid\xE9rant 30 CSDDD \u2014 D\xE9finition cha\xEEne de valeur"], sanctions: "Amendes \u22655% du CA mondial net. Publication des entreprises sanctionn\xE9es.", lienOfficiel: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:L_202401760", impactPME: "Anticiper d\xE8s maintenant en structurant votre d\xE9marche ESG. Vos clients grands groupes seront soumis d\xE8s 2027.", tags: ["CSDDD", "vigilance", "droits humains", "2027", "responsabilit\xE9"] },
-    { id: "rgpd", code: "RGPD", titre: "R\xE8glement G\xE9n\xE9ral sur la Protection des Donn\xE9es", type: "R\xE8glement UE", categorie: "Gouvernance", domaine: "Gouvernance", date: "2016-04-27", entreeVigueur: "2018-05-25", origine: "UE", statut: "En vigueur", seuils: "Toute organisation traitant des donn\xE9es personnelles de r\xE9sidents UE, quelle que soit sa taille.", resume: "Cadre de protection des donn\xE9es personnelles. Droits des personnes, obligations des responsables de traitement, s\xE9curit\xE9 et notification des violations.", obligationsCl\u00E9s: ["Registre des activit\xE9s de traitement (art. 30) \u2014 obligatoire toute taille", "DPO si traitements \xE0 grande \xE9chelle ou de donn\xE9es sensibles", "Analyse d'impact (DPIA) pour traitements \xE0 risque \xE9lev\xE9", "Notification violations \xE0 la CNIL dans les 72h (art. 33)", "Consentement \xE9clair\xE9 et libre pour chaque finalit\xE9", "Contrats sous-traitants conformes art. 28", "S\xE9curit\xE9 : pseudonymisation, chiffrement, contr\xF4le d'acc\xE8s"], articlesLoi: ["Art. 5 RGPD \u2014 Principes de traitement licite", "Art. 7 RGPD \u2014 Conditions du consentement", "Art. 17 RGPD \u2014 Droit \xE0 l'effacement (droit \xE0 l'oubli)", "Art. 28 RGPD \u2014 Obligations du sous-traitant", "Art. 32 RGPD \u2014 S\xE9curit\xE9 du traitement", "Art. 33-34 RGPD \u2014 Notification de violation de donn\xE9es"], sanctions: "Jusqu'\xE0 20M\u20AC ou 4% du CA mondial. CNIL : mises en demeure, astreintes, amendes publi\xE9es.", lienOfficiel: "https://www.cnil.fr/fr/reglement-europeen-protection-donnees", impactPME: "Toutes PME. Registre de traitement obligatoire d\xE8s le 1er salari\xE9. Outil CNIL gratuit disponible.", tags: ["RGPD", "donn\xE9es personnelles", "CNIL", "DPO", "consentement", "cybers\xE9curit\xE9"] },
-    { id: "beges", code: "BEGES", titre: "Bilan des \xC9missions de Gaz \xE0 Effet de Serre", type: "D\xE9cret fran\xE7ais", categorie: "Carbone", domaine: "Environnement", date: "2011-07-11", entreeVigueur: "2012-01-01", origine: "France", statut: "En vigueur", seuils: "Personnes morales droit priv\xE9 >500 sal. m\xE9tropole (>250 DROM). Loi Climat 2021 : recommand\xE9 aux 50-499 sal. avec plan de transition.", resume: "Bilan GES obligatoire tous les 4 ans. Scope 1 et 2 obligatoires, Scope 3 recommand\xE9. Plan de transition obligatoire depuis 2021. Publication sur plateforme ADEME.", obligationsCl\u00E9s: ["Bilan Scope 1 : \xE9missions directes (combustibles, proc\xE9d\xE9s, fuites)", "Bilan Scope 2 : \xE9missions indirectes li\xE9es \xE0 l'\xE9nergie achet\xE9e", "Plan de transition associ\xE9 (obligatoire depuis Loi Climat 2021)", "Publication sur bilans-ges.ademe.fr dans les 6 mois", "Mise \xE0 jour tous les 4 ans", "Scope 3 recommand\xE9 : achats, transport, immobilisations, fin de vie"], articlesLoi: ["Art. L. 229-25 Code de l'environnement", "Art. R. 229-45 \xE0 R. 229-56 Code de l'environnement", "D\xE9cret n\xB02011-829 du 11 juillet 2011", "Art. 301-303 Loi Climat n\xB02021-1104 (plan de transition)", "Guide m\xE9thodologique ADEME Bilan GES v4 \u2014 2022"], sanctions: "Amende administrative jusqu'\xE0 10 000 \u20AC (+ 20 000 \u20AC si r\xE9cidive) en cas d'absence de publication.", lienOfficiel: "https://www.ecologie.gouv.fr/bilan-des-emissions-gaz-effet-serre", impactPME: "PME <500 sal. non soumises l\xE9galement mais fortement recommand\xE9 (appels d'offres publics, donneurs d'ordres CSRD).", tags: ["BEGES", "GES", "carbone", "Scope 1", "Scope 2", "Scope 3", "ADEME", "plan transition"] },
-    { id: "climatresilience", code: "Loi Climat", titre: "Loi Climat et R\xE9silience", type: "Loi fran\xE7aise", categorie: "Environnement", domaine: "Environnement", date: "2021-08-22", entreeVigueur: "2021-08-24", origine: "France", statut: "En vigueur (d\xE9ploiement progressif)", seuils: "Plan mobilit\xE9 : \u226550 sal./site. D\xE9cret tertiaire : b\xE2timents \u22651 000 m\xB2. Crit\xE8res env. march\xE9s publics : toutes tailles.", resume: "305 articles issus de la Convention Citoyenne pour le Climat. Consommation, production, transports, logement, alimentation, justice climatique.", obligationsCl\u00E9s: ["BEGES \xE9tendu aux 50-499 sal. (recommand\xE9 sans OTI)", "Plan de mobilit\xE9 employeur \u226550 sal. sur un m\xEAme site (avant 01/09/2023)", "Crit\xE8res environnementaux obligatoires dans les march\xE9s publics (21%)", "Formation des managers aux enjeux climatiques", "DPE opposable \u2014 calendrier interdiction location passoires thermiques", "Z\xE9ro artificialisation nette (ZAN) \u2014 objectif 2050"], articlesLoi: ["Art. 301-303 Loi Climat \u2014 BEGES PME et plan de transition", "Art. 82-84 Loi Climat \u2014 Plan de mobilit\xE9 employeur", "Art. 26 Loi Climat \u2014 Commande publique environnementale", "Art. 224-226 Loi Climat \u2014 Formation managers enjeux climatiques", "Art. 172 Loi Climat \u2014 DPE opposable et audit \xE9nerg\xE9tique", "Art. 191-199 Loi Climat \u2014 Z\xE9ro artificialisation nette"], sanctions: "DPE frauduleux : jusqu'\xE0 3 000 \u20AC. Plan mobilit\xE9 : injonction de mise en conformit\xE9.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000043956924", impactPME: "Plan mobilit\xE9 \u226550 sal. D\xE9cret tertiaire si locaux \u22651 000 m\xB2. March\xE9s publics : crit\xE8res env. valorisent toutes tailles.", tags: ["Loi Climat", "GES", "mobilit\xE9", "DPE", "ZAN", "b\xE2timent", "2030"] },
-    { id: "agec", code: "Loi AGEC", titre: "Loi Anti-Gaspillage pour une \xC9conomie Circulaire", type: "Loi fran\xE7aise", categorie: "\xC9conomie circulaire", domaine: "Environnement", date: "2020-02-10", entreeVigueur: "2020-02-10", origine: "France", statut: "En vigueur (d\xE9ploiement progressif)", seuils: "Variable selon les mesures. Indice r\xE9parabilit\xE9 : fabricants. REP : metteurs sur le march\xE9. Don alimentaire : GMS >400m\xB2.", resume: "Transformation vers le mod\xE8le circulaire : 5R (Refuser, R\xE9duire, R\xE9utiliser, Recycler, Rendre). Plastiques, indice r\xE9parabilit\xE9, fili\xE8res REP \xE9tendues.", obligationsCl\u00E9s: ["Interdiction plastiques \xE0 usage unique (progressif 2020-2025)", "Indice de r\xE9parabilit\xE9 et durabilit\xE9 sur produits \xE9lectriques", "Extension des fili\xE8res REP (emballages, textiles, papiers, jouets\u2026)", "Information obligatoire sur les qualit\xE9s environnementales des produits", "Interdiction destruction stocks neufs invendus", "Don alimentaire obligatoire grandes surfaces >400m\xB2"], articlesLoi: ["Art. L. 541-10 Code de l'environnement \u2014 REP et \xE9coconception", "Art. L. 541-1 Code de l'environnement \u2014 Hi\xE9rarchie 5R", "Art. 13 Loi AGEC \u2014 Indice de r\xE9parabilit\xE9 (L. 111-6 Code consommation)", "Art. 17 Loi AGEC \u2014 Information consommateurs qualit\xE9s env.", "Art. 24 Loi AGEC \u2014 Invendus non alimentaires interdits", "D\xE9cret n\xB02021-1342 \u2014 REP emballages m\xE9nagers"], sanctions: "Indice r\xE9parabilit\xE9 absent : amende jusqu'\xE0 3 000 \u20AC. REP : contributions + sanctions variables par fili\xE8re.", lienOfficiel: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000041553759", impactPME: "Fabricants, distributeurs, restaurateurs concern\xE9s selon leur activit\xE9. V\xE9rifier les fili\xE8res REP applicables.", tags: ["AGEC", "REP", "plastique", "r\xE9parabilit\xE9", "\xE9conomie circulaire", "invendus"] },
-    { id: "decrettertiaire", code: "D\xE9cret Tertiaire", titre: "D\xE9cret \xC9co-\xC9nergie Tertiaire", type: "D\xE9cret fran\xE7ais", categorie: "\xC9nergie", domaine: "Environnement", date: "2019-07-23", entreeVigueur: "2021-09-30", origine: "France", statut: "En vigueur", seuils: "B\xE2timents ou parties \xE0 usage tertiaire \u22651 000 m\xB2 (bureaux, commerces, h\xF4tels, restauration collective\u2026).", resume: "Objectifs de r\xE9duction \xE9nerg\xE9tique vs. une ann\xE9e de r\xE9f\xE9rence : -40% en 2030, -50% en 2040, -60% en 2050. D\xE9claration annuelle sur OPERAT.", obligationsCl\u00E9s: ["D\xE9claration annuelle sur la plateforme OPERAT (ADEME)", "D\xE9finition d'une ann\xE9e de r\xE9f\xE9rence (2010-2019)", "Objectif -40% conso. \xE9nerg\xE9tique en 2030", "Objectif -50% en 2040, -60% en 2050", "Plan d'actions techniques et comportementales", "Rapport d'avancement transmis tous les 3 ans"], articlesLoi: ["Art. L. 174-1 Code de la construction et de l'habitation", "D\xE9cret n\xB02019-771 du 23 juillet 2019", "Arr\xEAt\xE9 du 10 avril 2020 \u2014 Valeurs absolues de consommation", "Arr\xEAt\xE9 du 24 novembre 2020 \u2014 Plateforme OPERAT", "Guide ADEME-DHUP 2022 \u2014 Application du d\xE9cret tertiaire"], sanctions: "Name and shame : liste publique des propri\xE9taires/occupants d\xE9faillants sur un site gouvernemental.", lienOfficiel: "https://operat.ademe.fr", impactPME: "PME propri\xE9taire ou locataire de locaux \u22651 000 m\xB2. Bureaux, commerces, restaurants d'entreprise concern\xE9s.", tags: ["D\xE9cret Tertiaire", "\xE9nergie", "OPERAT", "b\xE2timent", "tertiaire", "-40%", "2030"] },
-    { id: "indexegalite", code: "Index \xC9galit\xE9 F/H", titre: "Index de l'\xC9galit\xE9 Professionnelle F/H", type: "Loi fran\xE7aise", categorie: "\xC9galit\xE9", domaine: "Social", date: "2018-09-05", entreeVigueur: "2019-03-01", origine: "France", statut: "En vigueur", seuils: "Toutes entreprises \u226550 salari\xE9s. Publication obligatoire avant le 1er mars de chaque ann\xE9e.", resume: "Note sur 100 calcul\xE9e sur 4 ou 5 indicateurs. Mesure les in\xE9galit\xE9s de r\xE9mun\xE9ration et de carri\xE8re. Plan d'action correctif obligatoire si note <75.", obligationsCl\u00E9s: ["Indicateur 1 : \xC9cart de r\xE9mun\xE9ration (40 pts)", "Indicateur 2 : \xC9cart de taux d'augmentations (20 pts)", "Indicateur 3 : \xC9cart de taux de promotions (15 pts \u2014 \u2265250 sal.)", "Indicateur 4 : Augmentations au retour de cong\xE9 maternit\xE9 (15 pts)", "Indicateur 5 : Part des femmes dans les 10 plus hautes r\xE9mun\xE9rations (10 pts)", "Publication sur site internet avant le 1er mars chaque ann\xE9e", "Transmission inspection du travail via index.egapro.travail.gouv.fr", "Plan d'action correctif si note <75/100 \u2014 accord ou plan unilat\xE9ral si <85"], articlesLoi: ["Art. L. 1142-8 Code du travail \u2014 Obligation de mesure des \xE9carts", "Art. L. 1142-9 Code du travail \u2014 Mesures correctives", "Art. L. 1142-10 Code du travail \u2014 P\xE9nalit\xE9 financi\xE8re", "D\xE9cret n\xB02019-15 du 8 janvier 2019 \u2014 Modalit\xE9s de calcul", "D\xE9cret n\xB02022-243 du 25 f\xE9vrier 2022 \u2014 Renforcement obligations"], sanctions: "P\xE9nalit\xE9 jusqu'\xE0 1% de la masse salariale si note <75/100 pendant 3 ans cons\xE9cutifs sans mesures.", lienOfficiel: "https://www.index-egapro.travail.gouv.fr", impactPME: "Obligatoire d\xE8s 50 sal. Calcul simplifi\xE9 (3 indicateurs) pour 50-249 sal. Outil gratuit sur index.egapro.travail.gouv.fr.", tags: ["index \xE9galit\xE9", "femmes", "hommes", "r\xE9mun\xE9ration", "promotion", "egapro", "F/H"] },
-    { id: "oeth", code: "OETH", titre: "Obligation d'Emploi des Travailleurs Handicap\xE9s", type: "Loi fran\xE7aise", categorie: "Handicap", domaine: "Social", date: "1987-07-10", entreeVigueur: "2020-01-01", origine: "France", statut: "En vigueur (r\xE9forme 2019)", seuils: "Entreprises \u226520 salari\xE9s. D\xE9claration mensuelle via DSN depuis janvier 2020.", resume: "Taux d'emploi de 6% de BOETH obligatoire. D\xE9claration mensuelle int\xE9gr\xE9e \xE0 la DSN. Contribution URSSAF si taux insuffisant.", obligationsCl\u00E9s: ["Taux d'emploi direct BOETH de 6% de l'effectif", "D\xE9claration mensuelle int\xE9gr\xE9e \xE0 la DSN (depuis jan. 2020)", "Contribution calcul\xE9e et vers\xE9e \xE0 l'URSSAF trimestriellement", "Accord agr\xE9\xE9 de branche ou d'entreprise possible", "Recours aux ESAT et EA valorisable (limite tiers)", "RQTH \xE0 jour pour chaque BOETH reconnu"], articlesLoi: ["Art. L. 5212-1 \xE0 L. 5212-17 Code du travail \u2014 OETH", "Art. L. 5213-13 \xE0 L. 5213-16 Code du travail \u2014 ESAT et EA", "Art. R. 5212-1 \xE0 R. 5212-45 Code du travail \u2014 Modalit\xE9s", "Loi n\xB087-517 du 10 juillet 1987 \u2014 Cr\xE9ation OETH", "Loi n\xB02018-771 du 5 septembre 2018 \u2014 R\xE9forme OETH et DSN"], sanctions: "Contribution URSSAF trimestrielle proportionnelle \xE0 l'\xE9cart. Contribution major\xE9e si aucune action depuis 3 ans.", lienOfficiel: "https://www.agefiph.fr/entreprises/obligation-demploi", impactPME: "Toutes PME \u226520 sal. Contribution calcul\xE9e automatiquement via DSN. AGEFIPH : aides financi\xE8res \xE0 l'embauche.", tags: ["OETH", "handicap", "BOETH", "AGEFIPH", "6%", "RQTH", "DSN"] },
-    { id: "mobilite", code: "Plan Mobilit\xE9", titre: "Plan de Mobilit\xE9 Employeur (PDME)", type: "Loi fran\xE7aise", categorie: "Mobilit\xE9", domaine: "Environnement", date: "2021-08-22", entreeVigueur: "2023-09-01", origine: "France", statut: "En vigueur", seuils: "Entreprises \u226550 salari\xE9s sur un m\xEAme site.", resume: "Plan de mobilit\xE9 pour r\xE9duire les \xE9missions li\xE9es aux d\xE9placements domicile-travail. Forfait mobilit\xE9s durables jusqu'\xE0 800\u20AC d\xE9fiscalis\xE9/an.", obligationsCl\u00E9s: ["Diagnostic des d\xE9placements domicile-travail et professionnels", "Plan d'actions avec objectifs de r\xE9duction des \xE9missions", "Consultation du CSE avant adoption", "Forfait mobilit\xE9s durables (FMD) : jusqu'\xE0 800\u20AC/an d\xE9fiscalis\xE9", "Prise en charge 50% transports en commun (obligatoire)", "Mise \xE0 jour tous les 3 ans"], articlesLoi: ["Art. L. 1214-8-2 Code des transports \u2014 PDME obligatoire", "Art. R. 1214-1 \xE0 R. 1214-8 Code des transports \u2014 Contenu", "Art. L. 3261-3-1 Code du travail \u2014 Forfait mobilit\xE9s durables", "D\xE9cret n\xB02020-541 du 9 mai 2020 \u2014 FMD d\xE9fiscalisation", "Art. 82-84 Loi Climat n\xB02021-1104 \u2014 Obligation PDME"], sanctions: "Proc\xE9dure de mise en conformit\xE9 en construction. Risque de p\xE9nalit\xE9 \xE0 terme.", lienOfficiel: "https://www.ecologie.gouv.fr/plan-mobilite-employeur", impactPME: "D\xE8s 50 sal. FMD = avantage RH. R\xE9duction des cotisations patronales sur le FMD (jusqu'\xE0 800\u20AC/an non charg\xE9).", tags: ["PDME", "mobilit\xE9", "FMD", "d\xE9placements", "v\xE9lo", "co-voiturage", "transports"] },
-    { id: "santetravail", code: "Sant\xE9 au Travail", titre: "Loi Sant\xE9 au Travail \u2014 R\xE9forme 2021", type: "Loi fran\xE7aise", categorie: "Sant\xE9 & S\xE9curit\xE9", domaine: "Social", date: "2021-08-02", entreeVigueur: "2022-03-31", origine: "France", statut: "En vigueur", seuils: "Toutes entreprises d\xE8s 1 salari\xE9. DUERP num\xE9rique : \u226511 sal. imm\xE9diat, <11 sal. diff\xE9r\xE9.", resume: "Renforce la pr\xE9vention primaire. DUERP num\xE9ris\xE9 et historis\xE9. Visite mi-carri\xE8re \xE0 45 ans. Passeport pr\xE9vention individuel. Rendez-vous de liaison.", obligationsCl\u00E9s: ["DUERP num\xE9ris\xE9, actualis\xE9 et historis\xE9 (toutes entreprises)", "Visite m\xE9dicale de mi-carri\xE8re \xE0 45 ans", "Rendez-vous de liaison en cas d'arr\xEAt >30 jours", "Programme annuel de pr\xE9vention des risques professionnels", "Passeport de pr\xE9vention individuel pour chaque salari\xE9", "Cellule de pr\xE9vention de la d\xE9sinsertion professionnelle (SPSTI)"], articlesLoi: ["Loi n\xB02021-1018 du 2 ao\xFBt 2021 \u2014 R\xE9forme sant\xE9 au travail", "Art. L. 4121-1 Code du travail \u2014 Obligation g\xE9n\xE9rale de s\xE9curit\xE9", "Art. R. 4121-1 Code du travail \u2014 DUERP et mise \xE0 jour", "Art. L. 4624-1 Code du travail \u2014 Visite m\xE9dicale et mi-carri\xE8re", "D\xE9cret n\xB02022-395 du 18 mars 2022 \u2014 DUERP num\xE9rique", "D\xE9cret n\xB02022-372 du 16 mars 2022 \u2014 Visite mi-carri\xE8re 45 ans"], sanctions: "Faute inexcusable si DUERP absent lors d'un accident. Amende R. 4741-1 : jusqu'\xE0 3 750 \u20AC.", lienOfficiel: "https://www.ameli.fr/employeur/sante-et-prevoyance/sante-au-travail", impactPME: "Toutes PME. DUERP obligatoire d\xE8s 1 salari\xE9. Passeport pr\xE9vention : outil num\xE9rique gratuit via Mon Compte Formation.", tags: ["DUERP", "sant\xE9 travail", "s\xE9curit\xE9", "pr\xE9vention", "accidents", "mi-carri\xE8re"] },
-    { id: "formation", code: "Formation Pro", titre: "Formation Professionnelle \u2014 CPF & Plan de Formation", type: "Loi fran\xE7aise", categorie: "Formation", domaine: "Social", date: "2018-09-05", entreeVigueur: "2019-01-01", origine: "France", statut: "En vigueur", seuils: "Entretien professionnel : toutes entreprises \u22651 sal. Contribution OPCO : toutes entreprises. Abondement CPF correctif : \u226550 sal.", resume: "Loi Avenir Professionnel : CPF universalis\xE9, reconversion, formation qualifiante. Entretien professionnel obligatoire tous les 2 ans. Contribution OPCO obligatoire.", obligationsCl\u00E9s: ["Entretien professionnel tous les 2 ans + bilan \xE0 6 ans", "Plan de d\xE9veloppement des comp\xE9tences", "Contribution formation : 0,55% MS (<11 sal.) ou 1% MS (\u226511 sal.)", "Participation \xE0 la gouvernance de l'OPCO de branche", "Abondement correctif CPF (3 000 \u20AC) si bilan 6 ans non r\xE9alis\xE9 (\u226550 sal.)", "Possibilit\xE9 de co-financer les CPF de transition professionnelle"], articlesLoi: ["Art. L. 6315-1 Code du travail \u2014 Entretien professionnel", "Art. L. 6321-1 Code du travail \u2014 Plan de d\xE9veloppement comp\xE9tences", "Art. L. 6323-1 et s. Code du travail \u2014 CPF", "Loi n\xB02018-771 du 5 septembre 2018 \u2014 Avenir professionnel", "D\xE9cret n\xB02019-566 \u2014 Entretien professionnel renforc\xE9 et bilan"], sanctions: "Abondement correctif CPF de 3 000 \u20AC si entretiens non r\xE9alis\xE9s ou bilan 6 ans non tenu (\u226550 sal.).", lienOfficiel: "https://www.moncompteformation.gouv.fr", impactPME: "Toutes PME. Entretiens professionnels obligatoires. Contribution OPCO obligatoire. CPF : outil de fid\xE9lisation RH.", tags: ["CPF", "formation", "OPCO", "entretien professionnel", "comp\xE9tences", "plan formation"] },
-    { id: "taxonomy", code: "Taxonomie UE", titre: "R\xE8glement Taxonomie Verte Europ\xE9enne", type: "R\xE8glement UE", categorie: "Finance durable", domaine: "Environnement", date: "2020-06-18", entreeVigueur: "2022-01-01", origine: "UE", statut: "En vigueur", seuils: "Entreprises soumises \xE0 la NFRD/CSRD + \xE9tablissements financiers.", resume: "Classification des activit\xE9s \xE9conomiques durables selon 6 objectifs. Divulgation du % d'alignement taxonomique (CA, CapEx, OpEx). Principe DNSH obligatoire.", obligationsCl\u00E9s: ["% de CA align\xE9 taxonomie verte", "% de CapEx align\xE9 taxonomie verte", "% d'OpEx align\xE9 taxonomie verte", "Principe DNSH (Do No Significant Harm) pour 6 objectifs", "Garanties sociales minimales (droits fondamentaux OCDE)", "6 objectifs : att\xE9nuation CC, adaptation CC, eau, circularit\xE9, pollution, biodiversit\xE9"], articlesLoi: ["R\xE8glement UE 2020/852 \u2014 R\xE8glement Taxonomie", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2021/2139 \u2014 Crit\xE8res techniques Climat", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2022/1214 \u2014 Nucl\xE9aire et gaz", "Art. 8 Taxonomie \u2014 Obligations de divulgation", "Actes d\xE9l\xE9gu\xE9s 2023 \u2014 4 autres objectifs environnementaux"], sanctions: "Via la CSRD et SFDR. D\xE9claration inexacte : responsabilit\xE9 de la direction.", lienOfficiel: "https://finance.ec.europa.eu/sustainable-finance/tools-and-standards/eu-taxonomy-sustainable-activities_fr", impactPME: "Indirect. Clients et investisseurs soumis CSRD/SFDR peuvent demander vos donn\xE9es d'alignement.", tags: ["taxonomie", "finance verte", "DNSH", "alignement", "EU", "investissement"] },
-    { id: "gri", code: "GRI Standards", titre: "Global Reporting Initiative Standards", type: "Standard international", categorie: "Reporting", domaine: "Transversal", date: "2021-10-05", entreeVigueur: "2023-01-01", origine: "International", statut: "R\xE9f\xE9rence internationale", seuils: "Volontaire \u2014 toute organisation quelle que soit sa taille.", resume: "R\xE9f\xE9rentiel mondial de reporting de durabilit\xE9. Partiellement align\xE9 sur les ESRS. GRI 1-3 (Universal) + standards th\xE9matiques 200 (\xE9co), 300 (env), 400 (social).", obligationsCl\u00E9s: ["GRI 1 : Fondements et utilisation des standards", "GRI 2 : Informations g\xE9n\xE9rales (gouvernance, strat\xE9gie, parties prenantes)", "GRI 3 : Sujets mat\xE9riels \u2014 identification et gestion", "GRI 200 : Performance \xE9conomique, anticorruption, concurrence", "GRI 300 : \xC9nergie, eau, biodiversit\xE9, \xE9missions, effluents, d\xE9chets", "GRI 400 : Emploi, sant\xE9/s\xE9curit\xE9, formation, diversit\xE9, droits humains"], articlesLoi: ["GRI 1 Foundation 2021 \u2014 Exigences d'utilisation", "GRI 2 General Disclosures 2021 \u2014 Informations organisationnelles", "GRI 3 Material Topics 2021 \u2014 Analyse de mat\xE9rialit\xE9", "GRI 302 Energy 2016 \u2014 Indicateurs \xE9nergie", "GRI 305 Emissions 2016 \u2014 Indicateurs GES", "GRI 401 Employment 2016 \u2014 Emploi et relation de travail"], sanctions: "Aucune \u2014 standard volontaire.", lienOfficiel: "https://www.globalreporting.org/standards/", impactPME: "R\xE9f\xE9rentiel id\xE9al pour structurer le reporting ESG avant la CSRD. Reconnu mondialement.", tags: ["GRI", "reporting", "mat\xE9rialit\xE9", "international", "volontaire"] },
-    { id: "iso14001", code: "ISO 14001:2015", titre: "ISO 14001 \u2014 Syst\xE8me de Management Environnemental", type: "Norme internationale", categorie: "Management", domaine: "Environnement", date: "2015-09-15", entreeVigueur: "2018-09-14", origine: "International", statut: "En vigueur", seuils: "Volontaire \u2014 toute organisation.", resume: "SME (Syst\xE8me de Management Environnemental). Approche PDCA. Am\xE9lioration continue des performances environnementales. Certification reconnue dans les march\xE9s publics.", obligationsCl\u00E9s: ["Analyse du contexte et des parties prenantes", "Politique environnementale document\xE9e et communiqu\xE9e", "Identification aspects et impacts environnementaux significatifs", "Objectifs environnementaux SMART et plans d'action", "Formation et sensibilisation du personnel", "Surveillance, mesure et audit interne", "Revue de direction annuelle"], articlesLoi: ["Norme ISO 14001:2015 \u2014 Chapitres 4 \xE0 10", "ISO 14001:2015 \u2014 Annexe A (guide d'utilisation)", "ISO 14004:2016 \u2014 Lignes directrices SME", "ISO 19011:2018 \u2014 Audit de syst\xE8mes de management", "Chap. 6.2 ISO 14001 \u2014 Objectifs environnementaux et plans"], sanctions: "Aucune \u2014 norme volontaire.", lienOfficiel: "https://www.iso.org/fr/iso-14001-environmental-management.html", impactPME: "Tr\xE8s accessible aux PME. Certification valoris\xE9e dans les appels d'offres. Facilite la pr\xE9paration CSRD E1-E5.", tags: ["ISO 14001", "SME", "management environnemental", "certification", "PDCA"] },
-    { id: "iso26000", code: "ISO 26000", titre: "ISO 26000 \u2014 Responsabilit\xE9 Soci\xE9tale des Organisations", type: "Norme internationale", categorie: "RSE", domaine: "Transversal", date: "2010-11-01", entreeVigueur: "2010-11-01", origine: "International", statut: "Lignes directrices (non certifiable)", seuils: "Toute organisation, quelle que soit sa taille.", resume: "7 questions centrales de la RSO : gouvernance, droits de l'homme, conditions de travail, environnement, loyaut\xE9 des pratiques, consommateurs, communaut\xE9s.", obligationsCl\u00E9s: ["Question 1 : Gouvernance de l'organisation", "Question 2 : Droits de l'homme", "Question 3 : Relations et conditions de travail", "Question 4 : Environnement", "Question 5 : Loyaut\xE9 des pratiques (anticorruption, concurrence)", "Question 6 : Questions relatives aux consommateurs", "Question 7 : Communaut\xE9s et d\xE9veloppement local"], articlesLoi: ["Norme ISO 26000:2010 \u2014 Chapitre 6 (7 questions centrales)", "Chapitre 7 ISO 26000 \u2014 Int\xE9gration RSO dans l'organisation", "Annexe A ISO 26000 \u2014 Correspondances GRI et UNGC", "Principes directeurs OCDE pour les entreprises multinationales"], sanctions: "Aucune \u2014 lignes directrices non certifiables.", lienOfficiel: "https://www.iso.org/fr/iso-26000-social-responsibility.html", impactPME: "R\xE9f\xE9rentiel de structuration RSE id\xE9al. Compatible GRI, ESRS et devoir de vigilance.", tags: ["ISO 26000", "RSE", "RSO", "responsabilit\xE9", "7 questions", "parties prenantes"] },
-    { id: "ecovadis", code: "EcoVadis", titre: "EcoVadis \u2014 \xC9valuation RSE Fournisseurs", type: "Standard march\xE9", categorie: "Cha\xEEne de valeur", domaine: "Transversal", date: "2007-01-01", entreeVigueur: "2007-01-01", origine: "International", statut: "R\xE9f\xE9rence march\xE9 (Renault, L'Or\xE9al, Airbus, Michelin\u2026)", seuils: "Volontaire \u2014 demand\xE9 par les grands donneurs d'ordres.", resume: "\xC9valuation RSE sur 4 th\xE8mes (Environnement, Social/RH, \xC9thique, Achats responsables). Score 0-100. +80 000 entreprises dans 175 pays.", obligationsCl\u00E9s: ["Questionnaire RSE document\xE9 avec preuves justificatives", "Politique environnementale formalis\xE9e", "Indicateurs sociaux et RH document\xE9s", "Politique anticorruption et code de conduite", "Pratiques d'achats responsables", "Renouvellement annuel de l'\xE9valuation"], articlesLoi: ["M\xE9thodologie EcoVadis 2024 \u2014 Align\xE9e GRI, ISO 26000, UNGC, ESRS", "Scorecard EcoVadis \u2014 Pond\xE9ration par th\xE8me et secteur d'activit\xE9", "EcoVadis Sector-specific questionnaires (secteur adapt\xE9)", "Crit\xE8res ESRS S2 \u2014 Travailleurs de la cha\xEEne de valeur (lien direct)"], sanctions: "Aucune \u2014 \xE9valuation commerciale mais risque de perte de contrat si score insuffisant.", lienOfficiel: "https://ecovadis.com/fr/", impactPME: "Grands groupes soumis CSRD exigent EcoVadis \xE0 leurs fournisseurs PME (souvent >100k\u20AC/an). Pr\xE9pare directement \xE0 la CSRD S2.", tags: ["EcoVadis", "fournisseurs", "notation RSE", "cha\xEEne approvisionnement", "CSRD S2"] }
+    // REPORTING
+    {
+      id: "csrd",
+      code: "CSRD",
+      titre: "Corporate Sustainability Reporting Directive",
+      type: "Directive UE",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "UE",
+      date: "2022-12-14",
+      vigueur: "2024-01-01",
+      statut: "En vigueur",
+      seuils: "Grandes entreprises >500 sal. d\xE8s 2025. PME cot\xE9es >250 sal. ou >40M\u20AC CA d\xE8s 2026. VSME volontaire pour PME non cot\xE9es.",
+      resume: "Oblige la publication d'un rapport de durabilit\xE9 standardis\xE9 selon les normes ESRS, int\xE9gr\xE9 au rapport de gestion et audit\xE9 par un OTI.",
+      obligations: ["Rapport ESRS E1-G1 \u2014 double mat\xE9rialit\xE9", "Audit par OTI (organisme tiers ind\xE9pendant)", "Int\xE9gration dans le rapport de gestion", "Plan de transition climatique", "Couverture Scope 3 et cha\xEEne de valeur"],
+      articles: ["Art. 19a Directive 2013/34/UE modifi\xE9e", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2023/2772 \u2014 ESRS", "Ordonnance n\xB02023-1142 du 6 d\xE9c. 2023 \u2014 Transposition France", "Consid\xE9rant 44 CSRD \u2014 Double mat\xE9rialit\xE9"],
+      sanctions: "Amendes jusqu'\xE0 75 000 \u20AC + 5 ans d'emprisonnement (Art. L.225-102-1 Code com.)",
+      lien: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022L2464",
+      impact: "PME indirectement concern\xE9es d\xE8s maintenant via leurs donneurs d'ordres soumis.",
+      tags: ["CSRD", "ESRS", "reporting", "durabilit\xE9"]
+    },
+    {
+      id: "dpef",
+      code: "DPEF",
+      titre: "D\xE9claration de Performance Extra-Financi\xE8re",
+      type: "Loi fran\xE7aise",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "France",
+      date: "2017-08-19",
+      vigueur: "2018-01-01",
+      statut: "En vigueur",
+      seuils: "SA/SCA cot\xE9es >500 sal. et >40M\u20AC CA. Non cot\xE9es >500 sal. et >100M\u20AC CA.",
+      resume: "Rapport int\xE9gr\xE9 sur les risques ESG, politiques et r\xE9sultats. Audit OTI obligatoire. Pr\xE9curseur de la CSRD.",
+      obligations: ["Description du mod\xE8le d'affaires", "Risques ESG mat\xE9riels identifi\xE9s et g\xE9r\xE9s", "Indicateurs cl\xE9s (KPI)", "OTI accr\xE9dit\xE9 COFRAC", "Informations sociales, environnementales et soci\xE9tales"],
+      articles: ["Art. L.225-102-1 Code de commerce", "Art. R.225-104 \xE0 R.225-105-2 Code com.", "D\xE9cret n\xB02017-1265 du 9 ao\xFBt 2017", "Arr\xEAt\xE9 7 mai 2019 \u2014 Modalit\xE9s OTI"],
+      sanctions: "Amende 75 000 \u20AC. Nullit\xE9 du rapport de gestion possible.",
+      lien: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038792989",
+      impact: "PME hors seuils non soumises mais pratiques recommand\xE9es.",
+      tags: ["DPEF", "OTI", "rapport"]
+    },
+    {
+      id: "grenelle2",
+      code: "Art. 225 Grenelle II",
+      titre: "Loi Grenelle II \u2014 Rapport RSE obligatoire",
+      type: "Loi fran\xE7aise",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "France",
+      date: "2010-07-12",
+      vigueur: "2012-12-31",
+      statut: "Historique \u2014 pr\xE9curseur DPEF",
+      seuils: "Soci\xE9t\xE9s cot\xE9es et non cot\xE9es >500 sal. et >100M\u20AC CA ou bilan.",
+      resume: "Premi\xE8re obligation fran\xE7aise de reporting RSE int\xE9gr\xE9 au rapport de gestion. Pr\xE9curseur de la DPEF et de la CSRD.",
+      obligations: ["Informations sociales (emploi, sant\xE9, \xE9galit\xE9)", "Informations environnementales (\xE9nergie, GES, eau)", "Informations soci\xE9tales (fournisseurs, territoire)", "V\xE9rification OTI"],
+      articles: ["Art. L.225-102-1 et L.225-102-2 Code com.", "D\xE9cret n\xB02012-557 du 24 avril 2012", "Art. R.225-105 Code com."],
+      sanctions: "Engagement responsabilit\xE9 dirigeants. Nullit\xE9 rapport.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000022470434",
+      impact: "PME d\xE9passant les seuils et non encore soumises \xE0 la CSRD.",
+      tags: ["Grenelle", "RSE", "rapport", "225"]
+    },
+    {
+      id: "nre",
+      code: "Loi NRE",
+      titre: "Loi NRE \u2014 Nouvelles R\xE9gulations \xC9conomiques",
+      type: "Loi fran\xE7aise",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "France",
+      date: "2001-05-15",
+      vigueur: "2003-01-01",
+      statut: "Historique \u2014 pr\xE9curseur",
+      seuils: "Soci\xE9t\xE9s cot\xE9es (rapport annuel).",
+      resume: "Premi\xE8re loi mondiale imposant un reporting social et environnemental aux soci\xE9t\xE9s cot\xE9es dans leur rapport annuel. Pionni\xE8re de la RSE r\xE9glementaire.",
+      obligations: ["Informations sociales dans le rapport annuel", "Informations environnementales dans le rapport annuel", "Mention de l'impact territorial"],
+      articles: ["Art. 116 Loi NRE n\xB02001-420 du 15 mai 2001", "D\xE9cret n\xB02002-221 du 20 f\xE9vrier 2002"],
+      sanctions: "Absence d'informations : irr\xE9gularit\xE9 du rapport annuel.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000000222521",
+      impact: "Socle historique. Toutes les obligations RSE actuelles en d\xE9coulent.",
+      tags: ["NRE", "historique", "RSE", "pr\xE9curseur"]
+    },
+    // GOUVERNANCE
+    {
+      id: "pacte",
+      code: "Loi PACTE",
+      titre: "Loi PACTE \u2014 Raison d'\xEAtre & Soci\xE9t\xE9 \xE0 Mission",
+      type: "Loi fran\xE7aise",
+      cat: "Gouvernance",
+      dom: "Gouvernance",
+      origine: "France",
+      date: "2019-05-22",
+      vigueur: "2019-05-23",
+      statut: "En vigueur",
+      seuils: "Art. 1833 CC modifi\xE9 : TOUTES soci\xE9t\xE9s. Raison d'\xEAtre et soci\xE9t\xE9 \xE0 mission : optionnel.",
+      resume: "Toute soci\xE9t\xE9 doit g\xE9rer son activit\xE9 en tenant compte des enjeux sociaux et environnementaux (art. 1833 CC). Cr\xE9e la soci\xE9t\xE9 \xE0 mission.",
+      obligations: ["Art. 1833 CC : int\xE9r\xEAt social \xE9largi (toutes soci\xE9t\xE9s)", "Art. 1835 CC : raison d'\xEAtre possible dans les statuts", "Soci\xE9t\xE9 \xE0 mission : comit\xE9 de mission + OTI + rapport annuel"],
+      articles: ["Art. 1833 Code civil \u2014 Int\xE9r\xEAt social \xE9largi", "Art. 1835 Code civil \u2014 Raison d'\xEAtre", "Art. L.210-10 \xE0 L.210-12 Code com. \u2014 Soci\xE9t\xE9 \xE0 mission", "D\xE9cret n\xB02020-1 du 2 janv. 2020"],
+      sanctions: "Responsabilit\xE9 dirigeants. Perte du statut soci\xE9t\xE9 \xE0 mission.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000038496102",
+      impact: "Applicable \xE0 TOUTES les PME via l'art. 1833 CC.",
+      tags: ["PACTE", "raison d'\xEAtre", "mission", "1833"]
+    },
+    {
+      id: "sapin2",
+      code: "Loi Sapin II",
+      titre: "Loi Sapin II \u2014 Anticorruption & Lanceurs d'Alerte",
+      type: "Loi fran\xE7aise",
+      cat: "Gouvernance",
+      dom: "Gouvernance",
+      origine: "France",
+      date: "2016-12-09",
+      vigueur: "2017-06-01",
+      statut: "En vigueur",
+      seuils: "Programme AFA : >500 sal. et >100M\u20AC CA. Dispositif d'alerte : \u226550 sal. (Loi Waserman 2022).",
+      resume: "Cr\xE9e l'AFA. Programme de pr\xE9vention de la corruption en 8 piliers. Protection renforc\xE9e des lanceurs d'alerte.",
+      obligations: ["Code de conduite anticorruption dans le r\xE8glement int\xE9rieur", "Dispositif d'alerte confidentiel (\u226550 sal.)", "Cartographie des risques de corruption", "\xC9valuation des tiers (fournisseurs, clients)", "Formation des salari\xE9s expos\xE9s"],
+      articles: ["Art. 17 Loi n\xB02016-1691 \u2014 Programme AFA", "Loi n\xB02022-401 du 21 mars 2022 (Waserman)", "Art. L.1132-3-3 Code du travail \u2014 Protection lanceur d'alerte", "Recommandations AFA 2021 \u2014 Guide 8 piliers"],
+      sanctions: "200 000 \u20AC (personne physique), 1 000 000 \u20AC (personne morale) + injonction AFA.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000033558528",
+      impact: "Dispositif d'alerte obligatoire d\xE8s 50 sal. Programme AFA d\xE8s 500 sal.",
+      tags: ["Sapin II", "anticorruption", "AFA", "whistleblower"]
+    },
+    {
+      id: "vigilance",
+      code: "Loi Vigilance",
+      titre: "Devoir de Vigilance des Soci\xE9t\xE9s M\xE8res",
+      type: "Loi fran\xE7aise",
+      cat: "Gouvernance",
+      dom: "Social",
+      origine: "France",
+      date: "2017-03-27",
+      vigueur: "2018-03-27",
+      statut: "En vigueur",
+      seuils: ">5 000 sal. en France ou >10 000 sal. monde (si\xE8ge + filiales).",
+      resume: "Premi\xE8re loi mondiale sur le devoir de vigilance. Identifier et pr\xE9venir les risques droits humains, S&S, environnement dans toute la cha\xEEne de valeur.",
+      obligations: ["Cartographie des risques droits humains et environnement", "Plan de vigilance publi\xE9 dans le rapport annuel", "\xC9valuation filiales et sous-traitants", "Dispositif d'alerte et suivi", "Couverture cha\xEEne de valeur compl\xE8te"],
+      articles: ["Art. L.225-102-4 Code com. \u2014 Plan de vigilance", "Art. L.225-102-5 Code com. \u2014 Responsabilit\xE9 civile", "Loi n\xB02017-399 du 27 mars 2017"],
+      sanctions: "Mise en demeure + responsabilit\xE9 civile si pr\xE9judice caus\xE9.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000034290626",
+      impact: "PME fournisseurs de grands groupes doivent r\xE9pondre \xE0 leurs questionnaires.",
+      tags: ["vigilance", "droits humains", "cha\xEEne valeur"]
+    },
+    {
+      id: "csddd",
+      code: "CS3D / CSDDD",
+      titre: "Corporate Sustainability Due Diligence Directive",
+      type: "Directive UE",
+      cat: "Gouvernance",
+      dom: "Transversal",
+      origine: "UE",
+      date: "2024-07-13",
+      vigueur: "2027-07-26",
+      statut: "Transposition en cours",
+      seuils: "Phase 1 (2027) : >5 000 sal. et >1,5 Md\u20AC CA. Phase 2 (2028) : >3 000 sal. et >900M\u20AC. Phase 3 (2029) : >1 000 sal. et >450M\u20AC.",
+      resume: "Extension europ\xE9enne du devoir de vigilance. Cha\xEEne de valeur mondiale. Responsabilit\xE9 civile harmonis\xE9e.",
+      obligations: ["Cartographie des risques droits humains et environnement", "Plan de vigilance pr\xE9ventif et correctif", "M\xE9canisme de plainte", "Plan de transition Accord de Paris", "Rapport annuel publi\xE9"],
+      articles: ["Directive UE 2024/1760 du 13 juillet 2024", "Art. 10 CSDDD \u2014 Plan de transition", "Art. 22 CSDDD \u2014 Responsabilit\xE9 civile"],
+      sanctions: "Amendes \u22655% CA mondial net. Publication des entreprises sanctionn\xE9es.",
+      lien: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:L_202401760",
+      impact: "Anticipation recommand\xE9e d\xE8s maintenant. PME fournisseurs impact\xE9es d\xE8s 2027.",
+      tags: ["CSDDD", "vigilance", "2027"]
+    },
+    {
+      id: "rgpd",
+      code: "RGPD",
+      titre: "R\xE8glement G\xE9n\xE9ral sur la Protection des Donn\xE9es",
+      type: "R\xE8glement UE",
+      cat: "Gouvernance",
+      dom: "Gouvernance",
+      origine: "UE",
+      date: "2016-04-27",
+      vigueur: "2018-05-25",
+      statut: "En vigueur",
+      seuils: "Toute organisation traitant des donn\xE9es personnelles de r\xE9sidents UE.",
+      resume: "Protection des donn\xE9es personnelles. Droits des personnes, obligations des responsables de traitement, s\xE9curit\xE9.",
+      obligations: ["Registre des activit\xE9s de traitement (Art. 30 RGPD)", "DPO si traitements \xE0 grande \xE9chelle", "DPIA pour traitements \xE0 risque \xE9lev\xE9", "Notification violations CNIL dans 72h (Art. 33)", "Consentement \xE9clair\xE9 (Art. 7)", "Contrats sous-traitants (Art. 28)"],
+      articles: ["Art. 5 RGPD \u2014 Principes de traitement", "Art. 7 RGPD \u2014 Consentement", "Art. 17 RGPD \u2014 Droit \xE0 l'effacement", "Art. 28 RGPD \u2014 Sous-traitants", "Art. 32 RGPD \u2014 S\xE9curit\xE9", "Art. 33-34 RGPD \u2014 Notification violations"],
+      sanctions: "20M\u20AC ou 4% CA mondial. CNIL : amendes publi\xE9es.",
+      lien: "https://www.cnil.fr/fr/reglement-europeen-protection-donnees",
+      impact: "Toutes PME. Registre de traitement obligatoire d\xE8s 1 salari\xE9.",
+      tags: ["RGPD", "donn\xE9es", "CNIL", "DPO"]
+    },
+    {
+      id: "copezimm",
+      code: "Loi Cop\xE9-Zimmermann",
+      titre: "Loi Cop\xE9-Zimmermann \u2014 Parit\xE9 dans les CA",
+      type: "Loi fran\xE7aise",
+      cat: "Gouvernance",
+      dom: "Social",
+      origine: "France",
+      date: "2011-01-27",
+      vigueur: "2011-01-27",
+      statut: "En vigueur",
+      seuils: "SA et SCA cot\xE9es (40%) d\xE8s 2012. Non cot\xE9es >500 sal. et >50M\u20AC CA : 40% d\xE8s 2017.",
+      resume: "Impose des quotas de femmes dans les conseils d'administration et de surveillance. Objectif 40% minimum.",
+      obligations: ["40% de femmes au CA/CS (cot\xE9es et non cot\xE9es \u2265seuils)", "Toute d\xE9lib\xE9ration non conforme est nulle", "Rapport sur la repr\xE9sentation dans le rapport de gestion", "R\xE9mun\xE9ration des administrateurs suspendue si non-conformit\xE9"],
+      articles: ["Loi n\xB02011-103 du 27 janvier 2011", "Art. L.225-18-1 Code com. (SA)", "Art. L.225-69-1 Code com. (directoire)", "Art. L.226-4-1 Code com. (SCA)"],
+      sanctions: "D\xE9lib\xE9rations nulles. Suspension des jetons de pr\xE9sence.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000023521836",
+      impact: "PME non cot\xE9es hors seuils non soumises. Bonnes pratiques recommand\xE9es.",
+      tags: ["parit\xE9", "CA", "femmes", "gouvernance", "Cop\xE9-Zimmermann"]
+    },
+    {
+      id: "rixain",
+      code: "Loi Rixain",
+      titre: "Loi Rixain \u2014 Repr\xE9sentation \xC9quilibr\xE9e F/H",
+      type: "Loi fran\xE7aise",
+      cat: "Gouvernance",
+      dom: "Social",
+      origine: "France",
+      date: "2021-12-24",
+      vigueur: "2022-03-01",
+      statut: "En vigueur",
+      seuils: ">1 000 sal. : objectif 30% de femmes dans les postes de direction d\xE8s 2026, 40% d\xE8s 2029.",
+      resume: "\xC9tend les quotas de parit\xE9 aux postes de direction (cadres dirigeants et instances dirigeantes). Publication des \xE9carts obligatoire.",
+      obligations: ["Publication des \xE9carts de repr\xE9sentation F/H dans les postes de direction", "Objectif 30% postes de direction d'ici 2026", "Objectif 40% postes de direction d'ici 2029", "P\xE9nalit\xE9 si objectifs non atteints sans mesures correctives"],
+      articles: ["Loi n\xB02021-1774 du 24 d\xE9cembre 2021", "Art. L.1142-11 et L.1142-12 Code du travail", "D\xE9cret n\xB02022-680 du 26 avril 2022"],
+      sanctions: "P\xE9nalit\xE9 jusqu'\xE0 1% de la masse salariale si objectifs non atteints (apr\xE8s mise en demeure).",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000044559192",
+      impact: "Entreprises >1 000 sal. Indicateur int\xE9gr\xE9 \xE0 l'index F/H \xE9tendu.",
+      tags: ["Rixain", "parit\xE9", "direction", "femmes", "1000 sal."]
+    },
+    // SOCIAL & RH
+    {
+      id: "indexegalite",
+      code: "Index \xC9galit\xE9 F/H",
+      titre: "Index de l'\xC9galit\xE9 Professionnelle F/H",
+      type: "Loi fran\xE7aise",
+      cat: "\xC9galit\xE9",
+      dom: "Social",
+      origine: "France",
+      date: "2018-09-05",
+      vigueur: "2019-03-01",
+      statut: "En vigueur",
+      seuils: "\u226550 sal. Publication obligatoire avant le 1er mars.",
+      resume: "Note sur 100 calcul\xE9e sur 5 indicateurs (\u2265250 sal.) ou 4 (50-249 sal.). Plan d'action obligatoire si note <75.",
+      obligations: ["Indicateur 1 : \xC9cart de r\xE9mun\xE9ration (40 pts)", "Indicateur 2 : \xC9cart d'augmentations (20 pts)", "Indicateur 3 : \xC9cart de promotions (15 pts \u2014 \u2265250 sal.)", "Indicateur 4 : Augmentations retour maternit\xE9 (15 pts)", "Indicateur 5 : Femmes dans top 10 r\xE9mun\xE9rations (10 pts)", "Publication avant le 1er mars sur index.egapro.travail.gouv.fr", "Plan d'action si note <75 \u2014 accord ou plan unilat\xE9ral si <85"],
+      articles: ["Art. L.1142-8 Code du travail", "Art. L.1142-9 et L.1142-10 CT (mesures correctives)", "D\xE9cret n\xB02019-15 du 8 janv. 2019", "D\xE9cret n\xB02022-243 du 25 f\xE9v. 2022 (renforcement)"],
+      sanctions: "P\xE9nalit\xE9 jusqu'\xE0 1% masse salariale si note <75/100 pendant 3 ans sans mesures.",
+      lien: "https://www.index-egapro.travail.gouv.fr",
+      impact: "Obligatoire d\xE8s 50 sal. Outil de calcul gratuit disponible.",
+      tags: ["index \xE9galit\xE9", "F/H", "r\xE9mun\xE9ration", "egapro"]
+    },
+    {
+      id: "oeth",
+      code: "OETH",
+      titre: "Obligation d'Emploi des Travailleurs Handicap\xE9s",
+      type: "Loi fran\xE7aise",
+      cat: "Handicap",
+      dom: "Social",
+      origine: "France",
+      date: "1987-07-10",
+      vigueur: "2020-01-01",
+      statut: "En vigueur",
+      seuils: "\u226520 sal. D\xE9claration mensuelle via DSN depuis jan. 2020.",
+      resume: "Taux d'emploi de 6% de BOETH obligatoire. Contribution URSSAF si taux insuffisant.",
+      obligations: ["Taux d'emploi BOETH \u22656% de l'effectif", "D\xE9claration mensuelle via DSN", "Contribution URSSAF trimestrielle si taux insuffisant", "Accord agr\xE9\xE9 possible en alternative", "Recours ESAT/EA valorisable (limite 1/3)"],
+      articles: ["Art. L.5212-1 \xE0 L.5212-17 Code du travail", "Art. R.5212-1 \xE0 R.5212-45 CT", "Loi n\xB087-517 du 10 juillet 1987", "Loi n\xB02018-771 du 5 sept. 2018 (r\xE9forme)"],
+      sanctions: "Contribution URSSAF proportionnelle \xE0 l'\xE9cart. Majoration si aucune action depuis 3 ans.",
+      lien: "https://www.agefiph.fr/entreprises/obligation-demploi",
+      impact: "Toutes PME \u226520 sal. Aides AGEFIPH disponibles.",
+      tags: ["OETH", "handicap", "BOETH", "AGEFIPH", "6%"]
+    },
+    {
+      id: "santetravail",
+      code: "Sant\xE9 au Travail",
+      titre: "Loi Sant\xE9 au Travail \u2014 R\xE9forme 2021",
+      type: "Loi fran\xE7aise",
+      cat: "Sant\xE9 & S\xE9curit\xE9",
+      dom: "Social",
+      origine: "France",
+      date: "2021-08-02",
+      vigueur: "2022-03-31",
+      statut: "En vigueur",
+      seuils: "Toutes entreprises d\xE8s 1 salari\xE9.",
+      resume: "DUERP num\xE9ris\xE9 et historis\xE9. Visite mi-carri\xE8re \xE0 45 ans. Passeport pr\xE9vention individuel. Rendez-vous de liaison.",
+      obligations: ["DUERP num\xE9ris\xE9 et historis\xE9 (toutes entreprises)", "Visite m\xE9dicale de mi-carri\xE8re \xE0 45 ans", "Rendez-vous de liaison si arr\xEAt >30 jours", "Passeport de pr\xE9vention individuel", "Programme annuel de pr\xE9vention des risques"],
+      articles: ["Loi n\xB02021-1018 du 2 ao\xFBt 2021", "Art. L.4121-1 Code du travail (obligation s\xE9curit\xE9)", "Art. R.4121-1 CT \u2014 DUERP", "Art. L.4624-1 CT \u2014 Visite m\xE9dicale", "D\xE9cret n\xB02022-395 du 18 mars 2022 (DUERP num\xE9rique)"],
+      sanctions: "Faute inexcusable si DUERP absent lors d'un accident. Amende R.4741-1 : 3 750 \u20AC.",
+      lien: "https://www.ameli.fr/employeur/sante-et-prevoyance/sante-au-travail",
+      impact: "Toutes PME. DUERP obligatoire d\xE8s 1 salari\xE9.",
+      tags: ["DUERP", "sant\xE9", "s\xE9curit\xE9", "pr\xE9vention", "accidents"]
+    },
+    {
+      id: "cse",
+      code: "CSE",
+      titre: "Comit\xE9 Social et \xC9conomique",
+      type: "Ordonnance fran\xE7aise",
+      cat: "Dialogue social",
+      dom: "Social",
+      origine: "France",
+      date: "2017-09-22",
+      vigueur: "2020-01-01",
+      statut: "En vigueur",
+      seuils: "CSE obligatoire \u226511 sal. Attributions \xE9tendues \u226550 sal. Comit\xE9s sp\xE9cialis\xE9s \u2265300 sal.",
+      resume: "Instance unique de repr\xE9sentation du personnel fusionnant DP, CE et CHSCT. Missions \xE9conomiques, sociales et de sant\xE9/s\xE9curit\xE9.",
+      obligations: ["\xC9lection des membres du CSE (tous les 4 ans)", "R\xE9unions pl\xE9ni\xE8res mensuelles (\u226550 sal.)", "Budget de fonctionnement : 0,2% MS (50-2000 sal.) ou 0,22% (>2000)", "Budget activit\xE9s sociales et culturelles", "DUERP soumis au CSE", "Consultation sur les d\xE9cisions strat\xE9giques (\u226550 sal.)"],
+      articles: ["Art. L.2311-1 \xE0 L.2315-100 Code du travail", "Ordonnances Macron n\xB02017-1386 et 2017-1388", "Art. L.2312-8 CT \u2014 Attributions g\xE9n\xE9rales \u226550 sal.", "Art. L.2315-61 CT \u2014 Budget fonctionnement", "Art. L.2315-63 CT \u2014 Budget ASC"],
+      sanctions: "D\xE9lit d'entrave : 1 an d'emprisonnement et 7 500 \u20AC d'amende (Art. L.2317-1 CT).",
+      lien: "https://www.legifrance.gouv.fr/codes/section_lc/LEGISCTA000035611752/",
+      impact: "Toutes PME \u226511 sal. Processus \xE9lectoral \xE0 organiser.",
+      tags: ["CSE", "repr\xE9sentation", "dialogue social", "\xE9lection"]
+    },
+    {
+      id: "nao",
+      code: "NAO",
+      titre: "N\xE9gociations Annuelles Obligatoires",
+      type: "Loi fran\xE7aise",
+      cat: "N\xE9gociation collective",
+      dom: "Social",
+      origine: "France",
+      date: "1982-11-13",
+      vigueur: "1982-11-13",
+      statut: "En vigueur",
+      seuils: "Entreprises avec d\xE9l\xE9gu\xE9s syndicaux (\u226550 sal. en pratique).",
+      resume: "Obligation de n\xE9gocier chaque ann\xE9e sur les r\xE9mun\xE9rations, le temps de travail, l'\xE9galit\xE9 professionnelle, la qualit\xE9 de vie au travail.",
+      obligations: ["Bloc 1 annuel : R\xE9mun\xE9rations, dur\xE9e du travail, \xE9pargne salariale", "Bloc 1 annuel : \xC9galit\xE9 professionnelle F/H", "Bloc 2 triennal : Gestion pr\xE9visionnelle des emplois (GPEC)", "Bloc 2 triennal : Handicap et p\xE9nibilit\xE9", "Proc\xE8s-verbal de d\xE9saccord si pas d'accord"],
+      articles: ["Art. L.2242-1 \xE0 L.2242-20 Code du travail", "Art. L.2242-1 CT \u2014 Blocs de n\xE9gociation", "Art. L.2242-11 CT \u2014 Contenu du Bloc 1", "Art. L.2242-13 CT \u2014 Contenu du Bloc 2"],
+      sanctions: "Majoration de la contribution patronale de formation en l'absence de n\xE9gociation sur la formation.",
+      lien: "https://www.service-public.fr/particuliers/vosdroits/F2259",
+      impact: "PME avec DS. Structure d'un calendrier social annuel.",
+      tags: ["NAO", "n\xE9gociation", "syndicats", "r\xE9mun\xE9ration", "\xE9galit\xE9"]
+    },
+    {
+      id: "bilansocial",
+      code: "Bilan Social",
+      titre: "Bilan Social Annuel",
+      type: "Loi fran\xE7aise",
+      cat: "Reporting RH",
+      dom: "Social",
+      origine: "France",
+      date: "1977-07-12",
+      vigueur: "1978-01-01",
+      statut: "En vigueur",
+      seuils: "Entreprises \u2265300 salari\xE9s.",
+      resume: "Document r\xE9capitulatif des donn\xE9es chiffr\xE9es de l'entreprise sur les 3 derni\xE8res ann\xE9es (emploi, r\xE9mun\xE9rations, conditions de travail, formation, relations sociales).",
+      obligations: ["Emploi : effectifs, embauches, d\xE9parts, CDI/CDD", "R\xE9mun\xE9rations et charges accessoires", "Conditions de sant\xE9 et s\xE9curit\xE9 (AT, MP)", "Formation professionnelle", "Relations professionnelles", "Autres conditions de travail", "Soumis au CSE avant le 1er octobre", "D\xE9p\xF4t \xE0 l'inspection du travail"],
+      articles: ["Art. L.2323-70 et s. Code du travail", "Art. D.2323-13 \xE0 D.2323-15 CT \u2014 Contenu", "Art. R.2323-17 CT \u2014 D\xE9lais de communication"],
+      sanctions: "D\xE9lit d'entrave au CSE si bilan non communiqu\xE9.",
+      lien: "https://www.service-public.fr/professionnels-entreprises/vosdroits/F23382",
+      impact: "PME \u2265300 sal. Contient la plupart des indicateurs ESRS S1.",
+      tags: ["bilan social", "300 sal.", "RH", "indicateurs"]
+    },
+    {
+      id: "deconnexion",
+      code: "Droit \xE0 la d\xE9connexion",
+      titre: "Droit \xE0 la D\xE9connexion Num\xE9rique",
+      type: "Loi fran\xE7aise",
+      cat: "Qualit\xE9 de vie",
+      dom: "Social",
+      origine: "France",
+      date: "2016-08-08",
+      vigueur: "2017-01-01",
+      statut: "En vigueur",
+      seuils: "Toutes entreprises \u226550 sal. (accord ou charte). En pratique, recommand\xE9 \xE0 toutes tailles.",
+      resume: "Droit pour les salari\xE9s de ne pas \xEAtre connect\xE9s aux outils num\xE9riques professionnels en dehors des horaires de travail. Accord ou charte obligatoire \u226550 sal.",
+      obligations: ["Accord collectif sur les modalit\xE9s (\u226550 sal.)", "\xC0 d\xE9faut : charte unilat\xE9rale apr\xE8s avis CSE", "Formation et sensibilisation des salari\xE9s et managers", "Mesures de r\xE9gulation du bon usage des outils", "Suivi de l'application de l'accord/charte"],
+      articles: ["Art. L.2242-17 Code du travail (Loi El Khomri 2016)", "Art. L.3121-64 CT \u2014 Accord forfait jours", "Art. L.2242-8 CT (ancienne num\xE9rotation)"],
+      sanctions: "Absence d'accord ou charte : irr\xE9gularit\xE9 en cas de contentieux. Burn-out reconnaissable en accident du travail.",
+      lien: "https://www.service-public.fr/particuliers/vosdroits/F2448",
+      impact: "Toutes PME. Outil de pr\xE9vention des RPS. Facteur d'attractivit\xE9.",
+      tags: ["d\xE9connexion", "num\xE9rique", "RPS", "qualit\xE9 de vie", "t\xE9l\xE9travail"]
+    },
+    {
+      id: "teletravail",
+      code: "T\xE9l\xE9travail",
+      titre: "Accord National Interprofessionnel T\xE9l\xE9travail",
+      type: "ANI fran\xE7ais",
+      cat: "Organisation travail",
+      dom: "Social",
+      origine: "France",
+      date: "2020-11-26",
+      vigueur: "2021-04-24",
+      statut: "En vigueur",
+      seuils: "Toutes entreprises. Accord ou charte obligatoire si t\xE9l\xE9travail r\xE9gulier.",
+      resume: "Cadre national du t\xE9l\xE9travail. Formalis\xE9 par accord ou charte. Principe du double volontariat (salari\xE9 + employeur).",
+      obligations: ["Double volontariat : accord salari\xE9 et employeur", "Accord collectif ou charte unilat\xE9rale (avis CSE)", "Prise en charge des frais suppl\xE9mentaires", "Adaptation du management \xE0 distance", "Pr\xE9vention de l'isolement et droit \xE0 la d\xE9connexion", "\xC9galit\xE9 d'acc\xE8s au t\xE9l\xE9travail"],
+      articles: ["Art. L.1222-9 Code du travail \u2014 Cadre l\xE9gal", "Art. L.1222-10 CT \u2014 Obligations employeur", "Art. L.1222-11 CT \u2014 T\xE9l\xE9travail en cas de force majeure", "ANI T\xE9l\xE9travail du 26 novembre 2020"],
+      sanctions: "Refus de t\xE9l\xE9travail sans justification : recours possible si accord pr\xE9vu.",
+      lien: "https://travail-emploi.gouv.fr/dialogue-social/negociation-collective/article/accord-national-interprofessionnel-relatif-au-teletravail",
+      impact: "Toutes tailles. Formalisation par charte recommand\xE9e. Impact ESRS S1.",
+      tags: ["t\xE9l\xE9travail", "remote", "flexibilit\xE9", "ANI", "charte"]
+    },
+    {
+      id: "c2p",
+      code: "C2P / P\xE9nibilit\xE9",
+      titre: "Compte Professionnel de Pr\xE9vention (C2P)",
+      type: "Loi fran\xE7aise",
+      cat: "P\xE9nibilit\xE9",
+      dom: "Social",
+      origine: "France",
+      date: "2014-01-20",
+      vigueur: "2015-01-01",
+      statut: "En vigueur (r\xE9forme 2023)",
+      seuils: "Tous salari\xE9s expos\xE9s \xE0 des facteurs de risques professionnels au-del\xE0 des seuils.",
+      resume: "Syst\xE8me de points acquis par les salari\xE9s expos\xE9s aux 6 facteurs de p\xE9nibilit\xE9. Utilisables pour formation, r\xE9duction du temps de travail ou retraite anticip\xE9e.",
+      obligations: ["D\xE9claration annuelle des expositions via DSN", "6 facteurs : bruit, produits chimiques dangereux, TS travail de nuit, travaux r\xE9p\xE9titifs, milieu hyperbare, vibrations", "Diagnostic p\xE9nibilit\xE9 int\xE9gr\xE9 au DUERP", "Accord ou plan d'action pr\xE9vention si \u226525% salari\xE9s expos\xE9s et \u226550 sal."],
+      articles: ["Art. L.4163-1 \xE0 L.4163-22 Code du travail", "Art. R.4163-1 \xE0 R.4163-17 CT", "Loi n\xB02014-40 du 20 janv. 2014 (r\xE9forme retraites)", "Ordonnance n\xB02017-1389 du 22 sept. 2017 (C3P\u2192C2P)"],
+      sanctions: "D\xE9claration incompl\xE8te ou fausse : redressement URSSAF.",
+      lien: "https://www.compteprofessionneldeprevention.fr",
+      impact: "PME avec salari\xE9s expos\xE9s. Diagnostic via le DUERP.",
+      tags: ["C2P", "p\xE9nibilit\xE9", "facteurs risques", "pr\xE9vention", "retraite"]
+    },
+    {
+      id: "atmp",
+      code: "AT/MP",
+      titre: "Accidents du Travail & Maladies Professionnelles",
+      type: "Code de la S\xE9curit\xE9 Sociale",
+      cat: "Sant\xE9 & S\xE9curit\xE9",
+      dom: "Social",
+      origine: "France",
+      date: "1946-10-30",
+      vigueur: "1947-01-01",
+      statut: "En vigueur",
+      seuils: "Toutes entreprises d\xE8s 1 salari\xE9.",
+      resume: "R\xE9gime de protection des salari\xE9s victimes d'accidents du travail ou de maladies professionnelles. Contribution patronale au taux fix\xE9 par la CARSAT.",
+      obligations: ["D\xE9claration AT aupr\xE8s CPAM dans les 48h (Cerfa 14463)", "Registre des AT/MP et des maladies professionnelles", "DUERP tenant compte des risques AT/MP", "Cotisation AT/MP variable selon sinistralit\xE9 (taux individualis\xE9 \u2265200 sal.)", "Faute inexcusable si DUERP insuffisant"],
+      articles: ["Art. L.411-1 Code de la S\xE9curit\xE9 Sociale \u2014 D\xE9finition AT", "Art. L.441-1 \xE0 L.441-4 CSS \u2014 D\xE9claration", "Art. L.4121-1 Code du travail \u2014 Pr\xE9vention", "Art. L.452-1 CSS \u2014 Faute inexcusable"],
+      sanctions: "Faute inexcusable : majoration de rente + dommages et int\xE9r\xEAts. Amendes si non-d\xE9claration.",
+      lien: "https://www.ameli.fr/employeur/vos-salaries/declaration-accident-de-travail",
+      impact: "Toutes PME. Taux AT/MP impacte directement le co\xFBt du travail.",
+      tags: ["accident du travail", "AT/MP", "d\xE9claration", "CPAM", "faute inexcusable"]
+    },
+    {
+      id: "formation",
+      code: "Formation Pro",
+      titre: "Formation Professionnelle \u2014 CPF & Plan de Formation",
+      type: "Loi fran\xE7aise",
+      cat: "Formation",
+      dom: "Social",
+      origine: "France",
+      date: "2018-09-05",
+      vigueur: "2019-01-01",
+      statut: "En vigueur",
+      seuils: "Entretien professionnel : toutes entreprises \u22651 sal. Contribution OPCO : toutes entreprises.",
+      resume: "CPF universalis\xE9, reconversion professionnelle, entretien professionnel tous les 2 ans. Abondement correctif si bilan 6 ans non r\xE9alis\xE9.",
+      obligations: ["Entretien professionnel tous les 2 ans + bilan \xE0 6 ans", "Plan de d\xE9veloppement des comp\xE9tences annuel", "Contribution formation : 0,55% MS (<11 sal.) ou 1% MS (\u226511 sal.)", "Abondement correctif CPF 3 000 \u20AC si bilan non r\xE9alis\xE9 (\u226550 sal.)"],
+      articles: ["Art. L.6315-1 CT \u2014 Entretien professionnel", "Art. L.6321-1 CT \u2014 Plan de d\xE9veloppement comp\xE9tences", "Art. L.6323-1 et s. CT \u2014 CPF", "Loi n\xB02018-771 du 5 sept. 2018"],
+      sanctions: "Abondement correctif CPF 3 000 \u20AC si bilan 6 ans non tenu (\u226550 sal.).",
+      lien: "https://www.moncompteformation.gouv.fr",
+      impact: "Toutes PME. Outil de fid\xE9lisation et d'attractivit\xE9 RH.",
+      tags: ["CPF", "formation", "OPCO", "entretien professionnel"]
+    },
+    {
+      id: "interessement",
+      code: "Int\xE9ressement/Participation",
+      titre: "Int\xE9ressement, Participation et \xC9pargne Salariale",
+      type: "Loi fran\xE7aise",
+      cat: "\xC9pargne salariale",
+      dom: "Social",
+      origine: "France",
+      date: "1959-01-07",
+      vigueur: "1959-01-07",
+      statut: "En vigueur (r\xE9forme 2023)",
+      seuils: "Participation obligatoire : \u226550 sal. Int\xE9ressement : toutes tailles depuis 2023 (simplification).",
+      resume: "M\xE9canismes associant les salari\xE9s aux r\xE9sultats de l'entreprise. Avantages fiscaux et sociaux pour l'employeur et le salari\xE9.",
+      obligations: ["Participation obligatoire \u226550 sal. (r\xE9sultat fiscal >0)", "Accord ou formule l\xE9gale de calcul de la r\xE9serve de participation", "Int\xE9ressement : accord collectif ou d\xE9cision unilat\xE9rale (TPE/PME)", "Blocage 5 ans sauf d\xE9blocage anticip\xE9", "PEE obligatoire si participation", "Fonds ISR obligatoire dans le PEE"],
+      articles: ["Art. L.3311-1 \xE0 L.3315-5 CT \u2014 Int\xE9ressement", "Art. L.3321-1 \xE0 L.3326-2 CT \u2014 Participation", "Art. L.3332-1 \xE0 L.3332-28 CT \u2014 PEE", "Loi n\xB02023-1107 du 29 nov. 2023 (simplification)"],
+      sanctions: "Participation non vers\xE9e : redressement URSSAF + int\xE9r\xEAts de retard.",
+      lien: "https://travail-emploi.gouv.fr/dialogue-social/accords-collectifs/article/l-epargne-salariale",
+      impact: "Toutes tailles. Levier puissant d'attractivit\xE9 et de fid\xE9lisation RH.",
+      tags: ["int\xE9ressement", "participation", "PEE", "\xE9pargne salariale", "ISR"]
+    },
+    {
+      id: "mobilite",
+      code: "Plan Mobilit\xE9",
+      titre: "Plan de Mobilit\xE9 Employeur (PDME)",
+      type: "Loi fran\xE7aise",
+      cat: "Mobilit\xE9",
+      dom: "Environnement",
+      origine: "France",
+      date: "2021-08-22",
+      vigueur: "2023-09-01",
+      statut: "En vigueur",
+      seuils: "\u226550 sal. sur un m\xEAme site.",
+      resume: "Plan de mobilit\xE9 pour r\xE9duire les \xE9missions li\xE9es aux d\xE9placements. Forfait mobilit\xE9s durables jusqu'\xE0 800\u20AC/an d\xE9fiscalis\xE9.",
+      obligations: ["Diagnostic des d\xE9placements domicile-travail", "Plan d'actions avec objectifs de r\xE9duction", "Consultation du CSE", "FMD jusqu'\xE0 800\u20AC/an d\xE9fiscalis\xE9", "50% transports en commun pris en charge (obligatoire)"],
+      articles: ["Art. L.1214-8-2 Code des transports", "Art. L.3261-3-1 CT \u2014 Forfait mobilit\xE9s durables", "D\xE9cret n\xB02020-541 du 9 mai 2020", "Art. 82-84 Loi Climat n\xB02021-1104"],
+      sanctions: "Proc\xE9dure de mise en conformit\xE9 en cours.",
+      lien: "https://www.ecologie.gouv.fr/plan-mobilite-employeur",
+      impact: "D\xE8s 50 sal. FMD = avantage RH non charg\xE9.",
+      tags: ["mobilit\xE9", "FMD", "transports", "v\xE9lo", "co-voiturage"]
+    },
+    // ENVIRONNEMENT
+    {
+      id: "beges",
+      code: "BEGES",
+      titre: "Bilan des \xC9missions de Gaz \xE0 Effet de Serre",
+      type: "D\xE9cret fran\xE7ais",
+      cat: "Carbone",
+      dom: "Environnement",
+      origine: "France",
+      date: "2011-07-11",
+      vigueur: "2012-01-01",
+      statut: "En vigueur",
+      seuils: ">500 sal. m\xE9tropole (>250 DROM). Recommand\xE9 50-499 sal. depuis Loi Climat 2021.",
+      resume: "Bilan GES tous les 4 ans. Scope 1 et 2 obligatoires, Scope 3 recommand\xE9. Plan de transition obligatoire depuis 2021.",
+      obligations: ["Bilan Scope 1 : \xE9missions directes", "Bilan Scope 2 : \xE9missions indirectes (\xE9nergie)", "Plan de transition associ\xE9 (obligatoire depuis 2021)", "Publication sur bilans-ges.ademe.fr", "Mise \xE0 jour tous les 4 ans"],
+      articles: ["Art. L.229-25 Code de l'environnement", "Art. R.229-45 \xE0 R.229-56 Code env.", "D\xE9cret n\xB02011-829 du 11 juillet 2011", "Art. 301-303 Loi Climat 2021 \u2014 plan de transition", "Guide ADEME Bilan GES v4 (2022)"],
+      sanctions: "Amende 10 000 \u20AC (+ 20 000 \u20AC si r\xE9cidive) en cas d'absence de publication.",
+      lien: "https://www.ecologie.gouv.fr/bilan-des-emissions-gaz-effet-serre",
+      impact: "PME <500 sal. non soumises l\xE9galement mais recommand\xE9 pour appels d'offres.",
+      tags: ["BEGES", "GES", "carbone", "Scope", "ADEME"]
+    },
+    {
+      id: "climatresilience",
+      code: "Loi Climat",
+      titre: "Loi Climat et R\xE9silience",
+      type: "Loi fran\xE7aise",
+      cat: "Environnement",
+      dom: "Environnement",
+      origine: "France",
+      date: "2021-08-22",
+      vigueur: "2021-08-24",
+      statut: "En vigueur",
+      seuils: "Variable. Plan mobilit\xE9 : \u226550 sal./site. D\xE9cret tertiaire : \u22651 000 m\xB2. March\xE9s publics : toutes tailles.",
+      resume: "305 articles issus de la Convention Citoyenne pour le Climat. Consommation, production, transports, logement, justice climatique.",
+      obligations: ["BEGES \xE9tendu aux 50-499 sal. (recommand\xE9)", "Plan mobilit\xE9 \u226550 sal./site (avant 01/09/2023)", "Crit\xE8res environnementaux march\xE9s publics (21%)", "Formation managers aux enjeux climatiques", "ZAN \u2014 Z\xE9ro Artificialisation Nette 2050"],
+      articles: ["Art. 301-303 Loi Climat \u2014 BEGES PME", "Art. 82-84 Loi Climat \u2014 Plan mobilit\xE9", "Art. 26 \u2014 March\xE9s publics environnementaux", "Art. 224-226 \u2014 Formation managers", "Art. 191-199 \u2014 ZAN"],
+      sanctions: "DPE frauduleux : 3 000 \u20AC. Variable selon infractions.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000043956924",
+      impact: "Plan mobilit\xE9 d\xE8s 50 sal. D\xE9cret tertiaire si locaux \u22651 000 m\xB2.",
+      tags: ["Loi Climat", "GES", "mobilit\xE9", "ZAN", "DPE"]
+    },
+    {
+      id: "agec",
+      code: "Loi AGEC",
+      titre: "Loi Anti-Gaspillage pour une \xC9conomie Circulaire",
+      type: "Loi fran\xE7aise",
+      cat: "\xC9conomie circulaire",
+      dom: "Environnement",
+      origine: "France",
+      date: "2020-02-10",
+      vigueur: "2020-02-10",
+      statut: "En vigueur",
+      seuils: "Variable. Indice r\xE9parabilit\xE9 : fabricants. REP : metteurs sur le march\xE9. Don alimentaire : GMS >400m\xB2.",
+      resume: "\xC9conomie circulaire : 5R, plastiques, indice r\xE9parabilit\xE9, fili\xE8res REP \xE9tendues.",
+      obligations: ["Interdiction plastiques \xE0 usage unique (progressif 2020-2025)", "Indice de r\xE9parabilit\xE9 sur produits \xE9lectriques", "Extension fili\xE8res REP", "Interdiction destruction invendus", "Information environnementale produits"],
+      articles: ["Art. L.541-10 Code env. \u2014 REP", "Art. 13 AGEC \u2014 Indice r\xE9parabilit\xE9", "Art. 17 AGEC \u2014 Information consommateurs", "Art. 24 AGEC \u2014 Invendus interdits", "D\xE9cret n\xB02021-1342 \u2014 REP emballages"],
+      sanctions: "3 000 \u20AC pour indice r\xE9parabilit\xE9 absent. Sanctions REP variables.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000041553759",
+      impact: "Fabricants, distributeurs, restaurateurs selon activit\xE9.",
+      tags: ["AGEC", "REP", "r\xE9parabilit\xE9", "plastique", "\xE9conomie circulaire"]
+    },
+    {
+      id: "decrettertiaire",
+      code: "D\xE9cret Tertiaire",
+      titre: "D\xE9cret \xC9co-\xC9nergie Tertiaire",
+      type: "D\xE9cret fran\xE7ais",
+      cat: "\xC9nergie",
+      dom: "Environnement",
+      origine: "France",
+      date: "2019-07-23",
+      vigueur: "2021-09-30",
+      statut: "En vigueur",
+      seuils: "B\xE2timents ou parties \xE0 usage tertiaire \u22651 000 m\xB2.",
+      resume: "-40% consommation \xE9nerg\xE9tique en 2030, -50% en 2040, -60% en 2050 vs. ann\xE9e de r\xE9f\xE9rence. D\xE9claration annuelle sur OPERAT.",
+      obligations: ["D\xE9claration annuelle sur OPERAT (ADEME)", "Ann\xE9e de r\xE9f\xE9rence d\xE9finie (2010-2019)", "Objectifs : -40% en 2030 / -50% en 2040 / -60% en 2050", "Plan d'actions technique et comportemental"],
+      articles: ["Art. L.174-1 Code construction", "D\xE9cret n\xB02019-771 du 23 juillet 2019", "Arr\xEAt\xE9 du 10 avril 2020 (valeurs absolues)", "Arr\xEAt\xE9 du 24 nov. 2020 (plateforme OPERAT)"],
+      sanctions: "Name and shame : liste publique des d\xE9faillants.",
+      lien: "https://operat.ademe.fr",
+      impact: "PME propri\xE9taire ou locataire de locaux \u22651 000 m\xB2.",
+      tags: ["D\xE9cret Tertiaire", "\xE9nergie", "OPERAT", "b\xE2timent", "-40%"]
+    },
+    {
+      id: "taxonomy",
+      code: "Taxonomie UE",
+      titre: "R\xE8glement Taxonomie Verte Europ\xE9enne",
+      type: "R\xE8glement UE",
+      cat: "Finance durable",
+      dom: "Environnement",
+      origine: "UE",
+      date: "2020-06-18",
+      vigueur: "2022-01-01",
+      statut: "En vigueur",
+      seuils: "Entreprises >500 sal. soumises CSRD + \xE9tablissements financiers.",
+      resume: "Classification des activit\xE9s \xE9conomiques durables. Divulgation % CA, CapEx, OpEx align\xE9s. Principe DNSH.",
+      obligations: ["% CA align\xE9 taxonomie", "% CapEx align\xE9 taxonomie", "% OpEx align\xE9 taxonomie", "Principe DNSH pour 6 objectifs", "Garanties sociales minimales (droits fondamentaux OCDE)"],
+      articles: ["R\xE8glement UE 2020/852", "R\xE8glement d\xE9l\xE9gu\xE9 UE 2021/2139 (crit\xE8res CC)", "Art. 8 Taxonomie \u2014 Divulgation", "Actes d\xE9l\xE9gu\xE9s 2023 \u2014 4 autres objectifs"],
+      sanctions: "Via CSRD et SFDR. Responsabilit\xE9 de la direction.",
+      lien: "https://finance.ec.europa.eu/sustainable-finance/tools-and-standards/eu-taxonomy-sustainable-activities_fr",
+      impact: "Indirect. Vos clients/investisseurs peuvent vous demander vos donn\xE9es d'alignement.",
+      tags: ["taxonomie", "finance verte", "DNSH", "alignement"]
+    },
+    {
+      id: "icpe",
+      code: "ICPE",
+      titre: "Installations Class\xE9es pour la Protection de l'Environnement",
+      type: "Loi fran\xE7aise",
+      cat: "Environnement industriel",
+      dom: "Environnement",
+      origine: "France",
+      date: "1976-07-19",
+      vigueur: "1976-07-19",
+      statut: "En vigueur",
+      seuils: "Toute installation pr\xE9sentant des risques ou nuisances pour l'environnement. Nomenclature ICPE variable selon activit\xE9.",
+      resume: "R\xE9gime d'autorisation, d'enregistrement ou de d\xE9claration selon les risques de l'installation. Inspection des installations class\xE9es.",
+      obligations: ["D\xE9claration, enregistrement ou autorisation pr\xE9fectorale selon la nomenclature", "\xC9tude d'impact environnemental", "Plan de pr\xE9vention des risques", "Surveillance des \xE9missions", "Rapport annuel \xE0 l'inspection des installations class\xE9es"],
+      articles: ["Art. L.511-1 \xE0 L.514-12 Code de l'environnement", "Art. R.511-9 Code env. \u2014 Nomenclature ICPE", "D\xE9cret n\xB077-1133 du 21 sept. 1977 (codifi\xE9)", "Directive IED 2010/75/UE (grandes installations)"],
+      sanctions: "Amende jusqu'\xE0 75 000 \u20AC + 2 ans d'emprisonnement pour exploitation sans autorisation.",
+      lien: "https://www.georisques.gouv.fr/risques/installations",
+      impact: "PME industrielles, artisanales, agricoles. V\xE9rifier la nomenclature selon votre activit\xE9.",
+      tags: ["ICPE", "industrie", "pollution", "autorisation", "inspection"]
+    },
+    {
+      id: "industrie_verte",
+      code: "Loi Industrie Verte",
+      titre: "Loi Industrie Verte \u2014 R\xE9industrialisation",
+      type: "Loi fran\xE7aise",
+      cat: "Transition industrielle",
+      dom: "Environnement",
+      origine: "France",
+      date: "2023-10-23",
+      vigueur: "2024-01-01",
+      statut: "En vigueur",
+      seuils: "Variable selon les mesures. Finance verte : toutes tailles. Sobri\xE9t\xE9 : secteurs industriels.",
+      resume: "Acc\xE9l\xE8re la r\xE9industrialisation verte en France. Finance verte, acc\xE8s au foncier industriel, sobri\xE9t\xE9 \xE9nerg\xE9tique, d\xE9carbonation.",
+      obligations: ["Plan de sobri\xE9t\xE9 et d\xE9carbonation pour industries \xE9nergivores", "Labels bas-carbone pour l'industrie", "Fonds vert pour PME industrielles (subventions)", "Acc\xE8s facilit\xE9 au foncier industriel", "Int\xE9gration de crit\xE8res ESG dans les march\xE9s publics industriels"],
+      articles: ["Loi n\xB02023-973 du 23 octobre 2023", "Art. 35 \u2014 D\xE9carbonation des sites industriels", "Art. 47 \u2014 Finance verte dans l'\xE9pargne salariale", "Art. 12 \u2014 Acc\xE9l\xE9ration proc\xE9dures permis"],
+      sanctions: "Variables selon les mesures sp\xE9cifiques.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000048127757",
+      impact: "PME industrielles : acc\xE8s \xE0 des financements verts et simplification administrative.",
+      tags: ["industrie verte", "d\xE9carbonation", "r\xE9industrialisation", "finance verte"]
+    },
+    {
+      id: "reach",
+      code: "REACH",
+      titre: "REACH \u2014 Enregistrement des Substances Chimiques",
+      type: "R\xE8glement UE",
+      cat: "Chimie",
+      dom: "Environnement",
+      origine: "UE",
+      date: "2006-12-18",
+      vigueur: "2008-06-01",
+      statut: "En vigueur",
+      seuils: "Fabricants et importateurs de substances chimiques >1 tonne/an. Utilisateurs en aval concern\xE9s.",
+      resume: "Enregistrement, \xE9valuation, autorisation et restriction des substances chimiques. Substitution des substances les plus dangereuses (SVHC).",
+      obligations: ["Enregistrement des substances >1 t/an aupr\xE8s de l'ECHA", "Fiche de donn\xE9es de s\xE9curit\xE9 (FDS) actualis\xE9e", "Identification des substances extr\xEAmement pr\xE9occupantes (SVHC)", "Autorisation pour les substances de la Liste d'autorisation (Annexe XIV)", "Communication tout au long de la cha\xEEne d'approvisionnement"],
+      articles: ["R\xE8glement CE n\xB01907/2006 \u2014 REACH", "Art. 31 REACH \u2014 Fiche de donn\xE9es de s\xE9curit\xE9", "Art. 57 REACH \u2014 Substances extr\xEAmement pr\xE9occupantes", "R\xE8glement CLP n\xB01272/2008 \u2014 Classification"],
+      sanctions: "Amendes jusqu'\xE0 150 000 \u20AC + interdiction de commercialisation (droit national).",
+      lien: "https://echa.europa.eu/fr/regulations/reach/understanding-reach",
+      impact: "PME utilisant, fabriquant ou important des produits chimiques. Secteurs : cosm\xE9tique, textile, peinture, m\xE9tallurgie.",
+      tags: ["REACH", "chimie", "SVHC", "substances", "FDS"]
+    },
+    {
+      id: "re2020",
+      code: "RE2020",
+      titre: "R\xE9glementation Environnementale des B\xE2timents 2020",
+      type: "Arr\xEAt\xE9 fran\xE7ais",
+      cat: "Construction",
+      dom: "Environnement",
+      origine: "France",
+      date: "2021-08-04",
+      vigueur: "2022-01-01",
+      statut: "En vigueur",
+      seuils: "B\xE2timents neufs r\xE9sidentiels et tertiaires. R\xE9novation : extension et sur\xE9l\xE9vation.",
+      resume: "R\xE9glementation thermique et carbone pour les b\xE2timents neufs. Remplace la RT2012. Seuils carbone progressifs jusqu'en 2031.",
+      obligations: ["Bilan carbone du b\xE2timent (\xE9nergie grise et usage)", "Performance \xE9nerg\xE9tique am\xE9lior\xE9e vs RT2012", "Confort d'\xE9t\xE9 renforc\xE9 (sans climatisation)", "Indicateurs : Bbio, Cep, Ic Construction, Ic Energie", "Seuils carbone resserr\xE9s en 2025, 2028, 2031"],
+      articles: ["Arr\xEAt\xE9 du 4 ao\xFBt 2021 (RE2020)", "Art. R.172-1 \xE0 R.172-25 Code de la construction", "D\xE9cret n\xB02021-1004 du 29 juillet 2021"],
+      sanctions: "Non-conformit\xE9 : refus de permis de construire. Responsabilit\xE9 d\xE9cennale.",
+      lien: "https://www.ecologie.gouv.fr/reglementation-environnementale-re2020",
+      impact: "PME du secteur de la construction et de l'immobilier. Ma\xEEtres d'ouvrage.",
+      tags: ["RE2020", "b\xE2timent", "carbone", "\xE9nergie", "construction"]
+    },
+    {
+      id: "egalim",
+      code: "Loi EGAlim",
+      titre: "Loi EGAlim \u2014 Alimentation Responsable",
+      type: "Loi fran\xE7aise",
+      cat: "Alimentation",
+      dom: "Environnement",
+      origine: "France",
+      date: "2018-10-30",
+      vigueur: "2019-01-01",
+      statut: "En vigueur (renforc\xE9 EGAlim 2)",
+      seuils: "Restauration collective publique (50% produits durables dont 20% bio). GMS : don alimentaire.",
+      resume: "Alimentation durable dans la restauration collective. 50% produits durables/locaux dont 20% bio. R\xE9duction plastiques. Menus v\xE9g\xE9tariens.",
+      obligations: ["50% produits durables dont 20% bio en restauration collective publique", "Menu v\xE9g\xE9tarien quotidien en restauration collective", "Don alimentaire pour GMS >400m\xB2 (art. L.541-15-6 Code env.)", "R\xE9duction des emballages plastiques alimentaires", "Interdiction des contenants en plastique dans les cantines scolaires"],
+      articles: ["Loi n\xB02018-938 du 30 oct. 2018 (EGAlim)", "Loi n\xB02021-1357 du 18 oct. 2021 (EGAlim 2)", "Art. L.230-5-1 Code rural (50% produits durables)", "Art. L.541-15-6 Code env. (don alimentaire)"],
+      sanctions: "Contr\xF4les DGAL et DGCCRF. Amendes pour non-conformit\xE9.",
+      lien: "https://www.legifrance.gouv.fr/loi/id/JORFTEXT000037547946",
+      impact: "PME de restauration collective, traiteurs, cantines d'entreprise.",
+      tags: ["EGAlim", "alimentation", "bio", "restauration", "don alimentaire"]
+    },
+    {
+      id: "cbam",
+      code: "CBAM",
+      titre: "M\xE9canisme d'Ajustement Carbone aux Fronti\xE8res",
+      type: "R\xE8glement UE",
+      cat: "Carbone",
+      dom: "Environnement",
+      origine: "UE",
+      date: "2023-05-10",
+      vigueur: "2026-01-01",
+      statut: "Phase transitoire jusqu'au 31/12/2025",
+      seuils: "Importateurs de ciment, acier/fer, aluminium, engrais, \xE9lectricit\xE9, hydrog\xE8ne.",
+      resume: "Taxe carbone sur les importations \xE0 forte intensit\xE9 carbone. \xC9vite les fuites de carbone. D\xE9claration trimestrielle en phase transitoire.",
+      obligations: ["D\xE9claration trimestrielle des \xE9missions incorpor\xE9es (transitoire)", "Achat de certificats CBAM d\xE8s 2026", "Rapport annuel v\xE9rifi\xE9 par OTI accr\xE9dit\xE9", "Enregistrement aupr\xE8s de l'autorit\xE9 nationale", "Tra\xE7abilit\xE9 des \xE9missions cha\xEEne d'approvisionnement"],
+      articles: ["R\xE8glement UE 2023/956 du 10 mai 2023", "R\xE8glement d'ex\xE9cution UE 2023/1773 (transitoire)", "Art. 3 CBAM \u2014 D\xE9finitions", "Art. 5 CBAM \u2014 Autorisation importateur"],
+      sanctions: "100 \u20AC par tonne de CO\u2082 non d\xE9clar\xE9e en phase transitoire.",
+      lien: "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_fr",
+      impact: "PME importatrices des secteurs cit\xE9s. R\xE9vision cha\xEEnes d'approvisionnement n\xE9cessaire.",
+      tags: ["CBAM", "carbone", "importation", "fronti\xE8res", "acier", "aluminium"]
+    },
+    {
+      id: "eudr",
+      code: "EUDR",
+      titre: "R\xE8glement Anti-D\xE9forestation (EUDR)",
+      type: "R\xE8glement UE",
+      cat: "Biodiversit\xE9",
+      dom: "Environnement",
+      origine: "UE",
+      date: "2023-06-29",
+      vigueur: "2025-12-30",
+      statut: "En vigueur (application d\xE9cal\xE9e)",
+      seuils: "Op\xE9rateurs et commer\xE7ants de : bovins, cacao, caf\xE9, huile de palme, soja, bois, caoutchouc et produits d\xE9riv\xE9s.",
+      resume: "Interdit la mise sur le march\xE9 de produits li\xE9s \xE0 la d\xE9forestation apr\xE8s le 31 d\xE9cembre 2020. Tra\xE7abilit\xE9 g\xE9olocalis\xE9e exig\xE9e.",
+      obligations: ["G\xE9olocalisation des parcelles de production", "D\xE9claration de diligence raisonn\xE9e", "Tra\xE7abilit\xE9 document\xE9e cha\xEEne d'approvisionnement", "\xC9valuation du risque de d\xE9forestation"],
+      articles: ["R\xE8glement UE 2023/1115 du 31 mai 2023", "Art. 8 EUDR \u2014 Diligence raisonn\xE9e", "Art. 10 EUDR \u2014 Classification pays par risque", "Art. 19 EUDR \u2014 Sanctions"],
+      sanctions: "Amendes \u22654% CA annuel UE + confiscation produits.",
+      lien: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32023R1115",
+      impact: "PME fili\xE8res agro-alimentaires, bois, ameublement, caoutchouc.",
+      tags: ["EUDR", "d\xE9forestation", "biodiversit\xE9", "soja", "bois", "tra\xE7abilit\xE9"]
+    },
+    // STANDARDS INTERNATIONAUX
+    {
+      id: "gri",
+      code: "GRI Standards",
+      titre: "Global Reporting Initiative Standards",
+      type: "Standard international",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "International",
+      date: "2021-10-05",
+      vigueur: "2023-01-01",
+      statut: "R\xE9f\xE9rence internationale",
+      seuils: "Volontaire \u2014 toute organisation.",
+      resume: "R\xE9f\xE9rentiel mondial de reporting durabilit\xE9. GRI 1-3 (Universal) + th\xE9matiques 200-400. Align\xE9 sur les ESRS.",
+      obligations: ["GRI 1 : Fondements", "GRI 2 : Informations g\xE9n\xE9rales (gouvernance, strat\xE9gie)", "GRI 3 : Mat\xE9rialit\xE9", "GRI 200-300-400 : \xC9conomique, Environnemental, Social"],
+      articles: ["GRI 1 Foundation 2021", "GRI 2 General Disclosures 2021", "GRI 3 Material Topics 2021", "GRI 302 Energy", "GRI 305 Emissions", "GRI 401 Employment", "GRI 405 Diversity"],
+      sanctions: "Aucune \u2014 standard volontaire.",
+      lien: "https://www.globalreporting.org/standards/",
+      impact: "R\xE9f\xE9rentiel id\xE9al pour structurer le reporting avant la CSRD.",
+      tags: ["GRI", "reporting", "mat\xE9rialit\xE9", "international"]
+    },
+    {
+      id: "iso14001",
+      code: "ISO 14001:2015",
+      titre: "ISO 14001 \u2014 Syst\xE8me de Management Environnemental",
+      type: "Norme internationale",
+      cat: "Management",
+      dom: "Environnement",
+      origine: "International",
+      date: "2015-09-15",
+      vigueur: "2018-09-14",
+      statut: "En vigueur",
+      seuils: "Volontaire \u2014 toute organisation.",
+      resume: "SME (Syst\xE8me de Management Environnemental). Approche PDCA. Certification reconnue dans les march\xE9s publics.",
+      obligations: ["Politique environnementale document\xE9e", "Analyse des aspects et impacts environnementaux", "Objectifs environnementaux SMART", "Formation et sensibilisation", "Audit interne et revue de direction"],
+      articles: ["Norme ISO 14001:2015 \u2014 Chapitres 4 \xE0 10", "ISO 14004:2016 \u2014 Lignes directrices", "ISO 19011:2018 \u2014 Audit de SME"],
+      sanctions: "Aucune \u2014 volontaire.",
+      lien: "https://www.iso.org/fr/iso-14001-environmental-management.html",
+      impact: "Tr\xE8s accessible aux PME. Valoris\xE9 dans les appels d'offres. Facilite la CSRD E1-E5.",
+      tags: ["ISO 14001", "SME", "certification", "management environnemental"]
+    },
+    {
+      id: "iso26000",
+      code: "ISO 26000",
+      titre: "ISO 26000 \u2014 Responsabilit\xE9 Soci\xE9tale",
+      type: "Norme internationale",
+      cat: "RSE",
+      dom: "Transversal",
+      origine: "International",
+      date: "2010-11-01",
+      vigueur: "2010-11-01",
+      statut: "Lignes directrices",
+      seuils: "Toute organisation.",
+      resume: "7 questions centrales de la RSO. Lignes directrices non certifiables.",
+      obligations: ["1 \u2014 Gouvernance", "2 \u2014 Droits de l'homme", "3 \u2014 Conditions de travail", "4 \u2014 Environnement", "5 \u2014 Loyaut\xE9 des pratiques", "6 \u2014 Consommateurs", "7 \u2014 Communaut\xE9s locales"],
+      articles: ["Norme ISO 26000:2010 \u2014 Chapitre 6 (7 questions)", "Chapitre 7 \u2014 Int\xE9gration RSO", "Annexe A \u2014 Correspondances GRI/UNGC"],
+      sanctions: "Aucune \u2014 lignes directrices.",
+      lien: "https://www.iso.org/fr/iso-26000-social-responsibility.html",
+      impact: "R\xE9f\xE9rentiel de structuration RSE id\xE9al. Compatible GRI et ESRS.",
+      tags: ["ISO 26000", "RSE", "7 questions", "parties prenantes"]
+    },
+    {
+      id: "ungc",
+      code: "Pacte Mondial ONU",
+      titre: "United Nations Global Compact \u2014 10 Principes",
+      type: "Engagement volontaire",
+      cat: "RSE",
+      dom: "Transversal",
+      origine: "International",
+      date: "2000-07-26",
+      vigueur: "2000-07-26",
+      statut: "Engagement volontaire",
+      seuils: "Volontaire \u2014 toute organisation.",
+      resume: "10 principes universels sur les droits de l'homme, les conditions de travail, l'environnement et la lutte contre la corruption. Communication on Progress annuelle.",
+      obligations: ["2 principes Droits de l'homme (D\xE9claration ONU)", "4 principes Travail (conventions OIT)", "3 principes Environnement (approche de pr\xE9caution)", "1 principe Anticorruption", "Communication on Progress (COP) annuelle"],
+      articles: ["UNGC 10 principes (2000)", "D\xE9claration universelle des droits de l'homme", "Conventions OIT fondamentales", "Accord de Rio sur l'environnement"],
+      sanctions: "Exclusion du r\xE9seau si pas de COP depuis 2 ans.",
+      lien: "https://www.unglobalcompact.org",
+      impact: "Signal fort d'engagement RSE. Reconnu par les acheteurs et investisseurs internationaux.",
+      tags: ["Pacte Mondial", "ONU", "UNGC", "droits humains", "10 principes"]
+    },
+    {
+      id: "ruggie",
+      code: "Principes Ruggie",
+      titre: "Principes Directeurs ONU Entreprises & Droits de l'Homme",
+      type: "Cadre de r\xE9f\xE9rence",
+      cat: "Droits humains",
+      dom: "Gouvernance",
+      origine: "International",
+      date: "2011-06-16",
+      vigueur: "2011-06-16",
+      statut: "R\xE9f\xE9rence internationale",
+      seuils: "Volontaire \u2014 toute entreprise.",
+      resume: "Cadre de r\xE9f\xE9rence ONU en 3 piliers : obligation des \xC9tats de prot\xE9ger, responsabilit\xE9 des entreprises de respecter, acc\xE8s aux voies de recours.",
+      obligations: ["Pilier 1 \u2014 Obligation des \xC9tats de prot\xE9ger", "Pilier 2 \u2014 Responsabilit\xE9 des entreprises de respecter les droits humains", "Pilier 3 \u2014 Acc\xE8s des victimes aux voies de recours", "Due diligence droits de l'homme", "M\xE9canisme de r\xE9clamation non judiciaire"],
+      articles: ["R\xE9solution ONU A/HRC/17/31 (2011)", "Principes directeurs 11 \xE0 24 \u2014 Responsabilit\xE9 des entreprises", "Principe directeur 17 \u2014 Due diligence droits humains"],
+      sanctions: "Aucune directement \u2014 r\xE9f\xE9rence pour le contentieux strat\xE9gique.",
+      lien: "https://www.ohchr.org/fr/business-and-human-rights",
+      impact: "Socle de la Loi Vigilance et de la CSDDD. R\xE9f\xE9rence pour le reporting ESRS S2.",
+      tags: ["Ruggie", "droits humains", "ONU", "due diligence", "vigilance"]
+    },
+    {
+      id: "ecovadis",
+      code: "EcoVadis",
+      titre: "EcoVadis \u2014 \xC9valuation RSE Fournisseurs",
+      type: "Standard march\xE9",
+      cat: "Cha\xEEne de valeur",
+      dom: "Transversal",
+      origine: "International",
+      date: "2007-01-01",
+      vigueur: "2007-01-01",
+      statut: "R\xE9f\xE9rence march\xE9",
+      seuils: "Demand\xE9 par les grands donneurs d'ordres \xE0 leurs fournisseurs.",
+      resume: "\xC9valuation RSE sur 4 th\xE8mes. Score 0-100. +80 000 entreprises dans 175 pays.",
+      obligations: ["Questionnaire RSE document\xE9 avec preuves", "Politique environnementale formalis\xE9e", "Indicateurs sociaux et RH document\xE9s", "Politique anticorruption", "Renouvellement annuel"],
+      articles: ["M\xE9thodologie EcoVadis 2024 (GRI, ISO 26000, UNGC, ESRS)", "Scorecard EcoVadis \u2014 Pond\xE9ration par th\xE8me", "ESRS S2 \u2014 Lien direct avec \xE9valuation fournisseurs"],
+      sanctions: "Aucune \u2014 \xE9valuation commerciale. Risque de perte de contrat.",
+      lien: "https://ecovadis.com/fr/",
+      impact: "Grands groupes exigent EcoVadis \xE0 leurs PME fournisseurs (>100k\u20AC/an).",
+      tags: ["EcoVadis", "fournisseurs", "notation RSE", "CSRD S2"]
+    },
+    {
+      id: "tcfd",
+      code: "TCFD",
+      titre: "Task Force on Climate-related Financial Disclosures",
+      type: "Cadre de r\xE9f\xE9rence",
+      cat: "Climat",
+      dom: "Gouvernance",
+      origine: "International",
+      date: "2017-06-29",
+      vigueur: "2017-01-01",
+      statut: "Int\xE9gr\xE9 dans ESRS E1 et ISSB S2",
+      seuils: "Recommandations int\xE9gr\xE9es dans la CSRD/ESRS.",
+      resume: "4 piliers : Gouvernance, Strat\xE9gie, Gestion des risques, M\xE9triques et cibles. Int\xE9gr\xE9 dans l'ESRS E1.",
+      obligations: ["Gouvernance : r\xF4le CA/direction sur les risques climatiques", "Strat\xE9gie : impacts risques/opportunit\xE9s court/moyen/long terme", "Gestion des risques : identification et \xE9valuation", "M\xE9triques : Scope 1, 2, 3", "Cibles : objectifs de r\xE9duction des \xE9missions", "Sc\xE9narios climatiques <2\xB0C et 4\xB0C"],
+      articles: ["Rapport final TCFD 2017", "TCFD 2021 \u2014 Guidance transition plans", "ESRS E1 \u2014 Alignement TCFD", "ISSB IFRS S2 \u2014 Alignement TCFD"],
+      sanctions: "Aucune directement \u2014 int\xE9gr\xE9 dans textes contraignants.",
+      lien: "https://www.fsb-tcfd.org",
+      impact: "Pr\xE9pare les informations climatiques requises par la CSRD/ESRS E1.",
+      tags: ["TCFD", "climat", "sc\xE9narios", "risques", "transition"]
+    },
+    {
+      id: "issb",
+      code: "ISSB / IFRS S1-S2",
+      titre: "Standards IFRS de Durabilit\xE9 (ISSB)",
+      type: "Standard international",
+      cat: "Reporting",
+      dom: "Transversal",
+      origine: "International",
+      date: "2023-06-26",
+      vigueur: "2024-01-01",
+      statut: "Adoption nationale variable",
+      seuils: "Standard global \u2014 adoption selon d\xE9cision nationale ou boursi\xE8re.",
+      resume: "IFRS S1 (risques de durabilit\xE9 mat\xE9riels) et S2 (informations climatiques). Orient\xE9s investisseurs. Partiellement align\xE9s avec les ESRS.",
+      obligations: ["IFRS S1 : Risques et opportunit\xE9s de durabilit\xE9 mat\xE9riels", "IFRS S2 : Risques climatiques physiques et de transition", "Horizons court, moyen et long terme", "Sc\xE9narios climatiques", "Scope 1, 2, 3 (GHG Protocol)", "Indicateurs sectoriels SASB"],
+      articles: ["IFRS S1 General Requirements (juin 2023)", "IFRS S2 Climate-related Disclosures (juin 2023)", "SASB Standards \u2014 Sectoral Guidance"],
+      sanctions: "Selon r\xE9glementation nationale adoptant les normes.",
+      lien: "https://www.ifrs.org/groups/international-sustainability-standards-board/",
+      impact: "Entreprises cot\xE9es et celles soumises CSRD concern\xE9es via les ESRS.",
+      tags: ["ISSB", "IFRS", "S1", "S2", "investisseurs", "climatique"]
+    }
   ];
   var RSE_LEGAL_MAP = {
     "Environnement": {
@@ -13053,31 +13969,53 @@ Cette politique s'applique \xE0 tous les achats >50 000 \u20AC annuels. Crit\xE8
       { id: uid(), type: "warning", msg: "Rapport CSRD \xE0 soumettre avant le 30 juin 2026", date: "Aujourd'hui" },
       { id: uid(), type: "info", msg: "Score ESG am\xE9lior\xE9 de +8 points ce trimestre", date: "Il y a 2 jours" },
       { id: uid(), type: "warning", msg: "2 fournisseurs \xE0 r\xE9\xE9valuer (score ESG < 60)", date: "Il y a 5 jours" }
+    ],
+    planActions: [
+      { id: uid(), titre: "Publier l'Index \xC9galit\xE9 F/H 2026", categorie: "Social", priorite: "Haute", statut: "En cours", responsable: "Marie Dupont", echeance: "2026-03-01", loi: "Index \xC9galit\xE9 F/H \u2014 Art. L.1142-8 CT", notes: "Publication obligatoire avant le 1er mars sur index.egapro.travail.gouv.fr", avancement: 70 },
+      { id: uid(), titre: "R\xE9aliser le Bilan Carbone Scope 1+2", categorie: "Environnement", priorite: "Haute", statut: "\xC0 faire", responsable: "", echeance: "2026-06-30", loi: "BEGES \u2014 Art. L.229-25 Code env.", notes: "Prestataire \xE0 s\xE9lectionner. Budget estim\xE9 : 3 500 \u20AC.", avancement: 0 },
+      { id: uid(), titre: "D\xE9ployer le dispositif d'alerte \xE9thique", categorie: "Gouvernance", priorite: "Haute", statut: "\xC0 faire", responsable: "", echeance: "2026-09-01", loi: "Loi Waserman 2022 \u2014 Art. 8 Loi Sapin II", notes: "Obligatoire \u226550 salari\xE9s. Canal interne ou plateforme externe.", avancement: 0 },
+      { id: uid(), titre: "Mettre \xE0 jour le DUERP num\xE9rique", categorie: "Social", priorite: "Moyenne", statut: "En cours", responsable: "Marie Dupont", echeance: "2026-04-30", loi: "Sant\xE9 au Travail \u2014 Art. R.4121-1 CT", notes: "DUERP doit \xEAtre num\xE9ris\xE9, actualis\xE9 et historis\xE9.", avancement: 40 },
+      { id: uid(), titre: "D\xE9clarer OPERAT (D\xE9cret Tertiaire)", categorie: "Environnement", priorite: "Moyenne", statut: "\xC0 faire", responsable: "", echeance: "2026-09-30", loi: "D\xE9cret n\xB02019-771 \u2014 Art. L.174-1 CCH", notes: "D\xE9claration annuelle obligatoire si locaux \u22651 000 m\xB2.", avancement: 0 }
     ]
   };
-  function useStorage(key, fallback) {
-    const [val, setVal] = (0, import_react.useState)(fallback);
-    const [ready, setReady] = (0, import_react.useState)(false);
-    (0, import_react.useEffect)(() => {
-      (async () => {
-        try {
-          const r = await window.storage?.get(key);
-          setVal(r ? JSON.parse(r.value) : fallback);
-        } catch {
-          setVal(fallback);
-        }
-        setReady(true);
-      })();
+  function useAppData(fallback) {
+    const [data, setDataRaw] = (0, import_react.useState)(() => loadFromLocalStorage(fallback));
+    const [saveStatus, setSaveStatus] = (0, import_react.useState)("idle");
+    const saveTimer = (0, import_react.useRef)(null);
+    const setData = (0, import_react.useCallback)((updater) => {
+      setDataRaw((prev) => {
+        const next = typeof updater === "function" ? updater(prev) : updater;
+        saveToLocalStorage(next);
+        if (saveTimer.current) clearTimeout(saveTimer.current);
+        setSaveStatus("saving");
+        saveTimer.current = setTimeout(async () => {
+          const ok = await saveToServer(next);
+          setSaveStatus(ok ? "saved" : "local");
+          setTimeout(() => setSaveStatus("idle"), 2e3);
+        }, 1e3);
+        return next;
+      });
     }, []);
-    const save = (0, import_react.useCallback)(async (v) => {
-      const next = typeof v === "function" ? v(val) : v;
-      setVal(next);
-      try {
-        await window.storage?.set(key, JSON.stringify(next));
-      } catch {
-      }
-    }, [val, key]);
-    return [val, save, ready];
+    (0, import_react.useEffect)(() => {
+      loadFromServer().then((serverData) => {
+        if (serverData && !serverData.notFound && !serverData.error) {
+          const merged = { ...fallback, ...serverData };
+          setDataRaw(merged);
+          saveToLocalStorage(merged);
+        }
+      });
+    }, []);
+    (0, import_react.useEffect)(() => {
+      const interval = setInterval(() => {
+        setDataRaw((current) => {
+          saveToLocalStorage(current);
+          saveToServer(current);
+          return current;
+        });
+      }, 6e4);
+      return () => clearInterval(interval);
+    }, []);
+    return [data, setData, saveStatus];
   }
   function calcScores(esg) {
     const e = esg.env, s = esg.soc, g = esg.gov;
@@ -13375,36 +14313,77 @@ ${htmlContent}
     }, {});
     const fournOk = data.fournisseurs.filter((f) => f.scoreESG >= 70).length;
     const polPub = data.rse.politiques.filter((p) => p.statut === "Publi\xE9").length;
+    const today = /* @__PURE__ */ new Date();
+    const greeting = today.getHours() < 12 ? "Bonjour" : today.getHours() < 18 ? "Bon apr\xE8s-midi" : "Bonsoir";
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 14, background: C.brandLight, borderRadius: 12, padding: "16px 22px", marginBottom: 24, border: `1px solid #BDE5CF` }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 44 }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 20, background: `linear-gradient(135deg,${C.brand} 0%,${C.brandMid} 100%)`, borderRadius: 16, padding: "22px 28px", marginBottom: 24, color: "#fff", position: "relative", overflow: "hidden" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", right: -20, top: -30, width: 160, height: 160, borderRadius: "50%", background: "rgba(255,255,255,.05)" } }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", right: 80, bottom: -40, width: 100, height: 100, borderRadius: "50%", background: "rgba(255,255,255,.05)" } }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 48 }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 15, fontWeight: 700, color: C.brand }, children: [
-            "Bonjour, ",
-            data.admin.prenom,
-            " \u{1F44B}"
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 18, fontWeight: 700, fontFamily: "'DM Serif Display',serif", lineHeight: 1.2, marginBottom: 4 }, children: [
+            greeting,
+            ", ",
+            data.admin.prenom
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: C.brandMid }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, color: "rgba(255,255,255,.7)" }, children: [
+            data.company.name || "Votre entreprise",
+            " \xB7 ",
             data.admin.role,
-            " \xB7 Tableau de bord ESG 2025"
+            " \xB7 Exercice 2025"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "right" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginBottom: 2 }, children: "Score global" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: onScoreDetail, style: { background: "none", border: "none", cursor: "pointer", textAlign: "right", padding: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 30, fontWeight: 800, color: getGradeColor(sc.total), fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: [
-              sc.total,
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 14, fontWeight: 400, color: C.muted }, children: "/100" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.accent, marginTop: 2 }, children: "Comprendre mon score \u2192" })
-          ] })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "right", cursor: "pointer" }, onClick: onScoreDetail, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: "rgba(255,255,255,.6)", marginBottom: 4 }, children: "Score ESG Global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "baseline", gap: 4, justifyContent: "flex-end" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 40, fontWeight: 800, fontFamily: "'DM Serif Display',serif", lineHeight: 1, color: getGradeColor(sc.total) }, children: sc.total }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 14, color: "rgba(255,255,255,.5)" }, children: "/ 100" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 38, height: 38, borderRadius: 10, background: `${getGradeColor(sc.total)}25`, border: `2px solid ${getGradeColor(sc.total)}`, display: "flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 18, fontWeight: 800, color: getGradeColor(sc.total) }, children: getGrade(sc.total) }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: "rgba(255,255,255,.5)", marginTop: 4 }, children: "Analyser mon score \u2192" })
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Salari\xE9s", value: data.employees.length, icon: "\u{1F465}", sub: `${data.employees.filter((e) => e.genre === "F").length} femmes \xB7 ${data.employees.filter((e) => e.genre === "M").length} hommes` }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Fournisseurs ESG", value: `${fournOk}/${data.fournisseurs.length}`, icon: "\u{1F91D}", sub: "fournisseurs score \u2265 70", color: C.accent }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Politiques RSE", value: polPub, icon: "\u{1F4DC}", sub: `sur ${data.rse.politiques.length} r\xE9dig\xE9es`, color: C.purple }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Conformit\xE9 CSRD", value: 74, unit: "%", icon: "\u2696\uFE0F", sub: "8 crit\xE8res sur 11 remplis", color: C.warning })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          KpiCard,
+          {
+            label: "Salari\xE9s",
+            value: data.employees.length,
+            icon: "\u{1F464}",
+            sub: `${data.employees.filter((e) => e.genre === "F").length} femmes \xB7 ${data.employees.filter((e) => e.genre === "M").length} hommes`
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          KpiCard,
+          {
+            label: "Fournisseurs ESG \u226570",
+            value: `${fournOk}/${data.fournisseurs.length}`,
+            icon: "\u{1F91D}",
+            color: fournOk === data.fournisseurs.length ? C.success : C.warning,
+            sub: "conformes sur le panel total"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          KpiCard,
+          {
+            label: "Politiques RSE publi\xE9es",
+            value: polPub,
+            icon: "\u{1F4DC}",
+            color: C.purple,
+            sub: `sur ${data.rse.politiques.length} politique${data.rse.politiques.length > 1 ? "s" : ""} r\xE9dig\xE9e${data.rse.politiques.length > 1 ? "s" : ""}`
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          KpiCard,
+          {
+            label: "Conformit\xE9 CSRD",
+            value: 74,
+            unit: "%",
+            icon: "\u2696\uFE0F",
+            color: C.warning,
+            sub: "8 crit\xE8res sur 11 remplis"
+          }
+        )
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 280px", gap: 16 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 24 }, children: [
@@ -13489,10 +14468,10 @@ ${htmlContent}
     const filtered = LEGISLATION.filter((l) => {
       const q = search.toLowerCase();
       const matchQ = !q || (l.titre.toLowerCase().includes(q) || l.code.toLowerCase().includes(q) || l.resume.toLowerCase().includes(q) || l.tags.some((t) => t.toLowerCase().includes(q)));
-      return matchQ && (!filterOrigine || l.origine === filterOrigine) && (!filterDomaine || l.domaine === filterDomaine);
+      return matchQ && (!filterOrigine || l.origine === filterOrigine) && (!filterDomaine || l.dom === filterDomaine);
     });
     const origines = [...new Set(LEGISLATION.map((l) => l.origine))];
-    const domaines = [...new Set(LEGISLATION.map((l) => l.domaine))];
+    const domaines = [...new Set(LEGISLATION.map((l) => l.dom))];
     const statutColor = (s) => s.includes("En vigueur") ? "green" : s.includes("cours") || s.includes("transitoire") ? "amber" : s.includes("R\xE9f\xE9rence") ? "blue" : "default";
     const origineColor = (o) => o === "UE" ? "blue" : o === "France" ? "brand" : o === "International" ? "purple" : "default";
     const law = selected ? LEGISLATION.find((l) => l.id === selected) : null;
@@ -13500,14 +14479,14 @@ ${htmlContent}
       const html = `
       <h2>${l.code} \u2014 ${l.titre}</h2>
       <p><strong>Type :</strong> ${l.type} | <strong>Origine :</strong> ${l.origine} | <strong>Statut :</strong> ${l.statut}</p>
-      <p><strong>Date :</strong> ${l.date} | <strong>En vigueur :</strong> ${l.entreeVigueur}</p>
+      <p><strong>Date :</strong> ${l.date} | <strong>En vigueur :</strong> ${l.vigueur}</p>
       <h2>R\xE9sum\xE9</h2><p>${l.resume}</p>
       <h2>Qui est concern\xE9 ?</h2><p>${l.seuils}</p>
-      <h2>Impact pour les PME</h2><p>${l.impactPME}</p>
-      <h2>Obligations cl\xE9s</h2><ul>${l.obligationsCl\u00E9s.map((o) => `<li>${o}</li>`).join("")}</ul>
-      <h2>Articles de loi de r\xE9f\xE9rence</h2><ul>${l.articlesLoi.map((a) => `<li>${a}</li>`).join("")}</ul>
+      <h2>Impact pour les PME</h2><p>${l.impact}</p>
+      <h2>Obligations cl\xE9s</h2><ul>${l.obligations.map((o) => `<li>${o}</li>`).join("")}</ul>
+      <h2>Articles de loi de r\xE9f\xE9rence</h2><ul>${l.articles.map((a) => `<li>${a}</li>`).join("")}</ul>
       <h2>Sanctions</h2><p>${l.sanctions}</p>
-      <p><strong>Source officielle :</strong> ${l.lienOfficiel}</p>
+      <p><strong>Source officielle :</strong> ${l.lien}</p>
     `;
       exportPDF(`Fiche l\xE9gislative \u2014 ${l.code}`, html);
     };
@@ -13544,7 +14523,7 @@ ${htmlContent}
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif" }, children: l.code }),
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.origine, color: origineColor(l.origine) }),
                     /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.statut, color: statutColor(l.statut) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.domaine })
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: l.dom })
                   ] }),
                   /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600, color: C.text, lineHeight: 1.4 }, children: l.titre })
                 ] }),
@@ -13570,7 +14549,7 @@ ${htmlContent}
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 5, flexWrap: "wrap" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.origine, color: origineColor(law.origine) }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.statut, color: statutColor(law.statut) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.domaine }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.dom }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: law.type })
           ] })
         ] }),
@@ -13582,7 +14561,7 @@ ${htmlContent}
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.bg, borderRadius: 8, padding: "10px 14px" }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 4 }, children: "En vigueur" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: law.entreeVigueur })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 600 }, children: law.vigueur })
             ] })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }, children: "R\xE9sum\xE9" }),
@@ -13593,15 +14572,15 @@ ${htmlContent}
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 10, padding: "12px 14px", marginBottom: 16, border: `1px solid #BDE5CF` }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 6 }, children: "\u{1F3E2} Impact PME" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.brand, lineHeight: 1.7 }, children: law.impactPME })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.brand, lineHeight: 1.7 }, children: law.impact })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8 }, children: "Obligations cl\xE9s" }),
-          law.obligationsCl\u00E9s.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "7px 0", borderBottom: `1px solid ${C.border}` }, children: [
+          law.obligations.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "7px 0", borderBottom: `1px solid ${C.border}` }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.accent, fontWeight: 700, fontSize: 13, marginTop: 1 }, children: "\u2192" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.text, lineHeight: 1.6 }, children: o })
           ] }, i)),
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, margin: "14px 0 8px" }, children: "Articles de loi de r\xE9f\xE9rence" }),
-          law.articlesLoi.map((a, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "6px 0", borderBottom: `1px solid ${C.border}` }, children: [
+          law.articles.map((a, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, padding: "6px 0", borderBottom: `1px solid ${C.border}` }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: C.blue, fontSize: 12, fontWeight: 700, flexShrink: 0 }, children: "\xA7" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.sub, lineHeight: 1.6, fontFamily: "monospace", fontSize: 11 }, children: a })
           ] }, i)),
@@ -13613,7 +14592,7 @@ ${htmlContent}
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
               "a",
               {
-                href: law.lienOfficiel,
+                href: law.lien,
                 target: "_blank",
                 rel: "noreferrer",
                 style: { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: C.brand, color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 500, textDecoration: "none" },
@@ -14540,22 +15519,420 @@ Que souhaitez-vous am\xE9liorer ?` }]);
       ] })
     ] });
   }
-  var VIEWS = [
-    { id: "dashboard", label: "Tableau de bord", icon: "\u25A6" },
-    { id: "salaries", label: "Salari\xE9s", icon: "\u25C9", countKey: "employees" },
-    { id: "postes", label: "Fiches de poste", icon: "\u25C8", countKey: "postes" },
-    { id: "fournisseurs", label: "Fournisseurs", icon: "\u25CE", countKey: "fournisseurs" },
-    { id: "esg", label: "Donn\xE9es ESG", icon: "\u25C7" },
-    { id: "documents", label: "Documents", icon: "\u25FB", countKey: "documents" },
-    { id: "legislation", label: "L\xE9gislation ESG", icon: "\u2696" },
-    { id: "rse", label: "Politiques RSE", icon: "\u{1F4DC}" },
-    { id: "rapport", label: "Rapport CSRD", icon: "\u2261" },
-    { id: "settings", label: "Param\xE8tres", icon: "\u2299" }
-  ];
-  var TITLES = { dashboard: "Tableau de bord", salaries: "Salari\xE9s", postes: "Fiches de poste", fournisseurs: "Fournisseurs", esg: "Donn\xE9es ESG", documents: "Documents", legislation: "L\xE9gislation ESG", rse: "Politiques RSE", rapport: "Rapport CSRD", settings: "Param\xE8tres" };
+  function PlanActionView({ actions, setActions }) {
+    const [modal, setModal] = (0, import_react.useState)(null);
+    const [filterCat, setFilterCat] = (0, import_react.useState)("");
+    const [filterStatut, setFilterStatut] = (0, import_react.useState)("");
+    const [confirm, setConfirm] = (0, import_react.useState)(null);
+    const CATS = ["Environnement", "Social", "Gouvernance", "RH", "Conformit\xE9", "Autre"];
+    const STATUTS = ["\xC0 faire", "En cours", "Termin\xE9", "Bloqu\xE9"];
+    const PRIORITES = ["Haute", "Moyenne", "Basse"];
+    const pColor = (p) => p === "Haute" ? "red" : p === "Moyenne" ? "amber" : "green";
+    const filtered = actions.filter((a) => (!filterCat || a.categorie === filterCat) && (!filterStatut || a.statut === filterStatut));
+    const overdue = actions.filter((a) => a.echeance && daysUntil(a.echeance) < 0 && a.statut !== "Termin\xE9");
+    const soon = actions.filter((a) => a.echeance && daysUntil(a.echeance) >= 0 && daysUntil(a.echeance) <= 30 && a.statut !== "Termin\xE9");
+    const ActionModal = ({ action: init }) => {
+      const blank = { id: uid(), titre: "", categorie: "Environnement", priorite: "Moyenne", statut: "\xC0 faire", responsable: "", echeance: "", loi: "", notes: "", avancement: 0 };
+      const [f, setF] = (0, import_react.useState)(init || blank);
+      const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: init ? "Modifier l'action" : "Nouvelle action ESG", subtitle: "Action concr\xE8te li\xE9e \xE0 la r\xE9glementation", onClose: () => setModal(null), width: 600, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Titre", required: true, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.titre, onChange: (e) => set("titre", e.target.value), placeholder: "Ex: Publier l'Index \xC9galit\xE9 F/H" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0 12px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Cat\xE9gorie", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.categorie, onChange: (e) => set("categorie", e.target.value), children: CATS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: c }, c)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Priorit\xE9", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.priorite, onChange: (e) => set("priorite", e.target.value), children: PRIORITES.map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: p }, p)) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Statut", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", { value: f.statut, onChange: (e) => set("statut", e.target.value), children: STATUTS.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s)) }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 12px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Responsable", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.responsable, onChange: (e) => set("responsable", e.target.value), placeholder: "Pr\xE9nom Nom" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "\xC9ch\xE9ance", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "date", value: f.echeance, onChange: (e) => set("echeance", e.target.value) }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Texte de loi li\xE9", hint: "Ex: BEGES \u2014 Art. L.229-25 Code env.", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { value: f.loi, onChange: (e) => set("loi", e.target.value) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Field, { label: "Notes et plan d\xE9taill\xE9", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { value: f.notes, onChange: (e) => set("notes", e.target.value) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Field, { label: `Avancement : ${f.avancement}%`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "range", min: "0", max: "100", step: "5", value: f.avancement, onChange: (e) => set("avancement", parseInt(e.target.value)), style: { padding: 0, height: "auto", border: "none", boxShadow: "none" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 4, background: C.bg, borderRadius: 99, marginTop: 4 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${f.avancement}%`, background: f.avancement === 100 ? C.success : C.accent, borderRadius: 99 } }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 8 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setModal(null), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => {
+            setActions((p) => p.find((x) => x.id === f.id) ? p.map((x) => x.id === f.id ? f : x) : [...p, f]);
+            setModal(null);
+          }, disabled: !f.titre, children: "Enregistrer" })
+        ] })
+      ] });
+    };
+    const handleExport = () => {
+      const html = `<h2>Plan d'Action ESG \u2014 ${(/* @__PURE__ */ new Date()).getFullYear()}</h2><table><tr><th>Action</th><th>Cat\xE9gorie</th><th>Priorit\xE9</th><th>Statut</th><th>Responsable</th><th>\xC9ch\xE9ance</th><th>Avancement</th></tr>${actions.map((a) => `<tr><td>${a.titre}</td><td>${a.categorie}</td><td>${a.priorite}</td><td>${a.statut}</td><td>${a.responsable || "\u2014"}</td><td>${a.echeance || "\u2014"}</td><td>${a.avancement}%</td></tr>`).join("")}</table><h2>D\xE9tail</h2>${actions.map((a) => `<h3>${a.titre}</h3><p><strong>Priorit\xE9 :</strong> ${a.priorite} | <strong>Statut :</strong> ${a.statut} | <strong>\xC9ch\xE9ance :</strong> ${a.echeance || "\u2014"}</p>${a.loi ? `<p><strong>Cadre l\xE9gal :</strong> ${a.loi}</p>` : ""}${a.notes ? `<p>${a.notes}</p>` : ""}`).join("<hr/>")}`;
+      exportPDF("Plan d'Action ESG", html);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 24 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "Actions totales", value: actions.length, icon: "\u{1F4CB}", sub: `${actions.filter((a) => a.statut === "Termin\xE9").length} termin\xE9e(s)` }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "En cours", value: actions.filter((a) => a.statut === "En cours").length, icon: "\u26A1", color: C.blue }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "En retard", value: overdue.length, icon: "\u26A0\uFE0F", color: overdue.length > 0 ? C.danger : C.success, sub: overdue.length > 0 ? "\xE0 traiter" : "aucun retard" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "\xC9ch\xE9ances < 30j", value: soon.length, icon: "\u23F0", color: soon.length > 0 ? C.warning : C.success })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, marginBottom: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: filterCat, onChange: (e) => setFilterCat(e.target.value), style: { width: 160 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Toutes cat\xE9gories" }),
+          CATS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: c }, c))
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { value: filterStatut, onChange: (e) => setFilterStatut(e.target.value), style: { width: 150 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Tous statuts" }),
+          STATUTS.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: s }, s))
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { flex: 1 } }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: handleExport, children: "\u{1F4C4} Exporter PDF" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: () => setModal("new"), children: "+ Nouvelle action" })
+      ] }),
+      overdue.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.dangerLight, border: `1px solid #FECACA`, borderRadius: 12, padding: "12px 16px", marginBottom: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 700, color: C.danger, marginBottom: 8 }, children: [
+          "\u26A0\uFE0F ",
+          overdue.length,
+          " action(s) en retard"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 6, flexWrap: "wrap" }, children: overdue.map((a) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setModal(a), style: { fontSize: 11, background: "#fff", border: `1px solid #FECACA`, borderRadius: 6, padding: "4px 10px", color: C.danger, cursor: "pointer", fontFamily: "Sora,sans-serif" }, children: [
+          a.titre,
+          " \u2014 ",
+          formatDate(a.echeance)
+        ] }, a.id)) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12 }, children: STATUTS.map((statut) => {
+        const col = filtered.filter((a) => a.statut === statut);
+        const colColor = { Termin\u00E9: C.success, "En cours": C.blue, "\xC0 faire": C.muted, Bloqu\u00E9: C.danger }[statut];
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 8, height: 8, borderRadius: "50%", background: colColor, flexShrink: 0 } }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 700, color: C.text }, children: statut }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, background: C.bg, color: C.muted, padding: "1px 7px", borderRadius: 99, border: `1px solid ${C.border}` }, children: col.length })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: [
+            col.map((a) => {
+              const days = a.echeance ? daysUntil(a.echeance) : null;
+              const urg = days !== null && days < 0 ? "red" : days !== null && days <= 7 ? "amber" : null;
+              return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { onClick: () => setModal(a), style: { background: C.surface, borderRadius: 10, border: `1px solid ${urg === "red" ? "#FECACA" : urg === "amber" ? "#FDE68A" : C.border}`, padding: "12px 14px", cursor: "pointer" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 5, marginBottom: 8, flexWrap: "wrap" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: a.priorite, color: pColor(a.priorite) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: a.categorie })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.text, lineHeight: 1.4, marginBottom: 6 }, children: a.titre }),
+                a.loi && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 10, color: C.muted, marginBottom: 4, fontFamily: "monospace" }, children: [
+                  "\u2696 ",
+                  a.loi.slice(0, 55),
+                  a.loi.length > 55 ? "\u2026" : ""
+                ] }),
+                a.responsable && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, color: C.sub, marginBottom: 4 }, children: [
+                  "\u{1F464} ",
+                  a.responsable
+                ] }),
+                a.echeance && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, fontWeight: 600, color: days < 0 ? C.danger : days <= 7 ? C.warning : C.muted }, children: [
+                  "\u{1F4C5} ",
+                  formatDate(a.echeance),
+                  days !== null && ` (${days < 0 ? `${Math.abs(days)}j retard` : `${days}j`})`
+                ] }),
+                a.avancement > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 8 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 3, background: C.bg, borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${a.avancement}%`, background: a.avancement === 100 ? C.success : C.accent, borderRadius: 99 } }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 10, color: C.muted, marginTop: 2, textAlign: "right" }, children: [
+                    a.avancement,
+                    "%"
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: (e) => {
+                  e.stopPropagation();
+                  setConfirm(a.id);
+                }, style: { marginTop: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, color: C.muted, padding: 0, fontFamily: "Sora,sans-serif" }, children: "Supprimer" })
+              ] }, a.id);
+            }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "button",
+              {
+                onClick: () => setModal({ id: uid(), titre: "", categorie: CATS[0], priorite: "Moyenne", statut, responsable: "", echeance: "", loi: "", notes: "", avancement: 0 }),
+                style: { padding: "10px", border: `1.5px dashed ${C.border}`, borderRadius: 10, background: "transparent", cursor: "pointer", color: C.muted, fontSize: 12, width: "100%" },
+                children: "+ Ajouter"
+              }
+            )
+          ] })
+        ] }, statut);
+      }) }),
+      modal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionModal, { action: modal === "new" ? null : modal }),
+      confirm && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Modal, { title: "Supprimer ?", onClose: () => setConfirm(null), width: 360, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.sub, marginBottom: 20 }, children: "Action irr\xE9versible." }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { variant: "outline", onClick: () => setConfirm(null), children: "Annuler" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { danger: true, onClick: () => {
+            setActions((p) => p.filter((a) => a.id !== confirm));
+            setConfirm(null);
+          }, children: "Supprimer" })
+        ] })
+      ] })
+    ] });
+  }
+  function EcheancesView() {
+    const yr = (/* @__PURE__ */ new Date()).getFullYear();
+    const ECH = [
+      { titre: "Publication Index \xC9galit\xE9 F/H", date: `${yr}-03-01`, loi: "Art. L.1142-8 CT", qui: "\u226550 sal.", urg: "haute" },
+      { titre: "Contribution formation OPCO", date: `${yr}-02-28`, loi: "Art. L.6331-1 CT", qui: "Toutes entreprises", urg: "haute" },
+      { titre: "Rapport du comit\xE9 de mission", date: `${yr}-06-30`, loi: "Art. L.210-10 Code com.", qui: "Soci\xE9t\xE9s \xE0 mission", urg: "normale" },
+      { titre: "Rapport CSRD 2025 (seuils atteints)", date: "2026-06-30", loi: "R\xE8glement UE 2023/2772", qui: "Grandes entreprises", urg: "haute" },
+      { titre: "Bilan Carbone BEGES \u2014 mise \xE0 jour", date: `${yr}-12-31`, loi: "Art. L.229-25 Code env.", qui: ">500 sal. (tous les 4 ans)", urg: "moyenne" },
+      { titre: "D\xE9claration OPERAT (D\xE9cret Tertiaire)", date: `${yr}-09-30`, loi: "D\xE9cret n\xB02019-771", qui: "Locaux \u22651 000 m\xB2", urg: "haute" },
+      { titre: "Entretiens professionnels \u2014 bilan 6 ans", date: `${yr}-12-31`, loi: "Art. L.6315-1 CT", qui: "Tous salari\xE9s (si 6 ans r\xE9volus)", urg: "moyenne" },
+      { titre: "NAO \u2014 Bloc 1 (r\xE9mun\xE9rations, \xE9galit\xE9)", date: `${yr}-12-31`, loi: "Art. L.2242-1 CT", qui: "Entreprises avec DS", urg: "moyenne" },
+      { titre: "Publication Bilan Social", date: `${yr}-09-30`, loi: "Art. L.2323-70 CT", qui: "\u2265300 sal.", urg: "normale" },
+      { titre: "DUERP \u2014 actualisation annuelle", date: `${yr}-12-31`, loi: "Art. R.4121-1 CT", qui: "Toutes entreprises", urg: "normale" },
+      { titre: "Plan de mobilit\xE9 \u2014 mise \xE0 jour triennale", date: `${yr + 1}-09-01`, loi: "Art. L.1214-8-2 CT", qui: "\u226550 sal./site", urg: "normale" },
+      { titre: "D\xE9claration OETH mensuelle (DSN)", date: `${yr}-01-31`, loi: "Art. L.5212-1 CT", qui: "\u226520 sal.", urg: "permanente" }
+    ].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const urgColor = (u) => u === "haute" ? C.danger : u === "moyenne" ? C.warning : u === "permanente" ? C.blue : C.muted;
+    const urgBg = (u) => u === "haute" ? C.dangerLight : u === "moyenne" ? C.warningLight : u === "permanente" ? C.blueLight : C.bg;
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12, marginBottom: 24 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "\xC9ch\xE9ances urgentes", value: ECH.filter((e) => e.urg === "haute" && daysUntil(e.date) >= 0 && daysUntil(e.date) <= 60).length, icon: "\u{1F6A8}", color: C.danger, sub: "dans les 60 jours" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "D\xE9pass\xE9es", value: ECH.filter((e) => daysUntil(e.date) < 0 && e.urg !== "permanente").length, icon: "\u26A0\uFE0F", color: C.warning, sub: "\xE0 v\xE9rifier" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, { label: "\xC0 venir (>60j)", value: ECH.filter((e) => daysUntil(e.date) > 60).length, icon: "\u{1F4C5}", color: C.brand })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: ECH.map((e, i) => {
+        const days = e.urg === "permanente" ? null : daysUntil(e.date);
+        const isPast = days !== null && days < 0;
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${isPast ? "#FECACA" : C.border}`, padding: "14px 18px", display: "flex", alignItems: "center", gap: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 52, height: 52, borderRadius: 10, background: urgBg(e.urg), display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: e.urg === "permanente" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 9, fontWeight: 700, color: urgColor(e.urg), textAlign: "center", lineHeight: 1.3 }, children: "Mensuel" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 16, fontWeight: 800, color: isPast ? C.danger : urgColor(e.urg), lineHeight: 1 }, children: new Date(e.date).getDate() }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, fontWeight: 600, color: isPast ? C.danger : urgColor(e.urg) }, children: new Date(e.date).toLocaleDateString("fr-FR", { month: "short" }) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontWeight: 600, fontSize: 13, color: isPast ? C.danger : C.text, marginBottom: 4 }, children: e.titre }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 11, fontFamily: "monospace", color: C.muted }, children: [
+                "\u2696 ",
+                e.loi
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: e.qui }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: e.urg === "haute" ? "\u{1F534} Prioritaire" : e.urg === "moyenne" ? "\u{1F7E1} Important" : e.urg === "permanente" ? "\u{1F535} Permanent" : "\u{1F7E2} Normal", color: e.urg === "haute" ? "red" : e.urg === "moyenne" ? "amber" : e.urg === "permanente" ? "blue" : "green" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { textAlign: "right", flexShrink: 0 }, children: days === null ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.blue }, children: "R\xE9current" }) : isPast ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 600, color: C.danger }, children: [
+            "En retard (",
+            Math.abs(days),
+            "j)"
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 600, color: days <= 30 ? C.warning : C.sub }, children: [
+            "dans ",
+            days,
+            "j"
+          ] }) })
+        ] }, i);
+      }) })
+    ] });
+  }
+  function RechercheJuridiqueView({ apiKey }) {
+    const [query, setQuery] = (0, import_react.useState)("");
+    const [source, setSource] = (0, import_react.useState)("ai");
+    const [loading, setLoading] = (0, import_react.useState)(false);
+    const [results, setResults] = (0, import_react.useState)(null);
+    const [pisteStatus, setPisteStatus] = (0, import_react.useState)(null);
+    const [history, setHistory] = (0, import_react.useState)([]);
+    const chatEndRef = (0, import_react.useRef)(null);
+    const QUICK = [
+      "Quelles sont mes obligations CSRD si j'ai 300 salari\xE9s ?",
+      "Texte exact de l'article L.1142-8 du Code du travail (Index \xC9galit\xE9 F/H)",
+      "Obligations RGPD pour une PME de 50 salari\xE9s",
+      "R\xE8glement CSRD \u2014 articles 19a et 29a de la directive 2013/34/UE",
+      "Sanctions en cas de non-publication du bilan carbone (BEGES)",
+      "Dispositif d'alerte \xE9thique \u2014 Loi Waserman 2022 obligations",
+      "Plan de mobilit\xE9 employeur : obligations et contenu l\xE9gal",
+      "Soci\xE9t\xE9 \xE0 mission : articles L.210-10 \xE0 L.210-12 Code de commerce",
+      "Index \xE9galit\xE9 F/H \u2014 calcul des 5 indicateurs",
+      "OETH : taux 6%, calcul de la contribution URSSAF"
+    ];
+    (0, import_react.useEffect)(() => {
+      fetch("/api/legal/status").then((r) => r.json()).then(setPisteStatus).catch(() => {
+      });
+    }, []);
+    const search = async () => {
+      if (!query.trim()) return;
+      setLoading(true);
+      const q = query.trim();
+      setHistory((h) => [...h, { type: "user", content: q }]);
+      setQuery("");
+      try {
+        let aiResult = null, legiResult = null, eurResult = null;
+        const sources = source === "all" ? ["ai", "legifrance", "eurlex"] : [source];
+        if (sources.includes("ai") || source === "all") {
+          const r = await fetch("/api/legal/ai-search", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: q, context: "PME fran\xE7aise, obligations l\xE9gales ESG", apiKey }) });
+          const d = await r.json();
+          aiResult = d.content?.[0]?.text || d.error || "Erreur IA";
+        }
+        if (sources.includes("legifrance") && pisteStatus?.piste?.connected) {
+          const r = await fetch("/api/legal/legifrance", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: q }) });
+          legiResult = await r.json();
+        }
+        if (sources.includes("eurlex") || source === "all") {
+          const r = await fetch("/api/legal/eurlex", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: q }) });
+          eurResult = await r.json();
+        }
+        setHistory((h) => [...h, { type: "result", aiResult, legiResult, eurResult, query: q }]);
+      } catch (e) {
+        setHistory((h) => [...h, { type: "error", content: "Erreur de connexion au serveur." }]);
+      }
+      setLoading(false);
+      setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+    };
+    const renderMD = (text) => {
+      if (!text) return null;
+      return text.split("\n").map((line, i) => {
+        if (line.startsWith("## ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { style: { fontSize: 13, fontWeight: 700, color: C.brand, margin: "14px 0 6px", fontFamily: "'DM Serif Display',serif" }, children: line.slice(3) }, i);
+        if (line.startsWith("### ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", { style: { fontSize: 12, fontWeight: 700, color: C.text, margin: "10px 0 4px" }, children: line.slice(4) }, i);
+        if (line.startsWith("- ") || line.startsWith("\u2022 ")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 12, color: C.text, lineHeight: 1.7, marginLeft: 16, marginBottom: 2 }, dangerouslySetInnerHTML: { __html: line.slice(2).replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/`(.*?)`/g, "<code style='background:#F4F4F5;padding:1px 5px;border-radius:4px;font-family:monospace;font-size:11px'>$1</code>") } }, i);
+        if (line === "") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}, i);
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.text, lineHeight: 1.7, marginBottom: 3 }, dangerouslySetInnerHTML: { __html: line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/`(.*?)`/g, "<code style='background:#F4F4F5;padding:1px 5px;border-radius:4px;font-family:monospace;font-size:11px'>$1</code>") } }, i);
+      });
+    };
+    const renderEurLex = (data) => {
+      if (!data?.results?.bindings?.length) return null;
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 8, textTransform: "uppercase", letterSpacing: 0.5 }, children: [
+          "\u{1F1EA}\u{1F1FA} R\xE9sultats EUR-Lex (",
+          data.results.bindings.length,
+          ")"
+        ] }),
+        data.results.bindings.map((b, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "8px 12px", background: C.blueLight, borderRadius: 8, marginBottom: 6, border: `1px solid #BFDBFE` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.blue, lineHeight: 1.4, marginBottom: 4 }, children: b.title?.value || "Sans titre" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
+            b.date?.value && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, color: C.muted }, children: b.date.value.slice(0, 10) }),
+            b.work?.value && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: b.work.value, target: "_blank", rel: "noreferrer", style: { fontSize: 10, color: C.blue, textDecoration: "none" }, children: "\u2192 EUR-Lex" })
+          ] })
+        ] }, i))
+      ] });
+    };
+    const renderLegifrance = (data) => {
+      if (!data || data.error) return null;
+      const items = data?.results || [];
+      if (!items.length) return null;
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 8, textTransform: "uppercase", letterSpacing: 0.5 }, children: [
+          "\u{1F3DB}\uFE0F R\xE9sultats L\xE9gifrance (",
+          items.length,
+          ")"
+        ] }),
+        items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "8px 12px", background: C.brandLight, borderRadius: 8, marginBottom: 6, border: `1px solid #BDE5CF` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600, color: C.brand, lineHeight: 1.4, marginBottom: 4 }, children: item.title || item.titre || "Sans titre" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 8 }, children: item.id && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: `https://www.legifrance.gouv.fr/codes/article_lc/${item.id}`, target: "_blank", rel: "noreferrer", style: { fontSize: 10, color: C.accent, textDecoration: "none" }, children: "\u2192 L\xE9gifrance" }) })
+        ] }, i))
+      ] });
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "calc(100vh - 110px)", gap: 16, overflow: "hidden" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, display: "flex", flexDirection: "column", background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "14px 20px", borderBottom: `1px solid ${C.border}`, background: C.bg }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 20 }, children: "\u2696\uFE0F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, fontWeight: 700 }, children: "Recherche juridique intelligente" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted }, children: "Claude IA \xB7 L\xE9gifrance \xB7 EUR-Lex" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 6 }, children: [
+            { id: "ai", label: "\u{1F916} IA Juridique", desc: "R\xE9ponse instantan\xE9e" },
+            { id: "legifrance", label: "\u{1F3DB}\uFE0F L\xE9gifrance", desc: pisteStatus?.piste?.connected ? "Connect\xE9" : "Non configur\xE9" },
+            { id: "eurlex", label: "\u{1F1EA}\u{1F1FA} EUR-Lex", desc: "Droit europ\xE9en" },
+            { id: "all", label: "\u{1F50D} Tout", desc: "Toutes sources" }
+          ].map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setSource(s.id), style: { padding: "5px 12px", borderRadius: 8, fontSize: 11, fontWeight: source === s.id ? 700 : 400, background: source === s.id ? C.brand : "transparent", color: source === s.id ? "#fff" : C.sub, border: `1px solid ${source === s.id ? C.brand : C.border}`, cursor: "pointer", lineHeight: 1.3 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: s.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 9, opacity: 0.7 }, children: s.desc })
+          ] }, s.id)) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: "auto", padding: "16px 20px" }, children: [
+          history.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "32px 16px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 32, marginBottom: 12 }, children: "\u2696\uFE0F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 15, fontWeight: 700, color: C.brand, marginBottom: 8, fontFamily: "'DM Serif Display',serif" }, children: "Recherche juridique ESG" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, color: C.muted, lineHeight: 1.7 }, children: "Posez vos questions sur la l\xE9gislation fran\xE7aise et europ\xE9enne. L'IA cite les articles de loi pr\xE9cis et les sources officielles." })
+          ] }),
+          history.map((msg, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 16 }, children: [
+            msg.type === "user" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.brand, color: "#fff", padding: "10px 14px", borderRadius: "12px 12px 4px 12px", maxWidth: "80%" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 13, lineHeight: 1.7 }, children: msg.content }) }) }),
+            msg.type === "result" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, alignItems: "flex-start" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 28, height: 28, borderRadius: "50%", background: C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: "\u2696\uFE0F" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, background: C.bg, borderRadius: "12px 12px 12px 4px", padding: "12px 16px", border: `1px solid ${C.border}` }, children: [
+                msg.aiResult && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: renderMD(msg.aiResult) }),
+                msg.legiResult && renderLegifrance(msg.legiResult),
+                msg.eurResult && renderEurLex(msg.eurResult)
+              ] })
+            ] }),
+            msg.type === "error" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.dangerLight, padding: "10px 14px", borderRadius: 10, border: `1px solid #FECACA` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, color: C.danger }, children: msg.content }) })
+          ] }, i)),
+          loading && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 10, alignItems: "flex-start" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 28, height: 28, borderRadius: "50%", background: C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }, children: "\u2696\uFE0F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { background: C.bg, padding: "10px 14px", borderRadius: "12px 12px 12px 4px", border: `1px solid ${C.border}`, display: "flex", gap: 4 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 6, height: 6, borderRadius: "50%", background: C.accent, animation: `pulse 1.2s ease-in-out ${i * 0.2}s infinite` } }, i)) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { ref: chatEndRef })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "12px 20px", borderTop: `1px solid ${C.border}`, display: "flex", gap: 8 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "textarea",
+            {
+              value: query,
+              onChange: (e) => setQuery(e.target.value),
+              onKeyDown: (e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  search();
+                }
+              },
+              placeholder: "Ex: Quelles sont les obligations BEGES pour une entreprise de 600 salari\xE9s ? (Entr\xE9e pour envoyer)",
+              style: { flex: 1, minHeight: 44, maxHeight: 100, resize: "none", fontSize: 13, lineHeight: 1.6 }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Btn, { onClick: search, disabled: loading || !query.trim(), variant: "accent", children: "Rechercher" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 260, display: "flex", flexDirection: "column", gap: 12, overflowY: "auto" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Sources disponibles" }),
+          [
+            { label: "Claude IA juridique", ok: !!apiKey, detail: apiKey ? "Disponible" : "Cl\xE9 API \xE0 configurer" },
+            { label: "L\xE9gifrance API", ok: pisteStatus?.piste?.connected, detail: pisteStatus?.piste?.configured ? pisteStatus?.piste?.connected ? "Connect\xE9" : "Erreur de connexion" : "Optionnel \u2014 voir guide" },
+            { label: "EUR-Lex SPARQL", ok: true, detail: "Disponible (sans auth)" }
+          ].map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 8, padding: "7px 0", borderBottom: i < 2 ? `1px solid ${C.border}` : "none" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, marginTop: 1 }, children: s.ok ? "\u2705" : "\u26A0\uFE0F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 12, fontWeight: 600 }, children: s.label }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted }, children: s.detail })
+            ] })
+          ] }, i)),
+          !pisteStatus?.piste?.connected && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginTop: 10, padding: "8px 10px", background: C.warningLight, borderRadius: 8, border: `1px solid #FDE68A` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 10, color: "#92400E", lineHeight: 1.6, fontWeight: 500 }, children: [
+            "\u{1F4A1} Pour activer L\xE9gifrance PISTE : cr\xE9ez un compte gratuit sur ",
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "developer.aife.economie.gouv.fr" }),
+            " puis ajoutez PISTE_CLIENT_ID et PISTE_CLIENT_SECRET dans Render."
+          ] }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.surface, borderRadius: 12, border: `1px solid ${C.border}`, padding: 16, flex: 1 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }, children: "Questions fr\xE9quentes" }),
+          QUICK.map((q, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => {
+            setQuery(q);
+          }, style: { display: "block", width: "100%", padding: "8px 10px", marginBottom: 4, background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, cursor: "pointer", textAlign: "left", fontSize: 11, color: C.text, lineHeight: 1.4, fontFamily: "Sora,sans-serif" }, children: q }, i))
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { background: C.brandLight, borderRadius: 12, border: `1px solid #BDE5CF`, padding: 14 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, fontWeight: 700, color: C.brandMid, marginBottom: 8 }, children: "\u{1F4A1} Conseils de recherche" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { style: { paddingLeft: 14 }, children: ["Citez le num\xE9ro d'article (ex: L.1142-8 CT)", "Pr\xE9cisez votre effectif", "Demandez les sanctions applicables", "Comparez les obligations avant/apr\xE8s une loi"].map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { style: { fontSize: 10, color: C.brandMid, lineHeight: 1.7 }, children: t }, i)) })
+        ] })
+      ] })
+    ] });
+  }
+  var TITLES = {
+    dashboard: "Vue d'ensemble",
+    plan: "Plan d'action ESG",
+    echeances: "\xC9ch\xE9ances l\xE9gales",
+    salaries: "Salari\xE9s",
+    postes: "Fiches de poste",
+    fournisseurs: "Fournisseurs",
+    esg: "Donn\xE9es ESG",
+    documents: "Documents",
+    legislation: "Base l\xE9gislative",
+    juridique: "Recherche juridique",
+    rse: "Politiques RSE",
+    rapport: "Rapport CSRD",
+    settings: "Param\xE8tres"
+  };
   function App() {
     const [view, setView] = (0, import_react.useState)("dashboard");
-    const [data, setData, ready] = useStorage("ecoscore_v5", DEFAULT_DATA);
+    const [data, setData, saveStatus] = useAppData(DEFAULT_DATA);
     const [toast, setToast] = (0, import_react.useState)(null);
     const [showScoreDetail, setShowScoreDetail] = (0, import_react.useState)(false);
     (0, import_react.useEffect)(() => {
@@ -14577,7 +15954,7 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     const setDocuments = (fn) => setData((d) => ({ ...d, documents: typeof fn === "function" ? fn(d.documents) : fn }));
     const setEsg = (fn) => setData((d) => ({ ...d, esg: typeof fn === "function" ? fn(d.esg) : fn }));
     const setRse = (fn) => setData((d) => ({ ...d, rse: typeof fn === "function" ? fn(d.rse) : fn }));
-    if (!ready) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: C.muted, fontSize: 13, fontFamily: "Sora,sans-serif" }, children: "Chargement\u2026" });
+    const setPlanActions = (fn) => setData((d) => ({ ...d, planActions: typeof fn === "function" ? fn(d.planActions || []) : fn }));
     const scores = calcScores(data.esg);
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "100vh", overflow: "hidden", position: "relative" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 224, flexShrink: 0, background: C.surface, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", padding: "20px 12px" }, children: [
@@ -14618,16 +15995,19 @@ Que souhaitez-vous am\xE9liorer ?` }]);
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { style: { fontSize: 15, fontWeight: 600, color: C.text, flex: 1 }, children: TITLES[view] }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `${LEGISLATION.length} textes r\xE9f\xE9renc\xE9s`, color: "blue" }),
           view === "rse" && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "\u26A0\uFE0F Cl\xE9 API \xE0 configurer (Param\xE8tres)", color: "amber" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: C.muted }, children: "Exercice 2025" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: saveStatus === "saved" ? C.success : saveStatus === "saving" ? C.warning : C.muted }, children: saveStatus === "saving" ? "\u{1F4BE} Enregistrement..." : saveStatus === "saved" ? "\u2713 Enregistr\xE9" : saveStatus === "local" ? "\u{1F4BE} Local" : "Exercice 2025" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: view === "legislation" || view === "rse" ? "hidden" : "auto", padding: view === "legislation" || view === "rse" ? "16px 28px" : "28px", animation: "fadeIn .2s ease" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: view === "legislation" || view === "rse" || view === "juridique" ? "hidden" : "auto", padding: view === "legislation" || view === "rse" || view === "juridique" ? "16px 28px" : "28px", animation: "fadeIn .2s ease" }, children: [
           view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
+          view === "plan" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanActionView, { actions: data.planActions || [], setActions: setPlanActions }),
+          view === "echeances" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EcheancesView, {}),
           view === "salaries" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SalariesView, { employees: data.employees, setEmployees }),
           view === "postes" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PostesView, { postes: data.postes, setPostes }),
           view === "fournisseurs" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FournisseursView, { fournisseurs: data.fournisseurs, setFournisseurs }),
           view === "esg" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EsgView, { esg: data.esg, setEsg, onSave: () => showToast("Donn\xE9es ESG enregistr\xE9es \u2713") }),
           view === "documents" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentsView, { documents: data.documents, setDocuments }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LegislationView, {}),
+          view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RechercheJuridiqueView, { apiKey: data.apiKey }),
           view === "rse" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RseView, { rse: data.rse, setRse, admin: data.admin, apiKey: data.apiKey }),
           view === "rapport" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RapportView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
           view === "settings" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsView, { data, setData })
@@ -14638,7 +16018,7 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     ] });
   }
 
-  // home/claude/entry-v5.jsx
+  // home/claude/entry-v6.jsx
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}));
 })();
