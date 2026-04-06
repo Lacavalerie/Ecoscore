@@ -15915,6 +15915,44 @@ Que souhaitez-vous am\xE9liorer ?` }]);
       ] })
     ] });
   }
+  var NAV_GROUPS = [
+    {
+      items: [
+        { id: "dashboard", label: "Vue d'ensemble", icon: "\u25A6" }
+      ]
+    },
+    {
+      label: "PILOTAGE",
+      items: [
+        { id: "plan", label: "Plan d'action ESG", icon: "\u2705", countKey: "planActions" },
+        { id: "echeances", label: "\xC9ch\xE9ances l\xE9gales", icon: "\u{1F4C5}" },
+        { id: "rapport", label: "Rapport CSRD", icon: "\u{1F4CA}" }
+      ]
+    },
+    {
+      label: "RESSOURCES HUMAINES",
+      items: [
+        { id: "salaries", label: "Salari\xE9s", icon: "\u{1F464}", countKey: "employees" },
+        { id: "postes", label: "Fiches de poste", icon: "\u{1F4CB}", countKey: "postes" }
+      ]
+    },
+    {
+      label: "DONN\xC9ES & CONFORMIT\xC9",
+      items: [
+        { id: "esg", label: "Donn\xE9es ESG", icon: "\u25C7" },
+        { id: "fournisseurs", label: "Fournisseurs", icon: "\u{1F91D}", countKey: "fournisseurs" },
+        { id: "documents", label: "Documents", icon: "\u{1F4C1}", countKey: "documents" },
+        { id: "rse", label: "Politiques RSE", icon: "\u{1F4DC}" }
+      ]
+    },
+    {
+      label: "DROIT & L\xC9GISLATION",
+      items: [
+        { id: "legislation", label: "Base l\xE9gislative", icon: "\u2696\uFE0F" },
+        { id: "juridique", label: "Recherche juridique", icon: "\u{1F50D}" }
+      ]
+    }
+  ];
   var TITLES = {
     dashboard: "Vue d'ensemble",
     plan: "Plan d'action ESG",
@@ -15930,6 +15968,21 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     rapport: "Rapport CSRD",
     settings: "Param\xE8tres"
   };
+  var SUBTITLES = {
+    dashboard: "Tableau de bord de votre performance ESG",
+    plan: "Pilotez vos actions concr\xE8tes et leur avancement",
+    echeances: "Toutes vos obligations l\xE9gales avec leurs dates limites",
+    salaries: "Gestion de vos collaborateurs et indicateurs RH",
+    postes: "Descriptifs de postes et recrutements en cours",
+    fournisseurs: "Panel fournisseurs et scores ESG",
+    esg: "Saisie de vos indicateurs Environnement \xB7 Social \xB7 Gouvernance",
+    documents: "Biblioth\xE8que de vos documents ESG & CSRD",
+    legislation: `${38} textes de r\xE9f\xE9rence \xB7 Droit fran\xE7ais et europ\xE9en`,
+    juridique: "Recherche en temps r\xE9el \xB7 L\xE9gifrance \xB7 EUR-Lex \xB7 Claude IA",
+    rse: "R\xE9digez et g\xE9rez vos politiques RSE avec l'IA",
+    rapport: "G\xE9n\xE9rez votre rapport de durabilit\xE9 conforme CSRD",
+    settings: "Configuration de votre profil et int\xE9grations"
+  };
   function App() {
     const [view, setView] = (0, import_react.useState)("dashboard");
     const [data, setData, saveStatus] = useAppData(DEFAULT_DATA);
@@ -15944,9 +15997,9 @@ Que souhaitez-vous am\xE9liorer ?` }]);
       s.textContent = CSS;
       document.head.appendChild(s);
     }, []);
-    const showToast = (msg) => {
-      setToast(msg);
-      setTimeout(() => setToast(null), 2500);
+    const showToast = (msg, type = "success") => {
+      setToast({ msg, type });
+      setTimeout(() => setToast(null), 2800);
     };
     const setEmployees = (fn) => setData((d) => ({ ...d, employees: typeof fn === "function" ? fn(d.employees) : fn }));
     const setPostes = (fn) => setData((d) => ({ ...d, postes: typeof fn === "function" ? fn(d.postes) : fn }));
@@ -15956,55 +16009,99 @@ Que souhaitez-vous am\xE9liorer ?` }]);
     const setRse = (fn) => setData((d) => ({ ...d, rse: typeof fn === "function" ? fn(d.rse) : fn }));
     const setPlanActions = (fn) => setData((d) => ({ ...d, planActions: typeof fn === "function" ? fn(d.planActions || []) : fn }));
     const scores = calcScores(data.esg);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "100vh", overflow: "hidden", position: "relative" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 224, flexShrink: 0, background: C.surface, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", padding: "20px 12px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "4px 8px", marginBottom: 24 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 32, height: 32, borderRadius: 8, background: C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }, children: "\u{1F33F}" }),
+    const grade = getGrade(scores.total);
+    const gradeColor = getGradeColor(scores.total);
+    const fullscreen = ["legislation", "rse", "juridique"].includes(view);
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", height: "100vh", overflow: "hidden", position: "relative", background: C.bg }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: 236, flexShrink: 0, background: "#FFFFFF", borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", overflow: "hidden" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { padding: "18px 16px 14px", borderBottom: `1px solid ${C.border}` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: 34, height: 34, borderRadius: 9, background: `linear-gradient(135deg,${C.brand},${C.accent})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, flexShrink: 0 }, children: "\u{1F33F}" }),
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 15, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: "EcoScore" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, letterSpacing: 0.4 }, children: "ESG \xB7 CSRD \xB7 PME" })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 16, fontWeight: 700, color: C.brand, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: "EcoScore" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, marginTop: 2, letterSpacing: 0.3 }, children: "Plateforme ESG & CSRD" })
           ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", { style: { flex: 1, display: "flex", flexDirection: "column", gap: 1, overflowY: "auto" }, children: VIEWS.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView(item.id), style: { display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 10px", borderRadius: 8, background: view === item.id ? C.brandLight : "transparent", color: view === item.id ? C.brand : C.sub, border: "none", cursor: "pointer", textAlign: "left", fontSize: 13, fontWeight: view === item.id ? 600 : 400, transition: "all .12s" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, width: 16, textAlign: "center" }, children: item.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { flex: 1 }, children: item.label }),
-          item.countKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: view === item.id ? C.brand : C.border, color: view === item.id ? "#fff" : C.muted, padding: "1px 6px", borderRadius: 99 }, children: data[item.countKey]?.length })
-        ] }, item.id)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { margin: "12px 0", padding: "12px", background: C.bg, borderRadius: 10, textAlign: "center", cursor: "pointer" }, onClick: () => setShowScoreDetail(true), children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }, children: "Score ESG global" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 24, fontWeight: 800, color: getGradeColor(scores.total), fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: [
-            scores.total,
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 400, color: C.muted }, children: "/100" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { onClick: () => setShowScoreDetail(true), style: { margin: "12px 10px 0", padding: "12px 14px", background: `linear-gradient(135deg,${C.brand},${C.brandMid})`, borderRadius: 12, cursor: "pointer", color: "#fff", position: "relative", overflow: "hidden" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", right: -10, top: -10, width: 70, height: 70, borderRadius: "50%", background: "rgba(255,255,255,.06)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, fontWeight: 600, color: "rgba(255,255,255,.65)", letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 6 }, children: "Score ESG Global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, marginBottom: 10 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 30, fontWeight: 800, fontFamily: "'DM Serif Display',serif", lineHeight: 1 }, children: scores.total }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, color: "rgba(255,255,255,.5)", marginBottom: 3 }, children: "/100" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginLeft: "auto", width: 34, height: 34, borderRadius: 9, background: `${gradeColor}30`, border: `2px solid ${gradeColor}`, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 16, fontWeight: 800, color: gradeColor }, children: grade }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.accent, marginTop: 4 }, children: "Voir d\xE9tails \u2192" })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", gap: 8 }, children: [{ l: "E", s: scores.E }, { l: "S", s: scores.S }, { l: "G", s: scores.G }].map((p) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginBottom: 2 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 9, color: "rgba(255,255,255,.55)", fontWeight: 600 }, children: p.l }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 9, color: "rgba(255,255,255,.75)", fontWeight: 700 }, children: p.s })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: 3, background: "rgba(255,255,255,.2)", borderRadius: 99 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { height: "100%", width: `${p.s}%`, background: getGradeColor(p.s), borderRadius: 99 } }) })
+          ] }, p.l)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 9, color: "rgba(255,255,255,.4)", marginTop: 8 }, children: "Cliquer pour analyser \u2192" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { borderTop: `1px solid ${C.border}`, paddingTop: 14 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView("settings"), style: { display: "flex", alignItems: "center", gap: 8, padding: "4px 8px", background: "none", border: "none", cursor: "pointer", width: "100%" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 28 }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "left" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 600, color: C.text }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", { style: { flex: 1, overflowY: "auto", padding: "6px 8px" }, children: NAV_GROUPS.map((group, gi) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginBottom: 2 }, children: [
+          group.label && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 9, fontWeight: 700, color: C.muted, letterSpacing: 0.9, textTransform: "uppercase", padding: "10px 8px 4px" }, children: group.label }),
+          group.items.map((item) => {
+            const active = view === item.id;
+            const count = item.countKey ? data[item.countKey]?.length ?? 0 : null;
+            return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView(item.id), style: {
+              display: "flex",
+              alignItems: "center",
+              gap: 9,
+              width: "100%",
+              padding: "7px 10px",
+              borderRadius: 8,
+              marginBottom: 1,
+              background: active ? C.brandLight : "transparent",
+              color: active ? C.brand : C.sub,
+              border: "none",
+              cursor: "pointer",
+              textAlign: "left",
+              fontSize: 12.5,
+              fontWeight: active ? 600 : 400,
+              transition: "background .12s",
+              fontFamily: "Sora,sans-serif"
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, width: 18, textAlign: "center", flexShrink: 0 }, children: item.icon }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { flex: 1 }, children: item.label }),
+              count != null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10, background: active ? C.brand : "#F4F4F5", color: active ? "#fff" : C.muted, padding: "1px 7px", borderRadius: 99, fontWeight: 600 }, children: count })
+            ] }, item.id);
+          })
+        ] }, gi)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { borderTop: `1px solid ${C.border}`, padding: "10px 8px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: () => setView("settings"), style: { display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", background: view === "settings" ? C.brandLight : "transparent", border: "none", cursor: "pointer", width: "100%", borderRadius: 9, fontFamily: "Sora,sans-serif" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, { name: `${data.admin.prenom} ${data.admin.nom}`, size: 30 }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "left", flex: 1, minWidth: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { style: { fontSize: 12, fontWeight: 600, color: C.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: [
               data.admin.prenom,
               " ",
               data.admin.nom
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted }, children: data.admin.role })
-          ] })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 10, color: C.muted, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: data.admin.role })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 13, color: C.muted }, children: "\u2699" })
         ] }) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { height: 54, flexShrink: 0, borderBottom: `1px solid ${C.border}`, background: C.surface, display: "flex", alignItems: "center", padding: "0 28px", gap: 12 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { style: { fontSize: 15, fontWeight: 600, color: C.text, flex: 1 }, children: TITLES[view] }),
-          view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `${LEGISLATION.length} textes r\xE9f\xE9renc\xE9s`, color: "blue" }),
-          view === "rse" && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "\u26A0\uFE0F Cl\xE9 API \xE0 configurer (Param\xE8tres)", color: "amber" }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, color: saveStatus === "saved" ? C.success : saveStatus === "saving" ? C.warning : C.muted }, children: saveStatus === "saving" ? "\u{1F4BE} Enregistrement..." : saveStatus === "saved" ? "\u2713 Enregistr\xE9" : saveStatus === "local" ? "\u{1F4BE} Local" : "Exercice 2025" })
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { height: 58, flexShrink: 0, borderBottom: `1px solid ${C.border}`, background: "#FFFFFF", display: "flex", alignItems: "center", padding: "0 28px", gap: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { style: { fontSize: 15, fontWeight: 700, color: C.text, lineHeight: 1.2 }, children: TITLES[view] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { style: { fontSize: 11, color: C.muted, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: SUBTITLES[view] })
+          ] }),
+          view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: `${LEGISLATION.length} textes`, color: "blue" }),
+          view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Badge, { label: "3 sources connect\xE9es", color: "green" }),
+          (view === "rse" || view === "juridique") && !data.apiKey && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => setView("settings"), style: { background: C.warningLight, border: `1px solid #FDE68A`, borderRadius: 8, padding: "5px 12px", cursor: "pointer", fontSize: 11, fontWeight: 600, color: "#92400E", fontFamily: "Sora,sans-serif" }, children: "\u26A0\uFE0F Cl\xE9 API manquante \u2192 Param\xE8tres" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 5, padding: "4px 12px", borderRadius: 20, background: saveStatus === "saved" ? C.successLight : saveStatus === "saving" ? C.warningLight : C.bg, border: `1px solid ${saveStatus === "saved" ? "#A7F3D0" : saveStatus === "saving" ? "#FDE68A" : C.border}`, transition: "all .3s" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 10 }, children: saveStatus === "saving" ? "\u23F3" : saveStatus === "saved" ? "\u2713" : "\u{1F4BE}" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 500, color: saveStatus === "saved" ? C.success : saveStatus === "saving" ? C.warning : C.muted }, children: saveStatus === "saving" ? "Enregistrement\u2026" : saveStatus === "saved" ? "Enregistr\xE9" : "Synchronis\xE9" })
+          ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: view === "legislation" || view === "rse" || view === "juridique" ? "hidden" : "auto", padding: view === "legislation" || view === "rse" || view === "juridique" ? "16px 28px" : "28px", animation: "fadeIn .2s ease" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { flex: 1, overflowY: fullscreen ? "hidden" : "auto", padding: fullscreen ? "16px 28px" : "28px 32px", animation: "fadeIn .2s ease" }, children: [
           view === "dashboard" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashView, { data, onScoreDetail: () => setShowScoreDetail(true) }),
           view === "plan" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlanActionView, { actions: data.planActions || [], setActions: setPlanActions }),
           view === "echeances" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EcheancesView, {}),
           view === "salaries" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SalariesView, { employees: data.employees, setEmployees }),
           view === "postes" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PostesView, { postes: data.postes, setPostes }),
           view === "fournisseurs" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FournisseursView, { fournisseurs: data.fournisseurs, setFournisseurs }),
-          view === "esg" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EsgView, { esg: data.esg, setEsg, onSave: () => showToast("Donn\xE9es ESG enregistr\xE9es \u2713") }),
+          view === "esg" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EsgView, { esg: data.esg, setEsg, onSave: () => showToast("Donn\xE9es ESG enregistr\xE9es") }),
           view === "documents" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DocumentsView, { documents: data.documents, setDocuments }),
           view === "legislation" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LegislationView, {}),
           view === "juridique" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RechercheJuridiqueView, { apiKey: data.apiKey }),
@@ -16014,7 +16111,10 @@ Que souhaitez-vous am\xE9liorer ?` }]);
         ] })
       ] }),
       showScoreDetail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScoreExplainModal, { scores, esg: data.esg, onClose: () => setShowScoreDetail(false) }),
-      toast && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { position: "absolute", bottom: 24, right: 24, background: C.brand, color: "#fff", padding: "12px 20px", borderRadius: 10, fontSize: 13, fontWeight: 500, zIndex: 200, boxShadow: "0 8px 24px rgba(0,0,0,.15)", animation: "fadeIn .2s ease" }, children: toast })
+      toast && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { position: "fixed", bottom: 28, right: 28, background: toast.type === "error" ? C.danger : C.brand, color: "#fff", padding: "12px 20px", borderRadius: 12, fontSize: 13, fontWeight: 500, zIndex: 300, boxShadow: "0 12px 40px rgba(0,0,0,.2)", animation: "slideIn .25s ease", display: "flex", alignItems: "center", gap: 8, fontFamily: "Sora,sans-serif" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: toast.type === "error" ? "\u26A0\uFE0F" : "\u2713" }),
+        toast.msg
+      ] })
     ] });
   }
 
